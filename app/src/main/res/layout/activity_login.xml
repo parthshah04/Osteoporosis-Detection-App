@@ -1,103 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEF7FF"
-    tools:context=".LoginActivity">
+    android:fillViewport="true"
+    android:background="?android:attr/windowBackground">
 
-    <!-- Logo -->
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="180dp"
-        android:contentDescription="@string/logo"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_logo" />
-
-    <!-- Welcome Message -->
-    <TextView
-        android:id="@+id/welcome_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/welcome_message"
-        android:textColor="#2C5C6C"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <!-- Username Field -->
-    <EditText
-        android:id="@+id/username"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/welcome_message"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:autofillHints="username"
-        android:backgroundTint="#7AB2B2"
-        android:hint="@string/username"
-        android:paddingStart="12dp"
-        android:paddingTop="12dp"
-        android:paddingEnd="12dp"
-        android:paddingBottom="12dp"
-        android:textColor="#2C5C6C"
-        android:textColorHint="#2C5C6C"
-        android:textSize="16sp" />
+        android:layout_height="match_parent"
+        android:background="#EEF7FF"
+        tools:context=".LoginActivity">
 
-    <!-- Password Field -->
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/username"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:autofillHints="password"
-        android:backgroundTint="#7AB2B2"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:paddingStart="12dp"
-        android:paddingTop="12dp"
-        android:paddingEnd="12dp"
-        android:paddingBottom="12dp"
-        android:textColor="#2C5C6C"
-        android:textColorHint="#2C5C6C"
-        android:textSize="16sp" />
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="180dp"
+            android:contentDescription="@string/logo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_logo" />
 
-    <!-- Login Button -->
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/password"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:paddingStart="16dp"
-        android:paddingTop="12dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="12dp"
-        android:text="@string/login"
-        android:textSize="16sp" />
+        <!-- Welcome Message -->
+        <TextView
+            android:id="@+id/welcome_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/welcome_message"
+            android:textColor="#2C5C6C"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <!-- Terms and Conditions Text -->
-    <TextView
-        android:id="@+id/terms_conditions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/login_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:autoLink="web"
-        android:text="@string/terms_conditions"
-        android:textColor="#2C5C6C"
-        android:textSize="8sp" />
+        <!-- Username Field -->
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/welcome_message"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:autofillHints="username"
+            android:backgroundTint="#7AB2B2"
+            android:hint="@string/username"
+            android:paddingStart="12dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="12dp"
+            android:textColor="#2C5C6C"
+            android:textColorHint="#2C5C6C"
+            android:textSize="16sp" />
 
-</RelativeLayout>
+        <!-- Password Field -->
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/username"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:autofillHints="password"
+            android:backgroundTint="#7AB2B2"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:paddingStart="12dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="12dp"
+            android:textColor="#2C5C6C"
+            android:textColorHint="#2C5C6C"
+            android:textSize="16sp" />
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/password"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="12dp"
+            android:text="@string/login"
+            android:textSize="16sp" />
+
+        <!-- Terms and Conditions Text -->
+        <TextView
+            android:id="@+id/terms_conditions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:autoLink="web"
+            android:text="@string/terms_conditions"
+            android:textColor="#2C5C6C"
+            android:textSize="8sp" />
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

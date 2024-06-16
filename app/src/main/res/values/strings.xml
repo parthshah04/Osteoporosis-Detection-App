@@ -6,4 +6,9 @@
     <string name="logo">Logo</string>
     <string name="welcome_message">Welcome!</string>
     <string name="terms_conditions">Terms and Condition</string>
+    <string name="newCase">New Case</string>
+    <string name="patients">Patients</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
 </resources>
