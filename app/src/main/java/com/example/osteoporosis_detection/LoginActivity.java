@@ -1,5 +1,6 @@
 package com.example.osteoporosis_detection;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +13,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
-    private Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
-        loginButton = findViewById(R.id.login_button);
+        Button loginButton = findViewById(R.id.login_button);
 
         loginButton.setOnClickListener(view -> {
             String username = usernameEditText.getText().toString();
@@ -30,7 +30,8 @@ public class LoginActivity extends AppCompatActivity {
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(LoginActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
             } else {
-                // Handle login logic here
+                Intent intent = new Intent(LoginActivity.this, LandingPage.class);
+                startActivity(intent);
                 Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
             }
         });

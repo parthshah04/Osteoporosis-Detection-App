@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    tools:context=".LandingPage">
+
+    <Button
+        android:id="@+id/newCase"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/newCase"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/patients"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/newCase"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/patients"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/dashboard"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/patients"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/dashboard"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/profile"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/dashboard"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/profile"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/profile"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/logout"
+        android:textSize="24sp" />
+
+</RelativeLayout>
