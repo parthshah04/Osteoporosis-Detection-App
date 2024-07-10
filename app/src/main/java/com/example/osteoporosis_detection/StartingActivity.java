@@ -1,4 +1,4 @@
-package com.example.osteo_vision;
+package com.example.osteoporosis_detection;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class StartingActivity extends AppCompatActivity {

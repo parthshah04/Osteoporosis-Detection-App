@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         // Here you can add your login logic, such as authentication with a server
         Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
         // Navigate to StartingActivity after successful login
-        Intent intent = new Intent(LoginActivity.this, PatientActivity.class);
+        Intent intent = new Intent(LoginActivity.this, StartingActivity.class);
         startActivity(intent);
         finish(); // Finish LoginActivity to prevent returning to it
     }
