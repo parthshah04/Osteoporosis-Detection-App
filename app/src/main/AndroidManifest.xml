@@ -27,6 +27,15 @@
         <activity
             android:name=".LandingPage"
             android:exported="false" />
+        <!-- Splash Activity as Launcher Activity -->
+        <activity
+            android:name="com.example.osteoporosis_detection.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="false" />
