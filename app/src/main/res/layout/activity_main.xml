@@ -7,6 +7,29 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+<!--    &lt;!&ndash; Age Input &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewAge"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Age"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginStart="16dp" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/editTextAge"-->
+<!--        android:layout_width="335dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:inputType="numberDecimal"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/textViewAge"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
     <!-- Age Input -->
     <TextView
         android:id="@+id/textViewAge"
@@ -18,21 +41,23 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"/>
 
-    <!-- Medications Input -->
-
     <EditText
         android:id="@+id/editTextAge"
-        android:layout_width="335dp"
-        android:layout_height="20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
+        android:background="@android:drawable/editbox_background_normal"
         android:inputType="numberDecimal"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toEndOf="@id/textViewAge"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <!-- Medications Input -->
     <TextView
         android:id="@+id/textViewMedications"
         android:layout_width="wrap_content"
@@ -67,7 +92,6 @@
         app:layout_constraintTop_toBottomOf="@id/textViewMedications" />
 
     <!-- Family History Input -->
-
     <Spinner
         android:id="@+id/spinnerHormonalChanges"
         android:layout_width="200dp"
@@ -92,7 +116,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewHormonalChanges" />
 
-
     <!-- Body Weight Input -->
     <Spinner
         android:id="@+id/spinnerFamilyHistory"
@@ -116,7 +139,6 @@
         app:layout_constraintTop_toBottomOf="@id/textViewFamilyHistory" />
 
     <!-- Calcium Intake Input -->
-
     <Spinner
         android:id="@+id/spinnerBodyWeight"
         android:layout_width="200dp"
@@ -208,7 +230,6 @@
         app:layout_constraintTop_toBottomOf="@id/textViewPhysicalActivity" />
 
     <!-- Alcohol Consumption Input -->
-
     <Spinner
         android:id="@+id/spinnerSmoking"
         android:layout_width="200dp"
@@ -301,20 +322,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinnerPriorFractures" />
 
-    <!-- Predict Button -->
-
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="139dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="Uploaded Image"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        app:layout_constraintTop_toBottomOf="@id/buttonSelectImage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonSelectImage" />
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="Uploaded Image"
+        android:scaleType="centerCrop" />
 
     <Button
         android:id="@+id/buttonPredict"
@@ -340,9 +359,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buttonPredict" />
-    <!-- Prediction of Image Data -->
 
-    <!-- Prediction of Tabular Data -->
+    <!-- Prediction of Image Data -->
     <TextView
         android:id="@+id/textViewImagePrediction"
         android:layout_width="wrap_content"
@@ -356,7 +374,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewResult" />
 
-    <!-- Circular Progress Bar -->
+    <!-- Prediction of Tabular Data -->
     <TextView
         android:id="@+id/textViewTabularPrediction"
         android:layout_width="wrap_content"
@@ -370,6 +388,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewImagePrediction" />
 
+    <!-- Circular Progress Bar -->
     <ProgressBar
         android:id="@+id/progressBarResult"
         style="?android:attr/progressBarStyleHorizontal"

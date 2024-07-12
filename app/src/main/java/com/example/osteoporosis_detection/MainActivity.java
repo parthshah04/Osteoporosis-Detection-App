@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         textViewImagePrediction = findViewById(R.id.textViewImagePrediction);
         textViewTabularPrediction = findViewById(R.id.textViewTabularPrediction);
         progressBarResult = findViewById(R.id.progressBarResult);
-
         // Set up listeners
         buttonSelectImage.setOnClickListener(v -> selectImage());
         buttonPredict.setOnClickListener(v -> makePrediction());
@@ -200,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         if (tfliteVGG19 != null) {
             tfliteVGG19.close();
