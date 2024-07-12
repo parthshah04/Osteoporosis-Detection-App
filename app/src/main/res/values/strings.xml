@@ -1,14 +1,58 @@
 <resources>
-    <string name="app_name">Osteoporosis-Detection</string>
-    <string name="password">Password</string>
-    <string name="username">Username</string>
-    <string name="login">LOGIN</string>
-    <string name="logo">Logo</string>
-    <string name="welcome_message">Welcome!</string>
-    <string name="terms_conditions">Terms and Condition</string>
-    <string name="newCase">New Case</string>
-    <string name="patients">Patients</string>
-    <string name="dashboard">Dashboard</string>
-    <string name="profile">Profile</string>
-    <string name="logout">Logout</string>
+    <string name="app_name">Osteo-Vision</string>
+
+    <string-array name="medications_options">
+        <item>None</item>
+        <item>Corticosteroids</item>
+    </string-array>
+    <string-array name="hormonal_changes_options">
+        <item>Normal</item>
+        <item>Postmenopausal</item>
+    </string-array>
+    <string-array name="family_history_options">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="body_weight_options">
+        <item>Underweight</item>
+        <item>Normal</item>
+    </string-array>
+    <string-array name="calcium_intake_options">
+        <item>Low</item>
+        <item>Adequate</item>
+    </string-array>
+    <string-array name="vitamin_d_intake_options">
+        <item>Sufficient</item>
+        <item>Insufficient</item>
+    </string-array>
+    <string-array name="physical_activity_options">
+        <item>Active</item>
+        <item>Sedentary</item>
+    </string-array>
+    <string-array name="smoking_options">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="alcohol_consumption_options">
+        <item>Moderate</item>
+        <item>None</item>
+    </string-array>
+    <string-array name="medical_conditions_options">
+        <item>Rheumatoid Arthritis</item>
+        <item>None</item>
+        <item>Hyperthyroidism</item>
+    </string-array>
+    <string-array name="prior_fractures_options">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
