@@ -1,6 +1,7 @@
 package com.example.osteoporosis_detection;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,11 +13,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.osteoporosis_detection.data.DatabaseHelper;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailInput;
     private EditText passwordInput;
     private Button loginButton;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
         loginButton = findViewById(R.id.loginButton);
+
+        dbHelper = new DatabaseHelper(this);
 
         // Add TextWatcher to email input for validation
         emailInput.addTextChangedListener(new TextWatcher() {
@@ -80,11 +86,21 @@ public class LoginActivity extends AppCompatActivity {
 
     // Method to handle user login
     private void loginUser(String email, String password) {
-        // Here you can add your login logic, such as authentication with a server
-        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-        // Navigate to StartingActivity after successful login
-        Intent intent = new Intent(LoginActivity.this, StartingActivity.class);
-        startActivity(intent);
-        finish(); // Finish LoginActivity to prevent returning to it
+        Cursor cursor = dbHelper.getUser(email, password);
+        if (cursor != null && cursor.moveToFirst()) {
+            // User exists, proceed with login
+            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+            // Navigate to StartingActivity after successful login
+            Intent intent = new Intent(LoginActivity.this, StartingActivity.class);
+            intent.putExtra("EMAIL", email); // Pass the logged-in user's email
+            startActivity(intent);
+            finish(); // Finish LoginActivity to prevent returning to it
+        } else {
+            // User does not exist or invalid credentials
+            Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
     }
 }

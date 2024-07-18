@@ -27,23 +27,27 @@ public class StartingActivity extends AppCompatActivity {
         settingsIcon = findViewById(R.id.settingsIcon);
         aboutIcon = findViewById(R.id.aboutIcon);
 
-        setupIconClickAnimation(registrationIcon, TabularActivity.class);
-        setupIconClickAnimation(predictionIcon, MainActivity.class);
-        setupIconClickAnimation(visualizationIcon, Visualisation.class);
-        setupIconClickAnimation(doctorsProfileIcon, Profile.class);
+        // Get the logged-in user's email
+        String userEmail = getIntent().getStringExtra("EMAIL");
+
+        setupIconClickAnimation(registrationIcon, TabularActivity.class, userEmail);
+        setupIconClickAnimation(predictionIcon, MainActivity.class, userEmail);
+        setupIconClickAnimation(visualizationIcon, Visualisation.class, userEmail);
+        setupIconClickAnimation(doctorsProfileIcon, ProfileActivity.class, userEmail);
 
         setupIconHoverAnimation(homeIcon);
         setupIconHoverAnimation(settingsIcon);
         setupIconHoverAnimation(aboutIcon);
     }
 
-    private void setupIconClickAnimation(ImageButton icon, final Class<?> activityToLaunch) {
+    private void setupIconClickAnimation(ImageButton icon, final Class<?> activityToLaunch, final String userEmail) {
         final Animation clickAnimation = AnimationUtils.loadAnimation(this, R.anim.icon_click);
         icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.startAnimation(clickAnimation);
                 Intent intent = new Intent(StartingActivity.this, activityToLaunch);
+                intent.putExtra("EMAIL", userEmail); // Pass the logged-in user's email to the next activity
                 startActivity(intent);
             }
         });

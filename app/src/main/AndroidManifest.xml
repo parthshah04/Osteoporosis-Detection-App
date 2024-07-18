@@ -12,6 +12,38 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OsteoporosisDetection"
         tools:targetApi="31">
+
+        <!-- Splash Activity as Launcher Activity -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Login Activity -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <!-- Starting Activity -->
+        <activity
+            android:name=".StartingActivity"
+            android:exported="false" />
+
+        <!-- Main Activity as Parent Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:parentActivityName=".StartingActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StartingActivity" />
+        </activity>
+
+        <!-- Tabular Activity -->
         <activity
             android:name=".TabularActivity"
             android:exported="false"
@@ -20,6 +52,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <!-- Profile Activity -->
         <activity
             android:name=".Profile"
@@ -28,7 +61,17 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
-        </activity> <!-- Visualisation Activity -->
+        </activity>
+
+        <activity android:name=".ProfileActivity"
+            android:exported="false"
+            android:parentActivityName=".StartingActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StartingActivity" />
+        </activity>
+
+        <!-- Visualisation Activity -->
         <activity
             android:name=".Visualisation"
             android:exported="false"
@@ -36,30 +79,9 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
-        </activity> <!-- Splash Activity as Launcher Activity -->
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- Login Activity -->
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" /> <!-- Main Activity as Parent Activity -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:parentActivityName=".StartingActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StartingActivity" />
-        </activity> <!-- Starting Activity -->
-        <activity
-            android:name=".StartingActivity"
-            android:exported="false" />
+        </activity>
+        <activity android:name=".UpdateUserDetailsActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
