@@ -63,6 +63,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getUserByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
+        if (email == null) {
+            throw new IllegalArgumentException("Email cannot be null");
+        }
         String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_EMAIL + "=?";
         return db.rawQuery(query, new String[]{email});
     }

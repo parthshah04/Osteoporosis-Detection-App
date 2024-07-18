@@ -1,6 +1,7 @@
 package com.example.osteoporosis_detection;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText profileName, profileDesignation, profilePhone, profileEmail, profilePassword;
     private Button changeProfileImageButton, updatePasswordButton;
     private DatabaseHelper dbHelper;
+    private SharedPreferences sharedPreferences;
     private String email;
 
     @Override
@@ -45,12 +47,18 @@ public class ProfileActivity extends AppCompatActivity {
         updatePasswordButton = findViewById(R.id.updatePasswordButton);
 
         dbHelper = new DatabaseHelper(this);
+        sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
 
-        // Get logged in user's email from Intent or saved instance
-        email = getIntent().getStringExtra("EMAIL");
+        // Get logged in user's email from SharedPreferences
+        email = sharedPreferences.getString("email", "");
 
-        // Load user data
-        loadUserData(email);
+        if (!email.isEmpty()) {
+            // Load user data
+            loadUserData(email);
+        } else {
+            Toast.makeText(this, "Error: No email provided", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
         // Set click listener for changing profile image
         changeProfileImageButton.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +90,8 @@ public class ProfileActivity extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                 profileImage.setImageBitmap(bitmap);
             }
+        } else {
+            Toast.makeText(this, "Error: User not found", Toast.LENGTH_SHORT).show();
         }
         if (cursor != null) {
             cursor.close();

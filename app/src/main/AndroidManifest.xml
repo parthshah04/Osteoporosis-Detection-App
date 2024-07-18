@@ -16,7 +16,8 @@
         <!-- Splash Activity as Launcher Activity -->
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,17 +27,20 @@
         <!-- Login Activity -->
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar"/>
 
         <!-- Starting Activity -->
         <activity
             android:name=".StartingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar"/>
 
         <!-- Main Activity as Parent Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:label="Prediction"
             android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -47,6 +51,7 @@
         <activity
             android:name=".TabularActivity"
             android:exported="false"
+            android:label="Registration"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -65,6 +70,7 @@
 
         <activity android:name=".ProfileActivity"
             android:exported="false"
+            android:label="Profile"
             android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -74,6 +80,7 @@
         <!-- Visualisation Activity -->
         <activity
             android:name=".Visualisation"
+            android:label="Visualisation"
             android:exported="false"
             android:parentActivityName=".StartingActivity">
             <meta-data

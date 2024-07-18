@@ -34,8 +34,8 @@ public class StartingActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
 
-        // Get the logged-in user's email
-        String userEmail = getIntent().getStringExtra("EMAIL");
+        // Get the logged-in user's email from SharedPreferences
+        String userEmail = sharedPreferences.getString("email", "");
 
         setupIconClickAnimation(registrationIcon, TabularActivity.class, userEmail);
         setupIconClickAnimation(predictionIcon, MainActivity.class, userEmail);
