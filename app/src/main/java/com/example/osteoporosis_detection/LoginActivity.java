@@ -1,6 +1,7 @@
 package com.example.osteoporosis_detection;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordInput;
     private Button loginButton;
     private DatabaseHelper dbHelper;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,13 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
 
         dbHelper = new DatabaseHelper(this);
+        sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+
+        // Check if user is already logged in
+        if (sharedPreferences.getBoolean("isLoggedIn", false)) {
+            String email = sharedPreferences.getString("email", "");
+            navigateToStartingActivity(email);
+        }
 
         // Add TextWatcher to email input for validation
         emailInput.addTextChangedListener(new TextWatcher() {
@@ -89,12 +98,14 @@ public class LoginActivity extends AppCompatActivity {
         Cursor cursor = dbHelper.getUser(email, password);
         if (cursor != null && cursor.moveToFirst()) {
             // User exists, proceed with login
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isLoggedIn", true);
+            editor.putString("email", email);
+            editor.apply();
+
             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
             // Navigate to StartingActivity after successful login
-            Intent intent = new Intent(LoginActivity.this, StartingActivity.class);
-            intent.putExtra("EMAIL", email); // Pass the logged-in user's email
-            startActivity(intent);
-            finish(); // Finish LoginActivity to prevent returning to it
+            navigateToStartingActivity(email);
         } else {
             // User does not exist or invalid credentials
             Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
@@ -102,5 +113,12 @@ public class LoginActivity extends AppCompatActivity {
         if (cursor != null) {
             cursor.close();
         }
+    }
+
+    private void navigateToStartingActivity(String email) {
+        Intent intent = new Intent(LoginActivity.this, StartingActivity.class);
+        intent.putExtra("EMAIL", email);
+        startActivity(intent);
+        finish(); // Finish LoginActivity to prevent returning to it
     }
 }
