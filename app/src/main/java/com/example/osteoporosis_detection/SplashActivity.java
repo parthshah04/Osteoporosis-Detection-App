@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SplashActivity extends AppCompatActivity {
 
     private Button startDiagnosisButton;
+    private Handler handler;
+    private Runnable navigateToLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,23 +26,34 @@ public class SplashActivity extends AppCompatActivity {
         startDiagnosisButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Start the LoginActivity
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish(); // Finish the SplashActivity to prevent returning to it
+                // Navigate to LoginActivity immediately
+                navigateToLogin();
             }
         });
 
-        // Optional: Auto-navigate to LoginActivity after a delay (e.g., if no user interaction with the button)
-        new Handler().postDelayed(new Runnable() {
+        // Handler to navigate to LoginActivity after a delay
+        handler = new Handler();
+        navigateToLogin = new Runnable() {
             @Override
             public void run() {
                 if (!SplashActivity.this.isFinishing()) {
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    navigateToLogin();
                 }
             }
-        }, 5000); // 5-second delay (adjust as needed)
+        };
+        handler.postDelayed(navigateToLogin, 5000); // 5-second delay (adjust as needed)
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Remove any pending posts of navigateToLogin runnable
+        handler.removeCallbacks(navigateToLogin);
+    }
+
+    private void navigateToLogin() {
+        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish(); // Finish the SplashActivity to prevent returning to it
     }
 }
