@@ -1,11 +1,15 @@
 package com.example.osteoporosis_detection.data;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import com.example.osteoporosis_detection.util.EncryptionUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDB";
@@ -18,6 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_EMAIL = "email";
     private static final String COLUMN_PASSWORD = "password";
     private static final String COLUMN_PROFILE_PHOTO = "profile_photo";
+    private static final String SECRET_KEY = "5Tgb6Yhn7Ujm8Ik";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -45,11 +50,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void createInitialUser(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, "Initial User");
-        values.put(COLUMN_DESIGNATION, "Admin");
-        values.put(COLUMN_PHONE, "1234567890");
-        values.put(COLUMN_EMAIL, "admin@gmail.com");
-        values.put(COLUMN_PASSWORD, "password"); // Ideally, hash the password
+        values.put(COLUMN_NAME, "Parth Shah");
+        values.put(COLUMN_DESIGNATION, "MD Physicians");
+        values.put(COLUMN_PHONE, "9987654321");
+        values.put(COLUMN_EMAIL, "parth@gmail.com");
+        try {
+        values.put(COLUMN_PASSWORD, EncryptionUtil.encrypt("Parth@1234", SECRET_KEY));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         values.put(COLUMN_PROFILE_PHOTO, "app/src/main/res/drawable/profile.png"); // Add a path or URL to the profile photo
 
         db.insert(TABLE_USERS, null, values);
@@ -57,8 +66,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getUser(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_EMAIL + "=? AND " + COLUMN_PASSWORD + "=?";
-        return db.rawQuery(query, new String[]{email, password});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_EMAIL + "=?", new String[]{email});
+        if (cursor != null && cursor.moveToFirst()) {
+            int passwordIndex = cursor.getColumnIndex(COLUMN_PASSWORD);
+            if (passwordIndex != -1) {
+                try {
+                    String storedPassword = cursor.getString(passwordIndex);
+                    String decryptedPassword = EncryptionUtil.decrypt(storedPassword, SECRET_KEY);
+                    Log.d(TAG, "Stored password: " + decryptedPassword);
+                    if (decryptedPassword.equals(password)) {
+                        Log.d(TAG, "Password matched");
+                        return cursor;
+                    } else {
+                        Log.d(TAG, "Password did not match");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return null;
     }
 
     public Cursor getUserByEmail(String email) {
@@ -78,7 +108,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateUserPassword(String email, String newPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PASSWORD, newPassword);
+        try {
+            values.put(COLUMN_PASSWORD, EncryptionUtil.encrypt(newPassword, SECRET_KEY)); // Encrypt the password
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         db.update(TABLE_USERS, values, COLUMN_EMAIL + "=?", new String[]{email});
     }
 
@@ -88,10 +122,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_NAME, newName);
         values.put(COLUMN_DESIGNATION, newDesignation);
         values.put(COLUMN_PHONE, newPhone);
-        values.put(COLUMN_PASSWORD, newPassword);
+        try {
+            values.put(COLUMN_PASSWORD, EncryptionUtil.encrypt(newPassword, SECRET_KEY)); // Encrypt the password
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (newProfilePhoto != null) {
             values.put(COLUMN_PROFILE_PHOTO, newProfilePhoto);
         }
         db.update(TABLE_USERS, values, COLUMN_EMAIL + "=?", new String[]{email});
+    }
+
+    public void deleteUserByEmail(String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_USERS, COLUMN_EMAIL + "=?", new String[]{email});
+        db.close();
     }
 }

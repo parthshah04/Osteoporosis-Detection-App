@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.osteoporosis_detection.data.DatabaseHelper;
@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private DatabaseHelper dbHelper;
     private SharedPreferences sharedPreferences;
+    private static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +96,10 @@ public class LoginActivity extends AppCompatActivity {
 
     // Method to handle user login
     private void loginUser(String email, String password) {
+        Log.d(TAG, "Login successful" + email + password);
         Cursor cursor = dbHelper.getUser(email, password);
         if (cursor != null && cursor.moveToFirst()) {
+            Log.d(TAG, "Login successful");
             // User exists, proceed with login
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("isLoggedIn", true);
@@ -108,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             navigateToStartingActivity(email);
         } else {
             // User does not exist or invalid credentials
+            Log.d(TAG, "Invalid email or password");
             Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
         }
         if (cursor != null) {

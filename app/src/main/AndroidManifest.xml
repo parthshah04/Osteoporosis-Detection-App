@@ -89,6 +89,8 @@
         </activity>
         <activity android:name=".UpdateUserDetailsActivity"
             android:exported="true" />
+        <activity android:name=".DeleteUserActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
