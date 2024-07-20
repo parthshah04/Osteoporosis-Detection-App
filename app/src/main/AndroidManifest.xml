@@ -110,6 +110,17 @@
                 android:value=".StartingActivity" />
         </activity>
 
+        <!-- Settings Activity -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="true"
+            android:label="Settings"
+            android:parentActivityName=".StartingActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StartingActivity" />
+        </activity>
+
         <activity android:name=".UpdateUserDetailsActivity"
             android:exported="true" />
         <activity android:name=".DeleteUserActivity"
