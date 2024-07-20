@@ -42,6 +42,7 @@ public class StartingActivity extends AppCompatActivity {
         setupIconClickAnimation(visualizationIcon, Visualisation.class, userEmail);
         setupIconClickAnimation(doctorsProfileIcon, ProfileActivity.class, userEmail);
         setupIconClickAnimation(aboutIcon, AboutActivity.class, userEmail); // About page
+        setupIconClickAnimation(settingsIcon, SettingsActivity.class, userEmail); // Settings page
 
         setupIconHoverAnimation(homeIcon);
         setupIconHoverAnimation(settingsIcon);

@@ -7,4 +7,11 @@
     <color name="colorQuestionSection">#7AB2B2</color>
     <color name="colorAnswerSection">#CDE8E5</color>
     <color name="colorBackground">#EEF7FF</color>
+
+    <color name="selectedColor">#007AFF</color>
+    <color name="unselectedColor">#808080</color>
+
+    <!-- Add these lines -->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
 </resources>
