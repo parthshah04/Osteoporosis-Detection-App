@@ -63,4 +63,6 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="beyond_conventional_care">BEYOND CONVENTIONAL CARE</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

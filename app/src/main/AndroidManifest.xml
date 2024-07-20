@@ -87,6 +87,29 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
         </activity>
+
+        <!-- Instruction Activity -->
+        <activity
+            android:name=".InstructionActivity"
+            android:exported="true"
+            android:label="Instructions"
+            android:parentActivityName=".AboutActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AboutActivity" />
+        </activity>
+
+        <!-- About Activity -->
+        <activity
+            android:name=".AboutActivity"
+            android:exported="true"
+            android:label="About"
+            android:parentActivityName=".StartingActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StartingActivity" />
+        </activity>
+
         <activity android:name=".UpdateUserDetailsActivity"
             android:exported="true" />
         <activity android:name=".DeleteUserActivity"
