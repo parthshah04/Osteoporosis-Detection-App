@@ -1,21 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- activity_instructions.xml -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@android:color/white"
     android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
-        <!-- Title Section -->
+        <!-- Header Section -->
         <LinearLayout
-            android:layout_width="346dp"
-            android:layout_height="118dp"
+            android:layout_width="match_parent"
+            android:layout_height="171dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingBottom="16dp">
@@ -36,244 +35,129 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Section 1: Login & Authentication -->
+        <!-- Title: Login and Authentication -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login and Authentication"
+            android:textSize="14sp"
+            android:textColor="#808080"
+            android:paddingBottom="8dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/settings_card_background"
+            android:padding="16dp"
             android:layout_marginBottom="16dp">
 
-            <!-- Heading -->
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/box_heading_background"
-                android:padding="8dp"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Login and Authentication"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-            <!-- Explanation -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="32dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/box_background"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\nDetails about login and Authentication.\n"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black" />
-                </LinearLayout>
-            </LinearLayout>
+                android:text="- Details about the section\n- Details about the section\n - Details about the section."
+                android:textSize="14sp"
+                android:textColor="#000000" />
         </LinearLayout>
 
-        <!-- Section 2: Add Patients -->
+        <!-- Title: Add Patients -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Patients"
+            android:textSize="14sp"
+            android:textColor="#808080"
+            android:paddingBottom="8dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/settings_card_background"
+            android:padding="16dp"
             android:layout_marginBottom="16dp">
 
-            <!-- Heading -->
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/box_heading_background"
-                android:padding="8dp"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add Patients"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-            <!-- Explanation -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="32dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/box_background"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\nDescription about how to add people.\n"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black" />
-                </LinearLayout>
-            </LinearLayout>
+                android:text="- Details about the section\n- Details about the section\n - Details about the section."
+                android:textSize="14sp"
+                android:textColor="#000000" />
         </LinearLayout>
 
-        <!-- Section 3: Patient Details -->
+        <!-- Title: Patient Details -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient Details"
+            android:textSize="14sp"
+            android:textColor="#808080"
+            android:paddingBottom="8dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/settings_card_background"
+            android:padding="16dp"
             android:layout_marginBottom="16dp">
 
-            <!-- Heading -->
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/box_heading_background"
-                android:padding="8dp"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Patient Details"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-            <!-- Explanation -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="32dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/box_background"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\nDescription about manipulating.\n"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black" />
-                </LinearLayout>
-            </LinearLayout>
+                android:text="- Details about the section\n- Details about the section\n - Details about the section."
+                android:textSize="14sp"
+                android:textColor="#000000" />
         </LinearLayout>
 
-        <!-- Section 4: Prediction & Results -->
+        <!-- Title: Prediction and Results -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prediction and Results"
+            android:textSize="14sp"
+            android:textColor="#808080"
+            android:paddingBottom="8dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/settings_card_background"
+            android:padding="16dp"
             android:layout_marginBottom="16dp">
 
-            <!-- Heading -->
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/box_heading_background"
-                android:padding="8dp"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Prediction and Results"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-            <!-- Explanation -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="32dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/box_background"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\nDescription about prediction.\n"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black" />
-                </LinearLayout>
-            </LinearLayout>
+                android:text="- Details about the section\n- Details about the section\n - Details about the section."
+                android:textSize="14sp"
+                android:textColor="#000000" />
         </LinearLayout>
 
-        <!-- Section 5: Visualization & Profile -->
+        <!-- Title: Visualization and Profile -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Visualization and Profile"
+            android:textSize="14sp"
+            android:textColor="#808080"
+            android:paddingBottom="8dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/settings_card_background"
+            android:padding="16dp"
             android:layout_marginBottom="16dp">
 
-            <!-- Heading -->
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/box_heading_background"
-                android:padding="8dp"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Visualization and Profile"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-            <!-- Explanation -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="32dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/box_background"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\nDescription about Visualization and Doctor's Profile.\n"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black" />
-                </LinearLayout>
-            </LinearLayout>
+                android:text="- Details about the section\n- Details about the section\n - Details about the section."
+                android:textSize="14sp"
+                android:textColor="#000000" />
         </LinearLayout>
 
     </LinearLayout>

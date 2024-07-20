@@ -92,13 +92,13 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Osteo Vision"
-                android:textSize="18sp"
-                android:textColor="#000000"
-                android:textStyle="bold"
+                android:layout_height="34dp"
+                android:layout_marginBottom="0dp"
                 android:paddingStart="0dp"
-                android:layout_marginBottom="0dp" />
+                android:text="Osteo Vision"
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,7 +112,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Masters of Applied Computing"
+                android:text="Academic Project - Masters of Applied Computing"
                 android:textSize="14sp"
                 android:textColor="#000000"
                 android:paddingStart="0dp" />
