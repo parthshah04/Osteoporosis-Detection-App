@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Other colors -->
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorQuestionSection">#7AB2B2</color>
+    <color name="colorAnswerSection">#CDE8E5</color>
+    <color name="colorBackground">#EEF7FF</color>
 </resources>

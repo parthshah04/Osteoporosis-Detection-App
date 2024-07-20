@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- First Section: About the App -->
+
+        <!-- App Name -->
+        <TextView
+            android:id="@+id/textViewAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="Osteo-Vision"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <!-- One Liner Sub Heading -->
+        <TextView
+            android:id="@+id/textViewSubHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AI Excellence in Osteoporosis Care"
+            android:textSize="18sp"
+            android:paddingBottom="16dp"
+            android:textStyle="bold"/>
+
+        <!-- App Logo -->
+        <ImageView
+            android:id="@+id/imageViewAppLogo"
+            android:layout_width="298dp"
+            android:layout_height="206dp"
+            android:contentDescription="App Logo"
+            android:paddingBottom="16dp"
+            android:src="@drawable/osteoporosis" />
+
+        <!-- Version Number -->
+        <TextView
+            android:id="@+id/textViewVersionNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@drawable/text_background"
+            android:padding="8dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="Version: 1.0"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Mission Statement -->
+        <TextView
+            android:id="@+id/textViewMissionStatement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\nDedicated to improving bone health,
+we leverage cutting-edge AI to offer precise and reliable osteoporosis diagnosis, helping you stay strong and healthy."
+            android:textSize="16sp"
+            android:paddingBottom="16dp"
+            android:gravity="center"
+            android:justificationMode="inter_word"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</ScrollView>
