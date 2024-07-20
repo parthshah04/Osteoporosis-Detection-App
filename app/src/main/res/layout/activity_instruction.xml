@@ -14,27 +14,26 @@
         <!-- Header Section -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="171dp"
+            android:layout_height="180dp"
             android:gravity="center"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingBottom="16dp">
 
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_marginRight="16dp"
                 android:contentDescription="Instructions Icon"
                 android:src="@drawable/prediction" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="Instructions"
                 android:textColor="@android:color/black"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>
-
         <!-- Title: Login and Authentication -->
         <TextView
             android:layout_width="wrap_content"
