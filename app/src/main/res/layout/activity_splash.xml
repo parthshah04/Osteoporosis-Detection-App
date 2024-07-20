@@ -22,18 +22,6 @@
         android:backgroundTint="#FFFFFF"
         android:textColor="#000000" />
 
-    <Button
-        android:id="@+id/startDiagnosisButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="64dp"
-        android:text="@string/start_diagnosis"
-        android:textColor="#FFFFFF"
-        android:padding="16dp"
-        android:textSize="16sp" />
-
     <LinearLayout
         android:id="@+id/dotsLayout"
         android:layout_width="wrap_content"

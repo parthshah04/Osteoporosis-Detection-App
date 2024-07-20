@@ -17,8 +17,6 @@ public class SplashActivity extends AppCompatActivity {
     private Runnable navigateToLogin;
     private ViewPager2 viewPager;
     private Button skipButton;
-    private Button startDiagnosisButton;
-
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -45,15 +43,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        // Initialize the new button
-        startDiagnosisButton = findViewById(R.id.startDiagnosisButton);
-        startDiagnosisButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToLogin();
-            }
-        });
-
 
         // Handler to navigate to LoginActivity after a delay
         handler = new Handler();
@@ -65,7 +54,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
         };
-        handler.postDelayed(navigateToLogin, 15000); // 15-second delay (adjust as needed)
+        handler.postDelayed(navigateToLogin, 10000); // 10-second delay (adjust as needed)
     }
 
     @Override
