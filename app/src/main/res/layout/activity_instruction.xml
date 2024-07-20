@@ -77,7 +77,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Details about login and Authentication.\n"
+                        android:text="\nDetails about login and Authentication.\n"
                         android:textSize="16sp"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
@@ -125,7 +125,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Description about how to add people.\n"
+                        android:text="\nDescription about how to add people.\n"
                         android:textSize="16sp"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
@@ -173,7 +173,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Description about manipulating.\n"
+                        android:text="\nDescription about manipulating.\n"
                         android:textSize="16sp"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
@@ -221,7 +221,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Description about prediction.\n"
+                        android:text="\nDescription about prediction.\n"
                         android:textSize="16sp"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
@@ -269,7 +269,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Description about Visualization and Doctor's Profile.\n"
+                        android:text="\nDescription about Visualization and Doctor's Profile.\n"
                         android:textSize="16sp"
                         android:textColor="@android:color/black" />
                 </LinearLayout>

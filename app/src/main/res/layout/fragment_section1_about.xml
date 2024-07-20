@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +46,7 @@
         <TextView
             android:id="@+id/textViewVersionNumber"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/text_background"
             android:padding="8dp"
             android:paddingTop="16dp"
@@ -54,17 +55,29 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-        <!-- Mission Statement -->
-        <TextView
-            android:id="@+id/textViewMissionStatement"
-            android:layout_width="match_parent"
+        <!-- Mission Statement Box -->
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="\nDedicated to improving bone health,
+            android:background="@drawable/box_background"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <!-- Mission Statement -->
+            <TextView
+                android:id="@+id/textViewMissionStatement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dedicated to improving bone health,
 we leverage cutting-edge AI to offer precise and reliable osteoporosis diagnosis, helping you stay strong and healthy."
-            android:textSize="16sp"
-            android:paddingBottom="16dp"
-            android:gravity="center"
-            android:justificationMode="inter_word"
-            android:textStyle="bold"/>
+                android:textSize="16sp"
+                android:padding="0dp"
+                android:gravity="center"
+                android:justificationMode="inter_word"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
