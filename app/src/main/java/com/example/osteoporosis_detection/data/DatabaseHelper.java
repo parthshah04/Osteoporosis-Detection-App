@@ -14,7 +14,7 @@ import com.example.osteoporosis_detection.util.EncryptionUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDB";
-    private static final int DATABASE_VERSION = 7; // Incremented version for schema change
+    private static final int DATABASE_VERSION = 8; // Incremented version for schema change
     private static final String TABLE_USERS = "users";
     private static final String TABLE_PREDICTIONS = "predictions";
     public static final String COLUMN_ID = "id";
@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ALCOHOL_CONSUMPTION = "alcohol_consumption";
     public static final String COLUMN_MEDICAL_CONDITIONS = "medical_conditions";
     public static final String COLUMN_PRIOR_FRACTURES = "prior_fractures";
-    public static final String COLUMN_XRAY_IMAGE = "xray_image";
+    public static final String COLUMN_XRAY_IMAGE_PATH = "xray_image_path";
     private static final String COLUMN_DESIGNATION = "designation";
     private static final String COLUMN_PHONE = "phone";
     private static final String COLUMN_PASSWORD = "password";
@@ -77,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ALCOHOL_CONSUMPTION + " INTEGER,"
                 + COLUMN_MEDICAL_CONDITIONS + " INTEGER,"
                 + COLUMN_PRIOR_FRACTURES + " INTEGER,"
-                + COLUMN_XRAY_IMAGE + " BLOB" + ")";
+                + COLUMN_XRAY_IMAGE_PATH + " TEXT" + ")";
         db.execSQL(CREATE_PREDICTIONS_TABLE);
 
         createInitialUser(db); // Create initial user
@@ -108,7 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void insertPredictionData(String name, String email, String age, String tabularPrediction, String imagePrediction, String result,
                                      int medications, int hormonalChanges, int familyHistory, int bodyWeight, int calciumIntake, int vitaminDIntake,
-                                     int physicalActivity, int smoking, int alcoholConsumption, int medicalConditions, int priorFractures, byte[] xrayImageData) {
+                                     int physicalActivity, int smoking, int alcoholConsumption, int medicalConditions, int priorFractures, String xrayImagePath) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
@@ -128,7 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ALCOHOL_CONSUMPTION, alcoholConsumption);
         values.put(COLUMN_MEDICAL_CONDITIONS, medicalConditions);
         values.put(COLUMN_PRIOR_FRACTURES, priorFractures);
-        values.put(COLUMN_XRAY_IMAGE, xrayImageData);
+        values.put(COLUMN_XRAY_IMAGE_PATH, xrayImagePath);
         db.insert(TABLE_PREDICTIONS, null, values);
     }
 
@@ -171,7 +171,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_ALCOHOL_CONSUMPTION,
                 COLUMN_MEDICAL_CONDITIONS,
                 COLUMN_PRIOR_FRACTURES,
-                COLUMN_XRAY_IMAGE
+                COLUMN_XRAY_IMAGE_PATH
         };
         String selection = COLUMN_ID + " = ?";
         String[] selectionArgs = {String.valueOf(id)};
@@ -199,7 +199,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                         int hormonalChanges, int familyHistory,
                                         int bodyWeight, int calciumIntake, int vitaminDIntake,
                                         int physicalActivity, int smoking, int alcoholConsumption,
-                                        int medicalConditions, int priorFractures, String xrayImageData) {
+                                        int medicalConditions, int priorFractures, String xrayImagePath) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -218,7 +218,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ALCOHOL_CONSUMPTION, alcoholConsumption);
         values.put(COLUMN_MEDICAL_CONDITIONS, medicalConditions);
         values.put(COLUMN_PRIOR_FRACTURES, priorFractures);
-        values.put(COLUMN_XRAY_IMAGE, xrayImageData);
+        values.put(COLUMN_XRAY_IMAGE_PATH, xrayImagePath);
 
         int rowsAffected = db.update(TABLE_PREDICTIONS, values, COLUMN_ID + " = ?",
                 new String[]{String.valueOf(id)});
@@ -273,12 +273,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_PROFILE_PHOTO, imageBytes);
         db.update(TABLE_USERS, values, COLUMN_EMAIL + "=?", new String[]{email});
     }
-    public void updateXrayImage(int patientId, byte[] imageBytes) {
+    /*public void updateXrayImage(int patientId, byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_XRAY_IMAGE, imageBytes);
         db.update(TABLE_PREDICTIONS, values, COLUMN_ID + "=?", new String[]{String.valueOf(patientId)});
-    }
+    }*/
     public void updateUserPassword(String email, String newPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

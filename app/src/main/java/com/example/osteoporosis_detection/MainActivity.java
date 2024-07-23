@@ -20,7 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.tensorflow.lite.Interpreter;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
@@ -218,11 +220,9 @@ public class MainActivity extends AppCompatActivity {
         String tabularPrediction = textViewTabularPrediction.getText().toString();
         String imagePrediction = textViewImagePrediction.getText().toString();
         String result = textViewResult.getText().toString();
-        byte[] xrayImageData = null;
+        String xrayImagePath = null;
         if (xRayImage != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            xRayImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            xrayImageData = stream.toByteArray();
+            xrayImagePath = saveImageToInternalStorage(xRayImage);
         }
 
 
@@ -245,10 +245,26 @@ public class MainActivity extends AppCompatActivity {
 
         // Save data to database
         db.insertPredictionData(name, email, age, tabularPrediction, imagePrediction, result, medications, hormonalChanges, familyHistory,
-                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImageData);
+                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath);
         Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
     }
+    private String saveImageToInternalStorage(Bitmap bitmap) {
+        // Create a file to save the image
+        File directory = getApplicationContext().getFilesDir();
+        String fileName = "xray_" + System.currentTimeMillis() + ".png";
+        File file = new File(directory, fileName);
 
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return file.getAbsolutePath();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
