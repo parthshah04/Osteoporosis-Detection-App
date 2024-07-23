@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.tensorflow.lite.Interpreter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -217,6 +218,13 @@ public class MainActivity extends AppCompatActivity {
         String tabularPrediction = textViewTabularPrediction.getText().toString();
         String imagePrediction = textViewImagePrediction.getText().toString();
         String result = textViewResult.getText().toString();
+        byte[] xrayImageData = null;
+        if (xRayImage != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            xRayImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            xrayImageData = stream.toByteArray();
+        }
+
 
         if (name.isEmpty() || email.isEmpty() || age.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
@@ -237,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Save data to database
         db.insertPredictionData(name, email, age, tabularPrediction, imagePrediction, result, medications, hormonalChanges, familyHistory,
-                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures);
+                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImageData);
         Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
     }
 

@@ -1,10 +1,11 @@
 package com.example.osteoporosis_detection;
 
 import static android.content.ContentValues.TAG;
-
+import android.util.Base64;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,6 +22,8 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.tensorflow.lite.Interpreter;
+
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -267,7 +270,6 @@ public class EditPatientActivity extends AppCompatActivity {
 
     private void loadPatientData() {
         Cursor cursor = null;
-        try {
             cursor = db.getPatient(patientId);
             if (cursor != null && cursor.moveToFirst()) {
                 editTextName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAME)));
@@ -288,28 +290,16 @@ public class EditPatientActivity extends AppCompatActivity {
                 spinnerPriorFractures.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PRIOR_FRACTURES)));
 
                 // Load X-ray image
-                String xrayImagePath = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_XRAY_IMAGE));
-                if (xrayImagePath != null && !xrayImagePath.isEmpty()) {
-                    xrayImageUri = Uri.parse(xrayImagePath);
-                    imageViewXray.setImageURI(xrayImageUri);
+                byte[] xrayImageData = cursor.getBlob(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_XRAY_IMAGE));
+                if (xrayImageData != null) {
+                    xRayImage = BitmapFactory.decodeByteArray(xrayImageData, 0, xrayImageData.length);
+                    imageViewXray.setImageBitmap(xRayImage);
                 } else {
-                    imageViewXray.setImageResource(R.drawable.about); // Use a placeholder image
+                    imageViewXray.setImageResource(R.drawable.about);
                 }
 
-            } else {
-                Log.e(TAG, "Cursor is null or empty");
-                Toast.makeText(this, "Error: Patient data not found", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error loading patient data: ", e);
-            Toast.makeText(this, "Error loading patient data: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            finish();
-        } finally {
-            if (cursor != null) {
                 cursor.close();
             }
-        }
     }
 
     private void savePatientData() {
@@ -335,7 +325,14 @@ public class EditPatientActivity extends AppCompatActivity {
         int alcoholConsumption = spinnerAlcoholConsumption.getSelectedItemPosition();
         int medicalConditions = spinnerMedicalConditions.getSelectedItemPosition();
         int priorFractures = spinnerPriorFractures.getSelectedItemPosition();
-        String xrayImagePath = (xrayImageUri != null) ? xrayImageUri.toString() : "";
+        byte[] xrayImageData = null;
+        if (xRayImage != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            xRayImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            xrayImageData = stream.toByteArray();
+        }
+
+        String xrayImagePath = Base64.encodeToString(xrayImageData, Base64.DEFAULT);
 
         // Recalculate the tabular prediction
         String tabularPrediction = recalculatePrediction(age, medications, hormonalChanges,
@@ -373,7 +370,7 @@ public class EditPatientActivity extends AppCompatActivity {
     private String recalculatePrediction(String age, int medications, int hormonalChanges,
                                          int familyHistory, int bodyWeight, int calciumIntake, int vitaminDIntake,
                                          int physicalActivity, int smoking, int alcoholConsumption,
-                                         int medicalConditions, int priorFractures, String xrayPathImage) {
+                                         int medicalConditions, int priorFractures, String xrayImagePath) {
         try {
             // Check if models are loaded
             if (tfliteTabular == null || tfliteVGG19 == null) {
