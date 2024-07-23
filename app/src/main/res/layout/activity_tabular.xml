@@ -1,277 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TabularActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- Age Input -->
-    <TextView
-        android:id="@+id/textViewAge"
-        android:layout_width="wrap_content"
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Age"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        android:queryHint="Search patients"
+        android:iconifiedByDefault="false"
+        android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextAge"
-        android:layout_width="335dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewAge"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ListView
+        android:id="@+id/listViewPatients"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <!-- Body Weight Input -->
-    <TextView
-        android:id="@+id/textViewBodyWeight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Body Weight"
-        app:layout_constraintTop_toBottomOf="@id/textViewAge"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerBodyWeight"
-        android:layout_width="280dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewBodyWeight"
-        app:layout_constraintTop_toBottomOf="@id/editTextAge" />
-
-    <!-- Smoking Input -->
-    <TextView
-        android:id="@+id/textViewSmoking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Smoking"
-        app:layout_constraintTop_toBottomOf="@id/textViewBodyWeight"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerSmoking"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewSmoking"
-        app:layout_constraintTop_toBottomOf="@id/spinnerBodyWeight" />
-
-    <!-- Medications Input -->
-    <TextView
-        android:id="@+id/textViewMedications"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medications"
-        app:layout_constraintTop_toBottomOf="@id/textViewSmoking"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerMedications"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewMedications"
-        app:layout_constraintTop_toBottomOf="@id/spinnerSmoking" />
-
-    <!-- Hormonal Changes Input -->
-    <TextView
-        android:id="@+id/textViewHormonalChanges"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hormonal Changes"
-        app:layout_constraintTop_toBottomOf="@id/textViewMedications"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerHormonalChanges"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewHormonalChanges"
-        app:layout_constraintTop_toBottomOf="@id/spinnerMedications" />
-
-    <!-- Calcium Intake Input -->
-    <TextView
-        android:id="@+id/textViewCalciumIntake"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calcium Intake"
-        app:layout_constraintTop_toBottomOf="@id/textViewHormonalChanges"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerCalciumIntake"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewCalciumIntake"
-        app:layout_constraintTop_toBottomOf="@id/spinnerHormonalChanges" />
-
-    <!-- Vitamin D Intake Input -->
-    <TextView
-        android:id="@+id/textViewVitaminDIntake"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vitamin D Intake"
-        app:layout_constraintTop_toBottomOf="@id/textViewCalciumIntake"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerVitaminDIntake"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewVitaminDIntake"
-        app:layout_constraintTop_toBottomOf="@id/spinnerCalciumIntake" />
-
-    <!-- Physical Activity Input -->
-    <TextView
-        android:id="@+id/textViewPhysicalActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Physical Activity"
-        app:layout_constraintTop_toBottomOf="@id/textViewVitaminDIntake"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerPhysicalActivity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewPhysicalActivity"
-        app:layout_constraintTop_toBottomOf="@id/spinnerVitaminDIntake" />
-
-    <!-- Alcohol Consumption Input -->
-    <TextView
-        android:id="@+id/textViewAlcoholConsumption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Alcohol Consumption"
-        app:layout_constraintTop_toBottomOf="@id/textViewPhysicalActivity"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerAlcoholConsumption"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewAlcoholConsumption"
-        app:layout_constraintTop_toBottomOf="@id/spinnerPhysicalActivity" />
-
-    <!-- Medical Conditions Input -->
-    <TextView
-        android:id="@+id/textViewMedicalConditions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medical Conditions"
-        app:layout_constraintTop_toBottomOf="@id/textViewAlcoholConsumption"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerMedicalConditions"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewMedicalConditions"
-        app:layout_constraintTop_toBottomOf="@id/spinnerAlcoholConsumption" />
-
-    <!-- Prior Fractures Input -->
-    <TextView
-        android:id="@+id/textViewPriorFractures"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Prior Fractures"
-        app:layout_constraintTop_toBottomOf="@id/textViewMedicalConditions"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerPriorFractures"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewPriorFractures"
-        app:layout_constraintTop_toBottomOf="@id/spinnerMedicalConditions" />
-
-    <!-- Predict Button -->
     <Button
-        android:id="@+id/buttonPredict"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="Prognosticate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinnerPriorFractures" />
-
-    <!-- Result TextView -->
-    <TextView
-        android:id="@+id/textViewResult"
+        android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:text="The anticipated rate of osteoporosis occurrence is currently:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonPredict" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="Add New Patient"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp" />
+
+
+
+</LinearLayout>
