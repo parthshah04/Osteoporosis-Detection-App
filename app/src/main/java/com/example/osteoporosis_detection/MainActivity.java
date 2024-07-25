@@ -12,34 +12,41 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.tensorflow.lite.Interpreter;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+
+import com.example.osteoporosis_detection.data.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final String TAG = "MainActivity";
 
-    private EditText editTextAge;
+    private EditText editTextAge, editTextName, editTextEmail;
     private Spinner spinnerMedications, spinnerHormonalChanges, spinnerFamilyHistory, spinnerBodyWeight, spinnerCalciumIntake,
             spinnerVitaminDIntake, spinnerPhysicalActivity, spinnerSmoking, spinnerAlcoholConsumption,
             spinnerMedicalConditions, spinnerPriorFractures;
     private ImageView imageView;
-    private Button buttonSelectImage, buttonPredict;
+    private Button buttonSelectImage, buttonPredict, buttonSave, buttonViewPatients;
     private TextView textViewResult, textViewImagePrediction, textViewTabularPrediction;
     private ProgressBar progressBarResult;
     private Bitmap xRayImage;
     private Interpreter tfliteVGG19;
     private Interpreter tfliteTabular;
+    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize UI components
         editTextAge = findViewById(R.id.editTextAge);
+        editTextName = findViewById(R.id.editTextName);
+        editTextEmail = findViewById(R.id.editTextEmail);
         spinnerMedications = findViewById(R.id.spinnerMedications);
         spinnerHormonalChanges = findViewById(R.id.spinnerHormonalChanges);
         spinnerFamilyHistory = findViewById(R.id.spinnerFamilyHistory);
@@ -62,13 +71,19 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         buttonSelectImage = findViewById(R.id.buttonSelectImage);
         buttonPredict = findViewById(R.id.buttonPredict);
+        buttonSave = findViewById(R.id.buttonSave);
         textViewResult = findViewById(R.id.textViewResult);
         textViewImagePrediction = findViewById(R.id.textViewImagePrediction);
         textViewTabularPrediction = findViewById(R.id.textViewTabularPrediction);
         progressBarResult = findViewById(R.id.progressBarResult);
+
+        // Initialize database helper
+        db = new DatabaseHelper(this);
+
         // Set up listeners
         buttonSelectImage.setOnClickListener(v -> selectImage());
         buttonPredict.setOnClickListener(v -> makePrediction());
+        buttonSave.setOnClickListener(v -> saveData());
 
         // Load models
         try {
@@ -198,6 +213,58 @@ public class MainActivity extends AppCompatActivity {
         return outputBuffer[0][1]; // Assuming the positive class (osteoporosis) is at index 1
     }
 
+    private void saveData() {
+        String name = editTextName.getText().toString();
+        String email = editTextEmail.getText().toString();
+        String age = editTextAge.getText().toString();
+        String tabularPrediction = textViewTabularPrediction.getText().toString();
+        String imagePrediction = textViewImagePrediction.getText().toString();
+        String result = textViewResult.getText().toString();
+        String xrayImagePath = null;
+        if (xRayImage != null) {
+            xrayImagePath = saveImageToInternalStorage(xRayImage);
+        }
+
+
+        if (name.isEmpty() || email.isEmpty() || age.isEmpty()) {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int medications = spinnerMedications.getSelectedItemPosition();
+        int hormonalChanges = spinnerHormonalChanges.getSelectedItemPosition();
+        int familyHistory = spinnerFamilyHistory.getSelectedItemPosition();
+        int bodyWeight = spinnerBodyWeight.getSelectedItemPosition();
+        int calciumIntake = spinnerCalciumIntake.getSelectedItemPosition();
+        int vitaminDIntake = spinnerVitaminDIntake.getSelectedItemPosition();
+        int physicalActivity = spinnerPhysicalActivity.getSelectedItemPosition();
+        int smoking = spinnerSmoking.getSelectedItemPosition();
+        int alcoholConsumption = spinnerAlcoholConsumption.getSelectedItemPosition();
+        int medicalConditions = spinnerMedicalConditions.getSelectedItemPosition();
+        int priorFractures = spinnerPriorFractures.getSelectedItemPosition();
+
+        // Save data to database
+        db.insertPredictionData(name, email, age, tabularPrediction, imagePrediction, result, medications, hormonalChanges, familyHistory,
+                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath);
+        Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+    }
+    private String saveImageToInternalStorage(Bitmap bitmap) {
+        // Create a file to save the image
+        File directory = getApplicationContext().getFilesDir();
+        String fileName = "xray_" + System.currentTimeMillis() + ".png";
+        File file = new File(directory, fileName);
+
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return file.getAbsolutePath();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
