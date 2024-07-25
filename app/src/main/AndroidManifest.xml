@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OsteoporosisDetection"
         tools:targetApi="31">
-
+        <activity
+            android:name=".EditPatientActivity"
+            android:exported="false"
+            android:parentActivityName=".TabularActivity"/>
         <!-- Splash Activity as Launcher Activity -->
         <activity
             android:name=".SplashActivity"
