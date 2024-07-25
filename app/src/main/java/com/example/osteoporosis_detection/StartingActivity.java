@@ -37,8 +37,8 @@ public class StartingActivity extends AppCompatActivity {
         // Get the logged-in user's email from SharedPreferences
         String userEmail = sharedPreferences.getString("email", "");
 
-        setupIconClickAnimation(registrationIcon, TabularActivity.class, userEmail);
-        setupIconClickAnimation(predictionIcon, MainActivity.class, userEmail);
+        setupIconClickAnimation(registrationIcon, MainActivity.class, userEmail);
+        setupIconClickAnimation(predictionIcon, TabularActivity.class, userEmail);
         setupIconClickAnimation(visualizationIcon, Visualisation.class, userEmail);
         setupIconClickAnimation(doctorsProfileIcon, ProfileActivity.class, userEmail);
         setupIconClickAnimation(aboutIcon, AboutActivity.class, userEmail); // About page
