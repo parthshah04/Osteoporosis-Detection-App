@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OsteoporosisDetection"
         tools:targetApi="31">
-
+        <activity
+            android:name=".EditPatientActivity"
+            android:exported="false" />
         <!-- Splash Activity as Launcher Activity -->
         <activity
             android:name=".SplashActivity"
@@ -20,23 +22,18 @@
             android:theme="@style/Theme.OsteoporosisDetection.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Login Activity -->
+        </activity> <!-- Login Activity -->
         <activity
             android:name=".LoginActivity"
             android:exported="false"
-            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar"/>
-
-        <!-- Starting Activity -->
+            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar" /> <!-- Starting Activity -->
         <activity
             android:name=".StartingActivity"
             android:exported="false"
-            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar"/>
-
-        <!-- Main Activity as Parent Activity -->
+            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar" /> <!-- Main Activity as Parent Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -45,9 +42,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
-        </activity>
-
-        <!-- Tabular Activity -->
+        </activity> <!-- Tabular Activity -->
         <activity
             android:name=".TabularActivity"
             android:exported="false"
@@ -56,9 +51,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-        </activity>
-
-        <!-- Profile Activity -->
+        </activity> <!-- Profile Activity -->
         <activity
             android:name=".Profile"
             android:exported="false"
@@ -67,28 +60,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
         </activity>
-
-        <activity android:name=".ProfileActivity"
+        <activity
+            android:name=".ProfileActivity"
             android:exported="false"
             android:label="Profile"
             android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
-        </activity>
-
-        <!-- Visualisation Activity -->
+        </activity> <!-- Visualisation Activity -->
         <activity
             android:name=".Visualisation"
-            android:label="Visualisation"
             android:exported="false"
+            android:label="Visualisation"
             android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
-        </activity>
-
-        <!-- Instruction Activity -->
+        </activity> <!-- Instruction Activity -->
         <activity
             android:name=".InstructionActivity"
             android:exported="true"
@@ -97,9 +86,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".AboutActivity" />
-        </activity>
-
-        <!-- About Activity -->
+        </activity> <!-- About Activity -->
         <activity
             android:name=".AboutActivity"
             android:exported="true"
@@ -108,9 +95,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
-        </activity>
-
-        <!-- Settings Activity -->
+        </activity> <!-- Settings Activity -->
         <activity
             android:name=".SettingsActivity"
             android:exported="true"
@@ -120,10 +105,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
         </activity>
-
-        <activity android:name=".UpdateUserDetailsActivity"
+        <activity
+            android:name=".UpdateUserDetailsActivity"
             android:exported="true" />
-        <activity android:name=".DeleteUserActivity"
+        <activity
+            android:name=".DeleteUserActivity"
             android:exported="true" />
     </application>
 

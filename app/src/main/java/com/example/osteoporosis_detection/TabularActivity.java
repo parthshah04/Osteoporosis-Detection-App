@@ -1,127 +1,143 @@
-
 package com.example.osteoporosis_detection;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.tensorflow.lite.Interpreter;
+import com.example.osteoporosis_detection.data.DatabaseHelper;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 
 public class TabularActivity extends AppCompatActivity {
 
     private static final String TAG = "TabularActivity";
-    private EditText editTextAge;
-    private Spinner spinnerMedications, spinnerHormonalChanges, spinnerFamilyHistory, spinnerBodyWeight, spinnerCalciumIntake,
-            spinnerVitaminDIntake, spinnerPhysicalActivity, spinnerSmoking, spinnerAlcoholConsumption,
-            spinnerMedicalConditions, spinnerPriorFractures;
-    private Button buttonPredict;
-    private TextView textViewResult;
-    private Interpreter tfliteTabular;
+    private ListView listViewPatients;
+    private Button buttonBack;
+    private SearchView searchView;
+    private DatabaseHelper db;
+    private ArrayList<String> patientList;
+    private ArrayList<Integer> patientIds;
+    private ArrayList<String> originalPatientList;
+    private ArrayList<Integer> originalPatientIds;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabular);
 
-        // Initialize UI components
-        editTextAge = findViewById(R.id.editTextAge);
-        spinnerMedications = findViewById(R.id.spinnerMedications);
-        spinnerHormonalChanges = findViewById(R.id.spinnerHormonalChanges);
-        //spinnerFamilyHistory = findViewById(R.id.spinnerFamilyHistory);
-        spinnerBodyWeight = findViewById(R.id.spinnerBodyWeight);
-        spinnerCalciumIntake = findViewById(R.id.spinnerCalciumIntake);
-        spinnerVitaminDIntake = findViewById(R.id.spinnerVitaminDIntake);
-        spinnerPhysicalActivity = findViewById(R.id.spinnerPhysicalActivity);
-        spinnerSmoking = findViewById(R.id.spinnerSmoking);
-        spinnerAlcoholConsumption = findViewById(R.id.spinnerAlcoholConsumption);
-        spinnerMedicalConditions = findViewById(R.id.spinnerMedicalConditions);
-        spinnerPriorFractures = findViewById(R.id.spinnerPriorFractures);
-        buttonPredict = findViewById(R.id.buttonPredict);
-        textViewResult = findViewById(R.id.textViewResult);
+        listViewPatients = findViewById(R.id.listViewPatients);
+        buttonBack = findViewById(R.id.buttonBack);
+        searchView = findViewById(R.id.searchView);
+        db = new DatabaseHelper(this);
+        patientList = new ArrayList<>();
+        patientIds = new ArrayList<>();
+        originalPatientList = new ArrayList<>();
+        originalPatientIds = new ArrayList<>();
 
-        // Load model
-        try {
-            tfliteTabular = new Interpreter(loadModelFile("Tabular_Model.tflite"));
-            Log.d(TAG, "Tabular model loaded successfully.");
-        } catch (IOException e) {
-            Log.e(TAG, "Error loading tabular model: ", e);
-        }
+        loadPatientData();
 
-        // Set up listeners
-        buttonPredict.setOnClickListener(v -> makePrediction());
+        buttonBack.setOnClickListener(v -> {
+            Intent intent = new Intent(TabularActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        listViewPatients.setOnItemClickListener((parent, view, position, id) -> {
+            try {
+                if (position < patientIds.size()) {
+                    int patientId = patientIds.get(position);
+                    Intent intent = new Intent(TabularActivity.this, EditPatientActivity.class);
+                    intent.putExtra("PATIENT_ID", patientId);
+                    startActivity(intent);
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Error on item click: ", e);
+                Toast.makeText(this, "Error opening patient details: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        setupSearchView();
     }
 
-    private MappedByteBuffer loadModelFile(String modelFileName) throws IOException {
-        try (FileInputStream inputStream = new FileInputStream(getAssets().openFd(modelFileName).getFileDescriptor())) {
-            FileChannel fileChannel = inputStream.getChannel();
-            long startOffset = getAssets().openFd(modelFileName).getStartOffset();
-            long declaredLength = getAssets().openFd(modelFileName).getDeclaredLength();
-            return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
-        }
-    }
-
-    private void makePrediction() {
+    private void loadPatientData() {
+        Cursor cursor = null;
         try {
-            // Check if models are loaded
-            if (tfliteTabular == null) {
-                Log.e(TAG, "Tabular model not loaded.");
-                textViewResult.setText("Error: Tabular model not loaded.");
-                return;
+            cursor = db.getAllPatients();
+            if (cursor != null && cursor.moveToFirst()) {
+                int idIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_ID);
+                int nameIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME);
+                int emailIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_EMAIL);
+
+                if (idIndex == -1 || nameIndex == -1 || emailIndex == -1) {
+                    throw new IllegalArgumentException("One or more required columns are missing from the cursor.");
+                }
+
+                do {
+                    int id = cursor.getInt(idIndex);
+                    String name = cursor.getString(nameIndex);
+                    String email = cursor.getString(emailIndex);
+                    patientList.add(name + " - " + email);
+                    patientIds.add(id);
+                    originalPatientList.add(name + " - " + email);
+                    originalPatientIds.add(id);
+                } while (cursor.moveToNext());
             }
-
-            // Extract and preprocess input data
-            float[] inputFeatures = new float[12];
-            if (!editTextAge.getText().toString().isEmpty()) {
-                inputFeatures[0] = Float.parseFloat(editTextAge.getText().toString());
-            } else {
-                textViewResult.setText("Please enter age.");
-                return;
-            }
-            inputFeatures[1] = spinnerBodyWeight.getSelectedItemPosition();
-            inputFeatures[2] = spinnerSmoking.getSelectedItemPosition();
-            inputFeatures[3] = spinnerMedications.getSelectedItemPosition();
-            inputFeatures[4] = spinnerHormonalChanges.getSelectedItemPosition();
-            inputFeatures[5] = spinnerFamilyHistory.getSelectedItemPosition();
-            inputFeatures[6] = spinnerCalciumIntake.getSelectedItemPosition();
-            inputFeatures[7] = spinnerVitaminDIntake.getSelectedItemPosition();
-            inputFeatures[8] = spinnerPhysicalActivity.getSelectedItemPosition();
-            inputFeatures[9] = spinnerAlcoholConsumption.getSelectedItemPosition();
-            inputFeatures[10] = spinnerMedicalConditions.getSelectedItemPosition();
-            inputFeatures[11] = spinnerPriorFractures.getSelectedItemPosition();
-
-            // Perform inference using tabular model
-            float[][] inputBuffer = new float[1][12];
-            inputBuffer[0] = inputFeatures;
-            float[][] outputBuffer = new float[1][1];
-            tfliteTabular.run(inputBuffer, outputBuffer);
-
-            float tabularPrediction = outputBuffer[0][0];
-            Log.d(TAG, "Tabular prediction: " + tabularPrediction);
-
-            // Display the prediction
-            String resultText = "The likelihood of osteoporosis based on your symptoms is: " + (tabularPrediction * 100) + "%";
-            textViewResult.setText(resultText);
         } catch (Exception e) {
-            Log.e(TAG, "Error making prediction: ", e);
-            textViewResult.setText("Error in prediction.");
+            Log.e(TAG, "Error loading patient data: ", e);
+            Toast.makeText(this, "Error loading patient data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
+
+        if (patientList.isEmpty()) {
+            Toast.makeText(this, "No patients found.", Toast.LENGTH_SHORT).show();
+        }
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, patientList);
+        listViewPatients.setAdapter(adapter);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (tfliteTabular != null) {
-            tfliteTabular.close();
+    private void setupSearchView() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterPatients(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filterPatients(String query) {
+        ArrayList<String> filteredList = new ArrayList<>();
+        ArrayList<Integer> filteredIds = new ArrayList<>();
+
+        for (int i = 0; i < originalPatientList.size(); i++) {
+            if (originalPatientList.get(i).toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(originalPatientList.get(i));
+                filteredIds.add(originalPatientIds.get(i));
+            }
         }
+
+        runOnUiThread(() -> {
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, filteredList);
+            listViewPatients.setAdapter(adapter);
+            patientIds = filteredIds;
+        });
     }
 }
