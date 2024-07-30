@@ -1,7 +1,5 @@
 package com.example.osteoporosis_detection;
 
-import static android.content.ContentValues.TAG;
-import android.util.Base64;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,13 +15,11 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import android.content.res.AssetFileDescriptor;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.tensorflow.lite.Interpreter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -45,7 +41,9 @@ public class EditPatientActivity extends AppCompatActivity {
             spinnerBodyWeight, spinnerCalciumIntake, spinnerVitaminDIntake,
             spinnerPhysicalActivity, spinnerSmoking, spinnerAlcoholConsumption,
             spinnerMedicalConditions, spinnerPriorFractures;
-    private Button buttonSave, buttonCancel, buttonSelectImage, buttonPredict;
+    private Button buttonSave;
+    private Button buttonCancel;
+    private Button buttonPredict;
     private DatabaseHelper db;
     private int patientId;
     private ImageView imageViewXray;
@@ -58,6 +56,10 @@ public class EditPatientActivity extends AppCompatActivity {
     private Interpreter tfliteTabular;
     private Bitmap xRayImage;
     private String xrayImagePath;
+    private TextView textViewSavedResult;
+    private TextView textViewSavedImagePrediction;
+    private TextView textViewSavedTabularPrediction;
+    private ProgressBar progressBarSavedResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,11 @@ public class EditPatientActivity extends AppCompatActivity {
         textViewTabularPrediction = findViewById(R.id.textViewTabularPrediction);
         progressBarResult = findViewById(R.id.progressBarResult);
         buttonPredict.setOnClickListener(v -> makePrediction());
+
+        textViewSavedResult = findViewById(R.id.textViewSavedResult);
+        textViewSavedImagePrediction = findViewById(R.id.textViewSavedImagePrediction);
+        textViewSavedTabularPrediction = findViewById(R.id.textViewSavedTabularPrediction);
+        progressBarSavedResult = findViewById(R.id.progressBarSavedResult);
 
 // Load models
         try {
@@ -223,7 +230,7 @@ public class EditPatientActivity extends AppCompatActivity {
         buttonSave = findViewById(R.id.buttonSave);
         buttonCancel = findViewById(R.id.buttonCancel);
         imageViewXray = findViewById(R.id.imageViewXray);
-        buttonSelectImage = findViewById(R.id.buttonSelectImage);
+        Button buttonSelectImage = findViewById(R.id.buttonSelectImage);
 
         buttonSelectImage.setOnClickListener(v -> openImagePicker());
         buttonPredict = findViewById(R.id.buttonPredict);
@@ -341,6 +348,23 @@ public class EditPatientActivity extends AppCompatActivity {
                 imageViewXray.setImageBitmap(xRayImage);
             } else {
                 imageViewXray.setImageResource(R.drawable.about);
+            }
+
+            String savedResult = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_RESULT));
+            String savedImagePrediction = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_IMAGE_PREDICTION));
+            String savedTabularPrediction = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TABULAR_PREDICTION));
+            float savedFinalConfidenceScore = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FINAL_CONFIDENCE_SCORE));
+
+            if (savedResult != null && !savedResult.isEmpty()) {
+                textViewSavedResult.setText(savedResult);
+                textViewSavedImagePrediction.setText(savedImagePrediction);
+                textViewSavedTabularPrediction.setText(savedTabularPrediction);
+                progressBarSavedResult.setProgress((int) (savedFinalConfidenceScore * 100));
+            } else {
+                textViewSavedResult.setText("No prediction available");
+                textViewSavedImagePrediction.setText("");
+                textViewSavedTabularPrediction.setText("");
+                progressBarSavedResult.setProgress(0);
             }
 
             cursor.close();

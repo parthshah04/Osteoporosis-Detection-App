@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private Interpreter tfliteVGG19;
     private Interpreter tfliteTabular;
     private DatabaseHelper db;
+    private float finalConfidenceScore;
+    private String imagePredictionText;
+    private String tabularPredictionText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up listeners
         buttonSelectImage.setOnClickListener(v -> selectImage());
-        buttonPredict.setOnClickListener(v -> makePrediction());
+        buttonPredict.setOnClickListener(v -> {
+            makePrediction();
+            saveData();
+        });
         buttonSave.setOnClickListener(v -> saveData());
 
         // Load models
@@ -172,11 +178,18 @@ public class MainActivity extends AppCompatActivity {
             textViewResult.setText(resultText);
 
             // Update individual predictions
-            textViewImagePrediction.setText("Prediction of Image Data: " + (imagePrediction * 100) + "%");
-            textViewTabularPrediction.setText("Prediction of Tabular Data: " + (tabularPrediction * 100) + "%");
+            String imagePredictionText = "Prediction of Image Data: " + (imagePrediction * 100) + "%";
+            String tabularPredictionText = "Prediction of Tabular Data: " + (tabularPrediction * 100) + "%";
+            textViewImagePrediction.setText(imagePredictionText);
+            textViewTabularPrediction.setText(tabularPredictionText);
 
             // Update progress bar
             progressBarResult.setProgress((int) (finalConfidenceScore * 100));
+
+            // Store these values for saving to database
+            this.finalConfidenceScore = finalConfidenceScore;
+            this.imagePredictionText = imagePredictionText;
+            this.tabularPredictionText = tabularPredictionText;
 
         } catch (Exception e) {
             Log.e(TAG, "Error making prediction: ", e);
@@ -217,8 +230,6 @@ public class MainActivity extends AppCompatActivity {
         String name = editTextName.getText().toString();
         String email = editTextEmail.getText().toString();
         String age = editTextAge.getText().toString();
-        String tabularPrediction = textViewTabularPrediction.getText().toString();
-        String imagePrediction = textViewImagePrediction.getText().toString();
         String result = textViewResult.getText().toString();
         String xrayImagePath = null;
         if (xRayImage != null) {
@@ -244,8 +255,8 @@ public class MainActivity extends AppCompatActivity {
         int priorFractures = spinnerPriorFractures.getSelectedItemPosition();
 
         // Save data to database
-        db.insertPredictionData(name, email, age, tabularPrediction, imagePrediction, result, medications, hormonalChanges, familyHistory,
-                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath);
+        db.insertPredictionData(name, email, age, tabularPredictionText, imagePredictionText, result, medications, hormonalChanges, familyHistory,
+                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore);
         Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
     }
     private String saveImageToInternalStorage(Bitmap bitmap) {
