@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private Interpreter tfliteVGG19;
     private Interpreter tfliteTabular;
     private DatabaseHelper db;
+    private float finalConfidenceScore;
+    private String imagePredictionText;
+    private String tabularPredictionText;
+    private boolean predictionMade = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
         buttonSelectImage.setOnClickListener(v -> selectImage());
         buttonPredict.setOnClickListener(v -> makePrediction());
         buttonSave.setOnClickListener(v -> saveData());
+
+        // Initially disable the save button
+        buttonSave.setEnabled(true);
 
         // Load models
         try {
@@ -172,15 +179,25 @@ public class MainActivity extends AppCompatActivity {
             textViewResult.setText(resultText);
 
             // Update individual predictions
-            textViewImagePrediction.setText("Prediction of Image Data: " + (imagePrediction * 100) + "%");
-            textViewTabularPrediction.setText("Prediction of Tabular Data: " + (tabularPrediction * 100) + "%");
+            String imagePredictionText = "Prediction of Image Data: " + (imagePrediction * 100) + "%";
+            String tabularPredictionText = "Prediction of Tabular Data: " + (tabularPrediction * 100) + "%";
+            textViewImagePrediction.setText(imagePredictionText);
+            textViewTabularPrediction.setText(tabularPredictionText);
 
             // Update progress bar
             progressBarResult.setProgress((int) (finalConfidenceScore * 100));
 
+            // Store these values for saving to database
+            this.finalConfidenceScore = finalConfidenceScore;
+            this.imagePredictionText = imagePredictionText;
+            this.tabularPredictionText = tabularPredictionText;
+
+            predictionMade = true;
+
         } catch (Exception e) {
             Log.e(TAG, "Error making prediction: ", e);
             textViewResult.setText("Error in prediction.");
+            predictionMade = false;
         }
     }
 
@@ -217,9 +234,6 @@ public class MainActivity extends AppCompatActivity {
         String name = editTextName.getText().toString();
         String email = editTextEmail.getText().toString();
         String age = editTextAge.getText().toString();
-        String tabularPrediction = textViewTabularPrediction.getText().toString();
-        String imagePrediction = textViewImagePrediction.getText().toString();
-        String result = textViewResult.getText().toString();
         String xrayImagePath = null;
         if (xRayImage != null) {
             xrayImagePath = saveImageToInternalStorage(xRayImage);
@@ -243,10 +257,43 @@ public class MainActivity extends AppCompatActivity {
         int medicalConditions = spinnerMedicalConditions.getSelectedItemPosition();
         int priorFractures = spinnerPriorFractures.getSelectedItemPosition();
 
+       // boolean hasPrediction = !textViewResult.getText().toString().isEmpty();
+        String result = predictionMade ? textViewResult.getText().toString() : "";
+        String tabularPredictionText = predictionMade ? this.tabularPredictionText : "";
+        String imagePredictionText = predictionMade ? this.imagePredictionText : "";
+        float finalConfidenceScore = predictionMade ? this.finalConfidenceScore : 0f;
+
         // Save data to database
-        db.insertPredictionData(name, email, age, tabularPrediction, imagePrediction, result, medications, hormonalChanges, familyHistory,
-                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath);
+        db.insertPredictionData(name, email, age, tabularPredictionText, imagePredictionText, result, medications, hormonalChanges, familyHistory,
+                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore, predictionMade);
+        Log.d(TAG, "Data saved. Prediction made: " + predictionMade);
         Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+
+        clearInputFields();
+    }
+
+    private void clearInputFields() {
+        editTextName.setText("");
+        editTextEmail.setText("");
+        editTextAge.setText("");
+        spinnerMedications.setSelection(0);
+        spinnerHormonalChanges.setSelection(0);
+        spinnerFamilyHistory.setSelection(0);
+        spinnerBodyWeight.setSelection(0);
+        spinnerCalciumIntake.setSelection(0);
+        spinnerVitaminDIntake.setSelection(0);
+        spinnerPhysicalActivity.setSelection(0);
+        spinnerSmoking.setSelection(0);
+        spinnerAlcoholConsumption.setSelection(0);
+        spinnerMedicalConditions.setSelection(0);
+        spinnerPriorFractures.setSelection(0);
+        imageView.setImageResource(R.drawable.about); // Set a placeholder image
+        xRayImage = null;
+        textViewResult.setText("");
+        textViewImagePrediction.setText("");
+        textViewTabularPrediction.setText("");
+        progressBarResult.setProgress(0);
+        predictionMade = false;
     }
     private String saveImageToInternalStorage(Bitmap bitmap) {
         // Create a file to save the image

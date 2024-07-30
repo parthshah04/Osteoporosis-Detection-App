@@ -1,7 +1,5 @@
 package com.example.osteoporosis_detection;
 
-import static android.content.ContentValues.TAG;
-import android.util.Base64;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -9,7 +7,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,13 +19,11 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import android.content.res.AssetFileDescriptor;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.tensorflow.lite.Interpreter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.Objects;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -45,19 +46,33 @@ public class EditPatientActivity extends AppCompatActivity {
             spinnerBodyWeight, spinnerCalciumIntake, spinnerVitaminDIntake,
             spinnerPhysicalActivity, spinnerSmoking, spinnerAlcoholConsumption,
             spinnerMedicalConditions, spinnerPriorFractures;
-    private Button buttonSave, buttonCancel, buttonSelectImage, buttonPredict;
+    private Button buttonSave;
+    private Button buttonCancel;
+    private Button buttonPredict;
     private DatabaseHelper db;
     private int patientId;
     private ImageView imageViewXray;
     private Uri xrayImageUri;
-    private ActivityResultLauncher<Intent> imagePickerLauncher;
+    //private ActivityResultLauncher<Intent> imagePickerLauncher;
     private static final String TAG = "EditPatientActivity";
-    private TextView textViewResult, textViewImagePrediction, textViewTabularPrediction;
+    private TextView textViewResult, textViewImagePrediction, textViewTabularPrediction, textViewNoPrediction;
     private ProgressBar progressBarResult;
     private Interpreter tfliteVGG19;
     private Interpreter tfliteTabular;
     private Bitmap xRayImage;
     private String xrayImagePath;
+    private TextView textViewSavedResult;
+    private TextView textViewSavedImagePrediction;
+    private TextView textViewSavedTabularPrediction;
+    private ProgressBar progressBarSavedResult;
+    private boolean hasPrediction;
+
+    private String originalName, originalEmail, originalAge;
+    private int originalMedications, originalHormonalChanges, originalFamilyHistory,
+            originalBodyWeight, originalCalciumIntake, originalVitaminDIntake,
+            originalPhysicalActivity, originalSmoking, originalAlcoholConsumption,
+            originalMedicalConditions, originalPriorFractures;
+    private String originalXrayImagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +89,11 @@ public class EditPatientActivity extends AppCompatActivity {
         textViewTabularPrediction = findViewById(R.id.textViewTabularPrediction);
         progressBarResult = findViewById(R.id.progressBarResult);
         buttonPredict.setOnClickListener(v -> makePrediction());
+
+        textViewSavedResult = findViewById(R.id.textViewSavedResult);
+        textViewSavedImagePrediction = findViewById(R.id.textViewSavedImagePrediction);
+        textViewSavedTabularPrediction = findViewById(R.id.textViewSavedTabularPrediction);
+        progressBarSavedResult = findViewById(R.id.progressBarSavedResult);
 
 // Load models
         try {
@@ -95,7 +115,8 @@ public class EditPatientActivity extends AppCompatActivity {
         }
 
         loadPatientData();
-
+        addChangeListeners();
+        buttonPredict.setOnClickListener(v -> makePrediction());
         buttonSave.setOnClickListener(v -> savePatientData());
         buttonCancel.setOnClickListener(v -> finish());
     }
@@ -168,6 +189,16 @@ public class EditPatientActivity extends AppCompatActivity {
             // Update progress bar
             progressBarResult.setProgress((int) (finalConfidenceScore * 100));
 
+            hasPrediction = true;
+
+            textViewNoPrediction.setVisibility(View.GONE);
+            textViewResult.setVisibility(View.VISIBLE);
+            textViewImagePrediction.setVisibility(View.VISIBLE);
+            textViewTabularPrediction.setVisibility(View.VISIBLE);
+            progressBarResult.setVisibility(View.VISIBLE);
+
+            buttonPredict.setText("Update Prediction");
+
         } catch (Exception e) {
             Log.e(TAG, "Error making prediction: ", e);
             textViewResult.setText("Error in prediction: " + e.getMessage());
@@ -206,27 +237,41 @@ public class EditPatientActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        editTextName = findViewById(R.id.editTextName);
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextAge = findViewById(R.id.editTextAge);
-        spinnerMedications = findViewById(R.id.spinnerMedications);
-        spinnerHormonalChanges = findViewById(R.id.spinnerHormonalChanges);
-        spinnerFamilyHistory = findViewById(R.id.spinnerFamilyHistory);
-        spinnerBodyWeight = findViewById(R.id.spinnerBodyWeight);
-        spinnerCalciumIntake = findViewById(R.id.spinnerCalciumIntake);
-        spinnerVitaminDIntake = findViewById(R.id.spinnerVitaminDIntake);
-        spinnerPhysicalActivity = findViewById(R.id.spinnerPhysicalActivity);
-        spinnerSmoking = findViewById(R.id.spinnerSmoking);
-        spinnerAlcoholConsumption = findViewById(R.id.spinnerAlcoholConsumption);
-        spinnerMedicalConditions = findViewById(R.id.spinnerMedicalConditions);
-        spinnerPriorFractures = findViewById(R.id.spinnerPriorFractures);
-        buttonSave = findViewById(R.id.buttonSave);
-        buttonCancel = findViewById(R.id.buttonCancel);
-        imageViewXray = findViewById(R.id.imageViewXray);
-        buttonSelectImage = findViewById(R.id.buttonSelectImage);
+        try {
+            editTextName = findViewById(R.id.editTextName);
+            editTextEmail = findViewById(R.id.editTextEmail);
+            editTextAge = findViewById(R.id.editTextAge);
+            spinnerMedications = findViewById(R.id.spinnerMedications);
+            spinnerHormonalChanges = findViewById(R.id.spinnerHormonalChanges);
+            spinnerFamilyHistory = findViewById(R.id.spinnerFamilyHistory);
+            spinnerBodyWeight = findViewById(R.id.spinnerBodyWeight);
+            spinnerCalciumIntake = findViewById(R.id.spinnerCalciumIntake);
+            spinnerVitaminDIntake = findViewById(R.id.spinnerVitaminDIntake);
+            spinnerPhysicalActivity = findViewById(R.id.spinnerPhysicalActivity);
+            spinnerSmoking = findViewById(R.id.spinnerSmoking);
+            spinnerAlcoholConsumption = findViewById(R.id.spinnerAlcoholConsumption);
+            spinnerMedicalConditions = findViewById(R.id.spinnerMedicalConditions);
+            spinnerPriorFractures = findViewById(R.id.spinnerPriorFractures);
+            buttonSave = findViewById(R.id.buttonSave);
+            buttonCancel = findViewById(R.id.buttonCancel);
+            imageViewXray = findViewById(R.id.imageViewXray);
+            Button buttonSelectImage = findViewById(R.id.buttonSelectImage);
 
-        buttonSelectImage.setOnClickListener(v -> openImagePicker());
-        buttonPredict = findViewById(R.id.buttonPredict);
+            textViewResult = findViewById(R.id.textViewResult);
+            textViewImagePrediction = findViewById(R.id.textViewImagePrediction);
+            textViewTabularPrediction = findViewById(R.id.textViewTabularPrediction);
+            progressBarResult = findViewById(R.id.progressBarResult);
+            textViewNoPrediction = findViewById(R.id.textViewNoPrediction);
+            buttonSelectImage.setOnClickListener(v -> openImagePicker());
+            buttonPredict = findViewById(R.id.buttonPredict);
+            buttonSave = findViewById(R.id.buttonSave);
+
+            if (textViewNoPrediction == null) {
+                Log.w(TAG, "textViewNoPrediction not found in layout");
+            }
+        }catch(Exception e){
+            Log.e(TAG,"Error initializing Views : ", e);
+        }
     }
 
     private void setupImagePicker() {
@@ -234,10 +279,18 @@ public class EditPatientActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        xrayImageUri = result.getData().getData();
+                        Uri selectedImageUri = result.getData().getData();
                         try {
-                            xRayImage = MediaStore.Images.Media.getBitmap(getContentResolver(), xrayImageUri);
+                            xRayImage = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
                             imageViewXray.setImageBitmap(xRayImage);
+
+                            // Update xrayImagePath
+                            xrayImagePath = getRealPathFromURI(selectedImageUri);
+
+                            // Check for changes
+                            checkForChanges();
+
+                            Log.d(TAG, "New image selected. Path: " + xrayImagePath);
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
@@ -247,6 +300,33 @@ public class EditPatientActivity extends AppCompatActivity {
         );
     }
 
+    private ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri selectedImage = result.getData().getData();
+                    try {
+                        xRayImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                        imageViewXray.setImageBitmap(xRayImage);
+                        xrayImagePath = getRealPathFromURI(selectedImage);
+                        checkForChanges(); // Check for changes after selecting a new image
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+    );
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor == null) return null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String path = cursor.getString(column_index);
+        cursor.close();
+        return path;
+    }
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         imagePickerLauncher.launch(intent);
@@ -314,39 +394,201 @@ public class EditPatientActivity extends AppCompatActivity {
 
 
     private void loadPatientData() {
+        Log.d(TAG, "Loading patient data for ID: " + patientId);
         Cursor cursor = null;
-        cursor = db.getPatient(patientId);
-        if (cursor != null && cursor.moveToFirst()) {
-            editTextName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAME)));
-            editTextEmail.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_EMAIL)));
-            editTextAge.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_AGE)));
 
-            // Set spinner selections
-            spinnerMedications.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_MEDICATIONS)));
-            spinnerHormonalChanges.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_HORMONAL_CHANGES)));
-            spinnerFamilyHistory.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FAMILY_HISTORY)));
-            spinnerBodyWeight.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BODY_WEIGHT)));
-            spinnerCalciumIntake.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CALCIUM_INTAKE)));
-            spinnerVitaminDIntake.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_VITAMIN_D_INTAKE)));
-            spinnerPhysicalActivity.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PHYSICAL_ACTIVITY)));
-            spinnerSmoking.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_SMOKING)));
-            spinnerAlcoholConsumption.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ALCOHOL_CONSUMPTION)));
-            spinnerMedicalConditions.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_MEDICAL_CONDITIONS)));
-            spinnerPriorFractures.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PRIOR_FRACTURES)));
+        try {
+            cursor = db.getPatient(patientId);
+            if (cursor != null && cursor.moveToFirst()) {
+                editTextName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAME)));
+                editTextEmail.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_EMAIL)));
+                editTextAge.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_AGE)));
 
-            // Load X-ray image
-            xrayImagePath = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_XRAY_IMAGE_PATH));
-            if (xrayImagePath != null) {
-                xRayImage = BitmapFactory.decodeFile(xrayImagePath);
-                imageViewXray.setImageBitmap(xRayImage);
+                // Set spinner selections
+                spinnerMedications.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_MEDICATIONS)));
+                spinnerHormonalChanges.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_HORMONAL_CHANGES)));
+                spinnerFamilyHistory.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FAMILY_HISTORY)));
+                spinnerBodyWeight.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_BODY_WEIGHT)));
+                spinnerCalciumIntake.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CALCIUM_INTAKE)));
+                spinnerVitaminDIntake.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_VITAMIN_D_INTAKE)));
+                spinnerPhysicalActivity.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PHYSICAL_ACTIVITY)));
+                spinnerSmoking.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_SMOKING)));
+                spinnerAlcoholConsumption.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ALCOHOL_CONSUMPTION)));
+                spinnerMedicalConditions.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_MEDICAL_CONDITIONS)));
+                spinnerPriorFractures.setSelection(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PRIOR_FRACTURES)));
+
+                // Load X-ray image
+                xrayImagePath = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_XRAY_IMAGE_PATH));
+                if (xrayImagePath != null) {
+                    xRayImage = BitmapFactory.decodeFile(xrayImagePath);
+                    imageViewXray.setImageBitmap(xRayImage);
+                } else {
+                    imageViewXray.setImageResource(R.drawable.about);
+                }
+
+                int hasPredictionIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_HAS_PREDICTION);
+                if (hasPredictionIndex == -1) {
+                    Log.e(TAG, "COLUMN_HAS_PREDICTION not found in cursor");
+                    return;
+                }
+
+                boolean hasPrediction = cursor.getInt(hasPredictionIndex) == 1;
+                Log.d(TAG, "Has prediction: " + hasPrediction);
+
+                if (hasPrediction) {
+                    String savedResult = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_RESULT));
+                    String savedImagePrediction = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_IMAGE_PREDICTION));
+                    String savedTabularPrediction = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TABULAR_PREDICTION));
+                    float savedFinalConfidenceScore = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FINAL_CONFIDENCE_SCORE));
+
+                    Log.d(TAG, "Prediction data loaded: " + savedResult);
+
+                    if (!savedResult.isEmpty() && !savedImagePrediction.isEmpty() && !savedTabularPrediction.isEmpty()) {
+                        setViewTextSafely(textViewResult, savedResult);
+                        setViewTextSafely(textViewImagePrediction, savedImagePrediction);
+                        setViewTextSafely(textViewTabularPrediction, savedTabularPrediction);
+
+                        if (progressBarResult != null) {
+                            progressBarResult.setProgress((int) (savedFinalConfidenceScore * 100));
+                        }
+
+                        setViewVisibilitySafely(textViewResult, View.VISIBLE);
+                        setViewVisibilitySafely(textViewImagePrediction, View.VISIBLE);
+                        setViewVisibilitySafely(textViewTabularPrediction, View.VISIBLE);
+                        setViewVisibilitySafely(progressBarResult, View.VISIBLE);
+                        setViewVisibilitySafely(textViewNoPrediction, View.GONE);
+
+                        if (buttonPredict != null) {
+                            buttonPredict.setText("Update Prediction");
+                            Log.d(TAG, "Button text set to: Update Prediction");
+                        }
+                    } else {
+                        Log.d(TAG, "Prediction flag is true but prediction data is empty");
+                        displayNoPrediction();
+                    }
+                } else {
+                    Log.d(TAG, "No prediction data found");
+                    displayNoPrediction();
+                }
             } else {
-                imageViewXray.setImageResource(R.drawable.about);
+                Log.e(TAG, "Cursor is null or empty");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error loading patient data: ", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        originalName = editTextName.getText().toString();
+        originalEmail = editTextEmail.getText().toString();
+        originalAge = editTextAge.getText().toString();
+        originalMedications = spinnerMedications.getSelectedItemPosition();
+        originalHormonalChanges = spinnerHormonalChanges.getSelectedItemPosition();
+        originalFamilyHistory = spinnerFamilyHistory.getSelectedItemPosition();
+        originalBodyWeight = spinnerBodyWeight.getSelectedItemPosition();
+        originalCalciumIntake = spinnerCalciumIntake.getSelectedItemPosition();
+        originalVitaminDIntake = spinnerVitaminDIntake.getSelectedItemPosition();
+        originalPhysicalActivity = spinnerPhysicalActivity.getSelectedItemPosition();
+        originalSmoking = spinnerSmoking.getSelectedItemPosition();
+        originalAlcoholConsumption = spinnerAlcoholConsumption.getSelectedItemPosition();
+        originalMedicalConditions = spinnerMedicalConditions.getSelectedItemPosition();
+        originalPriorFractures = spinnerPriorFractures.getSelectedItemPosition();
+        originalXrayImagePath = xrayImagePath;
+    }
+
+    private void addChangeListeners() {
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkForChanges();
+            }
+        };
+
+        editTextName.addTextChangedListener(textWatcher);
+        editTextEmail.addTextChangedListener(textWatcher);
+        editTextAge.addTextChangedListener(textWatcher);
+
+        AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                checkForChanges();
             }
 
-            cursor.close();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        };
+
+        spinnerMedications.setOnItemSelectedListener(spinnerListener);
+        spinnerHormonalChanges.setOnItemSelectedListener(spinnerListener);
+        spinnerFamilyHistory.setOnItemSelectedListener(spinnerListener);
+        spinnerBodyWeight.setOnItemSelectedListener(spinnerListener);
+        spinnerCalciumIntake.setOnItemSelectedListener(spinnerListener);
+        spinnerVitaminDIntake.setOnItemSelectedListener(spinnerListener);
+        spinnerPhysicalActivity.setOnItemSelectedListener(spinnerListener);
+        spinnerSmoking.setOnItemSelectedListener(spinnerListener);
+        spinnerAlcoholConsumption.setOnItemSelectedListener(spinnerListener);
+        spinnerMedicalConditions.setOnItemSelectedListener(spinnerListener);
+        spinnerPriorFractures.setOnItemSelectedListener(spinnerListener);
+    }
+
+    private void checkForChanges() {
+        boolean hasChanges = !originalName.equals(editTextName.getText().toString()) ||
+                !originalEmail.equals(editTextEmail.getText().toString()) ||
+                !originalAge.equals(editTextAge.getText().toString()) ||
+                originalMedications != spinnerMedications.getSelectedItemPosition() ||
+                originalHormonalChanges != spinnerHormonalChanges.getSelectedItemPosition() ||
+                originalFamilyHistory != spinnerFamilyHistory.getSelectedItemPosition() ||
+                originalBodyWeight != spinnerBodyWeight.getSelectedItemPosition() ||
+                originalCalciumIntake != spinnerCalciumIntake.getSelectedItemPosition() ||
+                originalVitaminDIntake != spinnerVitaminDIntake.getSelectedItemPosition() ||
+                originalPhysicalActivity != spinnerPhysicalActivity.getSelectedItemPosition() ||
+                originalSmoking != spinnerSmoking.getSelectedItemPosition() ||
+                originalAlcoholConsumption != spinnerAlcoholConsumption.getSelectedItemPosition() ||
+                originalMedicalConditions != spinnerMedicalConditions.getSelectedItemPosition() ||
+                originalPriorFractures != spinnerPriorFractures.getSelectedItemPosition() ||
+                !Objects.equals(originalXrayImagePath, xrayImagePath);
+
+        buttonSave.setEnabled(hasChanges);
+        Log.d(TAG, "Changes detected: " + hasChanges + ". Update button enabled: " + buttonSave.isEnabled());
+    }
+    private void displayNoPrediction() {
+        setViewVisibilitySafely(textViewResult, View.GONE);
+        setViewVisibilitySafely(textViewImagePrediction, View.GONE);
+        setViewVisibilitySafely(textViewTabularPrediction, View.GONE);
+        setViewVisibilitySafely(progressBarResult, View.GONE);
+        setViewVisibilitySafely(textViewNoPrediction, View.VISIBLE);
+        setViewTextSafely(textViewNoPrediction, "No prediction has been made yet.");
+
+        if (buttonPredict != null) {
+            buttonPredict.setText("Make Prediction");
+            Log.d(TAG, "Button text set to: Make Prediction");
+        }
+    }
+    private void setViewTextSafely(TextView textView, String text) {
+        if (textView != null) {
+            textView.setText(text);
+            Log.d(TAG, "TextView text set to: " + text);
+        } else {
+            Log.w(TAG, "Attempted to set text on null TextView");
         }
     }
 
+    private void setViewVisibilitySafely(View view, int visibility) {
+        if (view != null) {
+            view.setVisibility(visibility);
+            Log.d(TAG, "View visibility set to: " + (visibility == View.VISIBLE ? "VISIBLE" : "GONE"));
+        } else {
+            Log.w(TAG, "Attempted to set visibility on null View");
+        }
+    }
     private void savePatientData() {
         String name = editTextName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
@@ -374,11 +616,15 @@ public class EditPatientActivity extends AppCompatActivity {
         if (xRayImage != null) {
             xrayImagePath = saveImageToInternalStorage(xRayImage);
         }
+        String result = textViewResult.getText().toString();
+        String imagePrediction = textViewImagePrediction.getText().toString();
+        String tabularPrediction = textViewTabularPrediction.getText().toString();
+        float finalConfidenceScore = progressBarResult.getProgress() / 100f;
 
         // Recalculate the tabular prediction
-        String tabularPrediction = recalculatePrediction(age, medications, hormonalChanges,
-                familyHistory, bodyWeight, calciumIntake, vitaminDIntake, physicalActivity,
-                smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath);
+        //String tabularPrediction = recalculatePrediction(age, medications, hormonalChanges,
+              //  familyHistory, bodyWeight, calciumIntake, vitaminDIntake, physicalActivity,
+                //smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath);
 
         boolean updated = db.updatePredictionData(
                 patientId,
@@ -386,6 +632,8 @@ public class EditPatientActivity extends AppCompatActivity {
                 email,
                 age,
                 tabularPrediction,
+                imagePrediction,
+                result,
                 medications,
                 hormonalChanges,
                 familyHistory,
@@ -397,7 +645,9 @@ public class EditPatientActivity extends AppCompatActivity {
                 alcoholConsumption,
                 medicalConditions,
                 priorFractures,
-                xrayImagePath
+                xrayImagePath,
+                finalConfidenceScore,
+                hasPrediction
         );
 
         if (updated) {
@@ -493,3 +743,4 @@ public class EditPatientActivity extends AppCompatActivity {
         }
     }
 }
+
