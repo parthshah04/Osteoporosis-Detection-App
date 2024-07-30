@@ -14,7 +14,7 @@ import com.example.osteoporosis_detection.util.EncryptionUtil;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDB";
-    private static final int DATABASE_VERSION = 10; // Incremented version for schema change
+    private static final int DATABASE_VERSION = 13; // Incremented version for schema change
     private static final String TABLE_USERS = "users";
     private static final String TABLE_PREDICTIONS = "predictions";
     public static final String COLUMN_ID = "id";
@@ -42,6 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PASSWORD = "password";
     private static final String COLUMN_PROFILE_PHOTO = "profile_photo";
     private static final String SECRET_KEY = "5Tgb6Yhn7Ujm8Ik";
+    public static final String COLUMN_HAS_PREDICTION = "has_prediction";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -79,7 +80,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_MEDICAL_CONDITIONS + " INTEGER,"
                 + COLUMN_PRIOR_FRACTURES + " INTEGER,"
                 + COLUMN_XRAY_IMAGE_PATH + " TEXT,"
-                + COLUMN_FINAL_CONFIDENCE_SCORE + " REAL" + ")";
+                + COLUMN_FINAL_CONFIDENCE_SCORE + " REAL,"
+                + COLUMN_HAS_PREDICTION + " INTEGER DEFAULT 0" + ")";
         db.execSQL(CREATE_PREDICTIONS_TABLE);
 
         createInitialUser(db); // Create initial user
@@ -111,7 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void insertPredictionData(String name, String email, String age, String tabularPrediction, String imagePrediction, String result,
                                      int medications, int hormonalChanges, int familyHistory, int bodyWeight, int calciumIntake, int vitaminDIntake,
                                      int physicalActivity, int smoking, int alcoholConsumption, int medicalConditions, int priorFractures,
-                                     String xrayImagePath, float finalConfidenceScore) {
+                                     String xrayImagePath, float finalConfidenceScore, boolean hasPrediction) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
@@ -133,6 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_PRIOR_FRACTURES, priorFractures);
         values.put(COLUMN_XRAY_IMAGE_PATH, xrayImagePath);
         values.put(COLUMN_FINAL_CONFIDENCE_SCORE, finalConfidenceScore);
+        values.put(COLUMN_HAS_PREDICTION, hasPrediction ? 1 : 0);
         db.insert(TABLE_PREDICTIONS, null, values);
     }
 
@@ -176,7 +179,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_MEDICAL_CONDITIONS,
                 COLUMN_PRIOR_FRACTURES,
                 COLUMN_XRAY_IMAGE_PATH,
-                COLUMN_FINAL_CONFIDENCE_SCORE
+                COLUMN_FINAL_CONFIDENCE_SCORE,
+                COLUMN_HAS_PREDICTION
         };
         String selection = COLUMN_ID + " = ?";
         String[] selectionArgs = {String.valueOf(id)};
@@ -200,11 +204,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public boolean updatePredictionData(int id, String name, String email, String age,
-                                        String tabularPrediction, int medications,
+                                        String tabularPrediction, String imagePrediction, String result, int medications,
                                         int hormonalChanges, int familyHistory,
                                         int bodyWeight, int calciumIntake, int vitaminDIntake,
                                         int physicalActivity, int smoking, int alcoholConsumption,
-                                        int medicalConditions, int priorFractures, String xrayImagePath) {
+                                        int medicalConditions, int priorFractures, String xrayImagePath,
+                                        float finalConfidenceScore, boolean hasPrediction) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -224,6 +229,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_MEDICAL_CONDITIONS, medicalConditions);
         values.put(COLUMN_PRIOR_FRACTURES, priorFractures);
         values.put(COLUMN_XRAY_IMAGE_PATH, xrayImagePath);
+        values.put(COLUMN_RESULT, result);
+        values.put(COLUMN_IMAGE_PREDICTION, imagePrediction);
+        values.put(COLUMN_FINAL_CONFIDENCE_SCORE, finalConfidenceScore);
+        values.put(COLUMN_HAS_PREDICTION, hasPrediction ? 1 : 0);
 
         int rowsAffected = db.update(TABLE_PREDICTIONS, values, COLUMN_ID + " = ?",
                 new String[]{String.valueOf(id)});

@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private float finalConfidenceScore;
     private String imagePredictionText;
     private String tabularPredictionText;
+    private boolean predictionMade = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up listeners
         buttonSelectImage.setOnClickListener(v -> selectImage());
-        buttonPredict.setOnClickListener(v -> {
-            makePrediction();
-            saveData();
-        });
+        buttonPredict.setOnClickListener(v -> makePrediction());
         buttonSave.setOnClickListener(v -> saveData());
+
+        // Initially disable the save button
+        buttonSave.setEnabled(true);
 
         // Load models
         try {
@@ -191,9 +192,12 @@ public class MainActivity extends AppCompatActivity {
             this.imagePredictionText = imagePredictionText;
             this.tabularPredictionText = tabularPredictionText;
 
+            predictionMade = true;
+
         } catch (Exception e) {
             Log.e(TAG, "Error making prediction: ", e);
             textViewResult.setText("Error in prediction.");
+            predictionMade = false;
         }
     }
 
@@ -230,7 +234,6 @@ public class MainActivity extends AppCompatActivity {
         String name = editTextName.getText().toString();
         String email = editTextEmail.getText().toString();
         String age = editTextAge.getText().toString();
-        String result = textViewResult.getText().toString();
         String xrayImagePath = null;
         if (xRayImage != null) {
             xrayImagePath = saveImageToInternalStorage(xRayImage);
@@ -254,10 +257,43 @@ public class MainActivity extends AppCompatActivity {
         int medicalConditions = spinnerMedicalConditions.getSelectedItemPosition();
         int priorFractures = spinnerPriorFractures.getSelectedItemPosition();
 
+       // boolean hasPrediction = !textViewResult.getText().toString().isEmpty();
+        String result = predictionMade ? textViewResult.getText().toString() : "";
+        String tabularPredictionText = predictionMade ? this.tabularPredictionText : "";
+        String imagePredictionText = predictionMade ? this.imagePredictionText : "";
+        float finalConfidenceScore = predictionMade ? this.finalConfidenceScore : 0f;
+
         // Save data to database
         db.insertPredictionData(name, email, age, tabularPredictionText, imagePredictionText, result, medications, hormonalChanges, familyHistory,
-                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore);
+                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore, predictionMade);
+        Log.d(TAG, "Data saved. Prediction made: " + predictionMade);
         Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+
+        clearInputFields();
+    }
+
+    private void clearInputFields() {
+        editTextName.setText("");
+        editTextEmail.setText("");
+        editTextAge.setText("");
+        spinnerMedications.setSelection(0);
+        spinnerHormonalChanges.setSelection(0);
+        spinnerFamilyHistory.setSelection(0);
+        spinnerBodyWeight.setSelection(0);
+        spinnerCalciumIntake.setSelection(0);
+        spinnerVitaminDIntake.setSelection(0);
+        spinnerPhysicalActivity.setSelection(0);
+        spinnerSmoking.setSelection(0);
+        spinnerAlcoholConsumption.setSelection(0);
+        spinnerMedicalConditions.setSelection(0);
+        spinnerPriorFractures.setSelection(0);
+        imageView.setImageResource(R.drawable.about); // Set a placeholder image
+        xRayImage = null;
+        textViewResult.setText("");
+        textViewImagePrediction.setText("");
+        textViewTabularPrediction.setText("");
+        progressBarResult.setProgress(0);
+        predictionMade = false;
     }
     private String saveImageToInternalStorage(Bitmap bitmap) {
         // Create a file to save the image

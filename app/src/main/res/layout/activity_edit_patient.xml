@@ -161,16 +161,30 @@
 
 
 
+
         <Button
             android:id="@+id/buttonPredict"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Prognosticate"/>
+            android:layout_below="@id/spinnerPriorFractures"
+            android:text="Make Prediction"/>
+
+        <TextView
+            android:id="@+id/textViewNoPrediction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonPredict"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="No prediction has been made yet."
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/textViewResult"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonPredict"/>
 
         <TextView
             android:id="@+id/textViewImagePrediction"
