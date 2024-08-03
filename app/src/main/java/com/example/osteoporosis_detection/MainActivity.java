@@ -17,18 +17,18 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.osteoporosis_detection.data.DatabaseHelper;
+
 import org.tensorflow.lite.Interpreter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-
-import com.example.osteoporosis_detection.data.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             spinnerVitaminDIntake, spinnerPhysicalActivity, spinnerSmoking, spinnerAlcoholConsumption,
             spinnerMedicalConditions, spinnerPriorFractures;
     private ImageView imageView;
-    private Button buttonSelectImage, buttonPredict, buttonSave, buttonViewPatients;
+    private Button buttonSelectImage, buttonPredict, buttonSave;
     private TextView textViewResult, textViewImagePrediction, textViewTabularPrediction;
     private ProgressBar progressBarResult;
     private Bitmap xRayImage;
@@ -57,7 +57,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize UI components
+        initializeUIComponents();
+        db = new DatabaseHelper(this);
+        setupListeners();
+        loadModels();
+    }
+
+    private void initializeUIComponents() {
         editTextAge = findViewById(R.id.editTextAge);
         editTextName = findViewById(R.id.editTextName);
         editTextEmail = findViewById(R.id.editTextEmail);
@@ -80,19 +86,15 @@ public class MainActivity extends AppCompatActivity {
         textViewImagePrediction = findViewById(R.id.textViewImagePrediction);
         textViewTabularPrediction = findViewById(R.id.textViewTabularPrediction);
         progressBarResult = findViewById(R.id.progressBarResult);
+    }
 
-        // Initialize database helper
-        db = new DatabaseHelper(this);
-
-        // Set up listeners
+    private void setupListeners() {
         buttonSelectImage.setOnClickListener(v -> selectImage());
         buttonPredict.setOnClickListener(v -> makePrediction());
         buttonSave.setOnClickListener(v -> saveData());
+    }
 
-        // Initially disable the save button
-        buttonSave.setEnabled(true);
-
-        // Load models
+    private void loadModels() {
         try {
             tfliteVGG19 = new Interpreter(loadModelFile("vgg19_finetuned_best_quantized.tflite"));
             tfliteTabular = new Interpreter(loadModelFile("Tabular_Model.tflite"));
@@ -132,39 +134,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void makePrediction() {
         try {
-            // Check if models are loaded
             if (tfliteTabular == null || tfliteVGG19 == null) {
                 Log.e(TAG, "Models not loaded.");
                 textViewResult.setText("Error: Models not loaded.");
                 return;
             }
 
-            // Check if Age input is empty
             if (editTextAge.getText().toString().isEmpty()) {
                 textViewResult.setText("Please enter age.");
                 return;
             }
 
-            // Extract and preprocess input data
-            float[] tabularInput = new float[12];
-            tabularInput[0] = Float.parseFloat(editTextAge.getText().toString());
-            tabularInput[1] = spinnerBodyWeight.getSelectedItemPosition();
-            tabularInput[2] = spinnerSmoking.getSelectedItemPosition();
-            tabularInput[3] = spinnerMedications.getSelectedItemPosition();
-            tabularInput[4] = spinnerHormonalChanges.getSelectedItemPosition();
-            tabularInput[5] = spinnerFamilyHistory.getSelectedItemPosition();
-            tabularInput[6] = spinnerCalciumIntake.getSelectedItemPosition();
-            tabularInput[7] = spinnerVitaminDIntake.getSelectedItemPosition();
-            tabularInput[8] = spinnerPhysicalActivity.getSelectedItemPosition();
-            tabularInput[9] = spinnerAlcoholConsumption.getSelectedItemPosition();
-            tabularInput[10] = spinnerMedicalConditions.getSelectedItemPosition();
-            tabularInput[11] = spinnerPriorFractures.getSelectedItemPosition();
-
-            // Perform inference using tabular model
+            float[] tabularInput = extractTabularInput();
             float tabularPrediction = predictTabularModel(tabularInput);
             Log.d(TAG, "Tabular prediction: " + tabularPrediction);
 
-            // Perform inference using VGG-19 model
             if (xRayImage == null) {
                 Log.e(TAG, "No image selected.");
                 textViewResult.setText("Please select an image.");
@@ -173,24 +157,16 @@ public class MainActivity extends AppCompatActivity {
             float imagePrediction = predictImageModel(xRayImage);
             Log.d(TAG, "Image prediction: " + imagePrediction);
 
-            // Combine predictions using confidence score
-            float finalConfidenceScore = (tabularPrediction + imagePrediction) / 2;
-            String resultText = "The anticipated rate of osteoporosis occurrence is currently: " + (finalConfidenceScore * 100) + "%";
+            finalConfidenceScore = (tabularPrediction + imagePrediction) / 2;
+            String resultText = "The anticipated rate of osteoporosis occurrence is currently: " + String.format("%.2f", finalConfidenceScore * 100) + "%";
             textViewResult.setText(resultText);
 
-            // Update individual predictions
-            String imagePredictionText = "Prediction of Image Data: " + (imagePrediction * 100) + "%";
-            String tabularPredictionText = "Prediction of Tabular Data: " + (tabularPrediction * 100) + "%";
+            imagePredictionText = "Image Data Prediction: " + (imagePrediction > 0.5 ? "Osteoporosis" : "Normal");
+            tabularPredictionText = "Tabular Data Prediction: " + (tabularPrediction > 0.5 ? "Osteoporosis" : "Normal");
             textViewImagePrediction.setText(imagePredictionText);
             textViewTabularPrediction.setText(tabularPredictionText);
 
-            // Update progress bar
             progressBarResult.setProgress((int) (finalConfidenceScore * 100));
-
-            // Store these values for saving to database
-            this.finalConfidenceScore = finalConfidenceScore;
-            this.imagePredictionText = imagePredictionText;
-            this.tabularPredictionText = tabularPredictionText;
 
             predictionMade = true;
 
@@ -199,6 +175,23 @@ public class MainActivity extends AppCompatActivity {
             textViewResult.setText("Error in prediction.");
             predictionMade = false;
         }
+    }
+
+    private float[] extractTabularInput() {
+        float[] tabularInput = new float[12];
+        tabularInput[0] = Float.parseFloat(editTextAge.getText().toString());
+        tabularInput[1] = spinnerBodyWeight.getSelectedItemPosition();
+        tabularInput[2] = spinnerSmoking.getSelectedItemPosition();
+        tabularInput[3] = spinnerMedications.getSelectedItemPosition();
+        tabularInput[4] = spinnerHormonalChanges.getSelectedItemPosition();
+        tabularInput[5] = spinnerFamilyHistory.getSelectedItemPosition();
+        tabularInput[6] = spinnerCalciumIntake.getSelectedItemPosition();
+        tabularInput[7] = spinnerVitaminDIntake.getSelectedItemPosition();
+        tabularInput[8] = spinnerPhysicalActivity.getSelectedItemPosition();
+        tabularInput[9] = spinnerAlcoholConsumption.getSelectedItemPosition();
+        tabularInput[10] = spinnerMedicalConditions.getSelectedItemPosition();
+        tabularInput[11] = spinnerPriorFractures.getSelectedItemPosition();
+        return tabularInput;
     }
 
     private float predictTabularModel(float[] inputFeatures) {
@@ -210,9 +203,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private float predictImageModel(Bitmap bitmap) {
-        // Preprocess the image manually
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true);
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * 224 * 224 * 3);
+        byteBuffer.order(ByteOrder.nativeOrder());
         byteBuffer.rewind();
 
         int[] intValues = new int[224 * 224];
@@ -224,10 +217,10 @@ public class MainActivity extends AppCompatActivity {
             byteBuffer.putFloat((pixel & 0xFF) / 255.0f);
         }
 
-        // Prepare input buffer and output buffer
-        float[][] outputBuffer = new float[1][2]; // Adjusted for the shape returned by the VGG-19 model
+        float[][] outputBuffer = new float[1][2];
         tfliteVGG19.run(byteBuffer, outputBuffer);
-        return outputBuffer[0][1]; // Assuming the positive class (osteoporosis) is at index 1
+
+        return outputBuffer[0][1];
     }
 
     private void saveData() {
@@ -238,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
         if (xRayImage != null) {
             xrayImagePath = saveImageToInternalStorage(xRayImage);
         }
-
 
         if (name.isEmpty() || email.isEmpty() || age.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
@@ -257,18 +249,19 @@ public class MainActivity extends AppCompatActivity {
         int medicalConditions = spinnerMedicalConditions.getSelectedItemPosition();
         int priorFractures = spinnerPriorFractures.getSelectedItemPosition();
 
-       // boolean hasPrediction = !textViewResult.getText().toString().isEmpty();
         String result = predictionMade ? textViewResult.getText().toString() : "";
-        String tabularPredictionText = predictionMade ? this.tabularPredictionText : "";
-        String imagePredictionText = predictionMade ? this.imagePredictionText : "";
+        String tabularPredictionValue = predictionMade ? this.tabularPredictionText : "";
+        String imagePredictionValue = predictionMade ? this.imagePredictionText : "";
         float finalConfidenceScore = predictionMade ? this.finalConfidenceScore : 0f;
 
-        // Save data to database
-        db.insertPredictionData(name, email, age, tabularPredictionText, imagePredictionText, result, medications, hormonalChanges, familyHistory,
+
+        db.insertPredictionData(name, email, age, tabularPredictionValue, imagePredictionValue, result, medications, hormonalChanges, familyHistory,
                 bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore, predictionMade);
         Log.d(TAG, "Data saved. Prediction made: " + predictionMade);
         Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
 
+        Intent intent = new Intent(MainActivity.this, TabularActivity.class);
+        startActivity(intent);
         clearInputFields();
     }
 
@@ -287,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerAlcoholConsumption.setSelection(0);
         spinnerMedicalConditions.setSelection(0);
         spinnerPriorFractures.setSelection(0);
-        imageView.setImageResource(R.drawable.about); // Set a placeholder image
+        imageView.setImageResource(R.drawable.about);
         xRayImage = null;
         textViewResult.setText("");
         textViewImagePrediction.setText("");
@@ -295,8 +288,8 @@ public class MainActivity extends AppCompatActivity {
         progressBarResult.setProgress(0);
         predictionMade = false;
     }
+
     private String saveImageToInternalStorage(Bitmap bitmap) {
-        // Create a file to save the image
         File directory = getApplicationContext().getFilesDir();
         String fileName = "xray_" + System.currentTimeMillis() + ".png";
         File file = new File(directory, fileName);
@@ -312,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
 
         return file.getAbsolutePath();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.osteoporosis_detection.data.DatabaseHelper;
@@ -28,6 +30,8 @@ public class TabularActivity extends AppCompatActivity {
     private ArrayList<String> originalPatientList;
     private ArrayList<Integer> originalPatientIds;
     private ArrayAdapter<String> adapter;
+    private ActivityResultLauncher<Intent> editPatientLauncher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,30 @@ public class TabularActivity extends AppCompatActivity {
         setupSearchView();
     }
 
+    private void setupEditPatientLauncher() {
+        editPatientLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        refreshPatientData();
+                    }
+                }
+        );
+    }
+
+    private void refreshPatientData() {
+        patientList.clear();
+        patientIds.clear();
+        originalPatientList.clear();
+        originalPatientIds.clear();
+        loadPatientData();
+        adapter.notifyDataSetChanged();
+    }
+
+    protected void onResume() {
+        super.onResume();
+        refreshPatientData();
+    }
     private void loadPatientData() {
         Cursor cursor = null;
         try {
@@ -104,8 +132,12 @@ public class TabularActivity extends AppCompatActivity {
             Toast.makeText(this, "No patients found.", Toast.LENGTH_SHORT).show();
         }
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, patientList);
-        listViewPatients.setAdapter(adapter);
+        if (adapter == null) {
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, patientList);
+            listViewPatients.setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void setupSearchView() {
