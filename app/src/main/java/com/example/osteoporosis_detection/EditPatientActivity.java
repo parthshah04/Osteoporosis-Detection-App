@@ -1,6 +1,7 @@
 package com.example.osteoporosis_detection;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,32 +13,34 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
-import android.content.res.AssetFileDescriptor;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.osteoporosis_detection.data.DatabaseHelper;
+
 import org.tensorflow.lite.Interpreter;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Objects;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.osteoporosis_detection.data.DatabaseHelper;
 
 public class EditPatientActivity extends AppCompatActivity {
 
@@ -48,7 +51,7 @@ public class EditPatientActivity extends AppCompatActivity {
             spinnerBodyWeight, spinnerCalciumIntake, spinnerVitaminDIntake,
             spinnerPhysicalActivity, spinnerSmoking, spinnerAlcoholConsumption,
             spinnerMedicalConditions, spinnerPriorFractures;
-    private Button buttonSave, buttonCancel, buttonPredict, buttonSelectImage;
+    private Button buttonSave, buttonCancel, buttonPredict, buttonSelectImage, buttonDelete;;
     private ImageView imageViewXray;
     private TextView textViewResult, textViewImagePrediction, textViewTabularPrediction, textViewNoPrediction;
     private ProgressBar progressBarResult;
@@ -97,6 +100,7 @@ public class EditPatientActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(v -> savePatientData());
         buttonCancel.setOnClickListener(v -> finish());
         buttonSelectImage.setOnClickListener(v -> openImagePicker());
+        buttonDelete.setOnClickListener(v -> confirmDelete());
     }
 
     private void initializeViews() {
@@ -124,6 +128,7 @@ public class EditPatientActivity extends AppCompatActivity {
         textViewTabularPrediction = findViewById(R.id.textViewTabularPrediction);
         textViewNoPrediction = findViewById(R.id.textViewNoPrediction);
         progressBarResult = findViewById(R.id.progressBarResult);
+        buttonDelete = findViewById(R.id.buttonDelete);
     }
 
     private void setupSpinners() {
@@ -156,7 +161,7 @@ public class EditPatientActivity extends AppCompatActivity {
                         try {
                             xRayImage = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
                             imageViewXray.setImageBitmap(xRayImage);
-                            xrayImagePath = getRealPathFromURI(selectedImageUri);
+                            xrayImagePath = copyImageToPrivateStorage(selectedImageUri);
                             checkForChanges();
                             Log.d(TAG, "New image selected. Path: " + xrayImagePath);
                         } catch (Exception e) {
@@ -166,6 +171,23 @@ public class EditPatientActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private String copyImageToPrivateStorage(Uri sourceUri) throws IOException {
+        InputStream inputStream = getContentResolver().openInputStream(sourceUri);
+        String fileName = "xray_" + System.currentTimeMillis() + ".jpg";
+        File destFile = new File(getFilesDir(), fileName);
+
+        try (FileOutputStream outputStream = new FileOutputStream(destFile)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+        }
+
+        inputStream.close();
+        return destFile.getAbsolutePath();
     }
 
     private void openImagePicker() {
@@ -480,6 +502,32 @@ public class EditPatientActivity extends AppCompatActivity {
         String path = cursor.getString(column_index);
         cursor.close();
         return path;
+    }
+
+    private void confirmDelete() {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Patient")
+                .setMessage("Are you sure you want to delete this patient? This action cannot be undone.")
+                .setPositiveButton("Delete", (dialog, which) -> deletePatient())
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+    private void deletePatient() {
+        boolean deleted = db.deletePatient(patientId);
+        if (deleted) {
+            Toast.makeText(this, "Patient deleted successfully", Toast.LENGTH_SHORT).show();
+            // Delete the associated X-ray image if it exists
+            if (xrayImagePath != null && !xrayImagePath.isEmpty()) {
+                File imageFile = new File(xrayImagePath);
+                if (imageFile.exists()) {
+                    imageFile.delete();
+                }
+            }
+            setResult(RESULT_OK);  // Set the result to OK
+            finish();
+        } else {
+            Toast.makeText(this, "Failed to delete patient", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
