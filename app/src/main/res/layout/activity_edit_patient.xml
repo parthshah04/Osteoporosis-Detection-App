@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F0F0F0"
+    tools:context=".EditPatientActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,231 +13,369 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <EditText
-            android:id="@+id/editTextName"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name" />
+            android:text="Edit Patient Information"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="16dp"/>
 
-        <EditText
-            android:id="@+id/editTextEmail"
+        <!-- Name Input -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email" />
+            android:hint="Name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/editTextAge"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Email Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Age Input -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Age"
-            android:inputType="number" />
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Medications Input -->
         <TextView
+            android:id="@+id/textViewMedicationsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="X-Ray Image"
-            android:layout_marginTop="16dp"/>
+            android:text="Medications"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerMedications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/medications_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Hormonal Changes Input -->
+        <TextView
+            android:id="@+id/textViewHormonalChangesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hormonal Changes"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerHormonalChanges"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/hormonal_changes_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Family History Input -->
+        <TextView
+            android:id="@+id/textViewFamilyHistoryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Family History"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerFamilyHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/family_history_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Body Weight Input -->
+        <TextView
+            android:id="@+id/textViewBodyWeightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Body Weight"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerBodyWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/body_weight_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Calcium Intake Input -->
+        <TextView
+            android:id="@+id/textViewCalciumIntakeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calcium Intake"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerCalciumIntake"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/calcium_intake_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Vitamin D Intake Input -->
+        <TextView
+            android:id="@+id/textViewVitaminDIntakeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vitamin-D Intake"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerVitaminDIntake"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/vitamin_d_intake_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Physical Activity Input -->
+        <TextView
+            android:id="@+id/textViewPhysicalActivityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Physical Activity"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerPhysicalActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/physical_activity_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Smoking Input -->
+        <TextView
+            android:id="@+id/textViewSmokingLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Smoking"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerSmoking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/smoking_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Alcohol Consumption Input -->
+        <TextView
+            android:id="@+id/textViewAlcoholConsumptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alcohol Consumption"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerAlcoholConsumption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/alcohol_consumption_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Medical Conditions Input -->
+        <TextView
+            android:id="@+id/textViewMedicalConditionsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medical Conditions"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerMedicalConditions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/medical_conditions_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Prior Fractures Input -->
+        <TextView
+            android:id="@+id/textViewPriorFracturesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prior Fractures"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerPriorFractures"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/prior_fractures_options"
+            android:padding="12dp"
+            android:background="@drawable/spinner_background"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- X-ray Image Upload -->
+        <Button
+            android:id="@+id/buttonSelectImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select X-ray Image"
+            android:backgroundTint="#4CAF50"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
 
         <ImageView
             android:id="@+id/imageViewXray"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="centerInside"
-            android:background="#EEEEEE"
-            android:contentDescription="X-Ray Image"/>
-
-        <Button
-            android:id="@+id/buttonSelectImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select X-Ray Image"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Medications" />
-
-        <Spinner
-            android:id="@+id/spinnerMedications"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hormonal Changes" />
-
-        <Spinner
-            android:id="@+id/spinnerHormonalChanges"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Family History" />
-
-        <Spinner
-            android:id="@+id/spinnerFamilyHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Body Weight" />
-
-        <Spinner
-            android:id="@+id/spinnerBodyWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Calcium Intake" />
-
-        <Spinner
-            android:id="@+id/spinnerCalciumIntake"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vitamin D Intake" />
-
-        <Spinner
-            android:id="@+id/spinnerVitaminDIntake"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Physical Activity" />
-
-        <Spinner
-            android:id="@+id/spinnerPhysicalActivity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Smoking" />
-
-        <Spinner
-            android:id="@+id/spinnerSmoking"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Alcohol Consumption" />
-
-        <Spinner
-            android:id="@+id/spinnerAlcoholConsumption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Medical Conditions" />
-
-        <Spinner
-            android:id="@+id/spinnerMedicalConditions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Prior Fractures" />
-
-        <Spinner
-            android:id="@+id/spinnerPriorFractures"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-
+            android:contentDescription="Uploaded Image"
+            android:scaleType="centerCrop"
+            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="16dp"/>
 
         <Button
             android:id="@+id/buttonPredict"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerPriorFractures"
-            android:text="Make Prediction"/>
+            android:text="Prognosticate"
+            android:backgroundTint="#2196F3"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp"/>
 
-        <TextView
-            android:id="@+id/textViewNoPrediction"
-            android:layout_width="wrap_content"
+        <!-- Save button -->
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonPredict"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="No prediction has been made yet."
-            android:textSize="18sp"
-            android:visibility="gone" />
+            android:text="Save Changes"
+            android:backgroundTint="#FF9800"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Delete button -->
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Patient"
+            android:backgroundTint="#F44336"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Cancel button -->
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:backgroundTint="#9E9E9E"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Result Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prediction Results"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/textViewResult"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonPredict"/>
-
+            android:text="The anticipated rate of osteoporosis occurrence is currently:"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/textViewImagePrediction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prediction of Image Data:"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/textViewTabularPrediction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prediction of Tabular Data:"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
 
+        <TextView
+            android:id="@+id/textViewNoPrediction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No prediction has been made yet."
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"/>
+
+        <!-- Circular Progress Bar -->
         <ProgressBar
             android:id="@+id/progressBarResult"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="100" />
-
-
-        <TextView
-            android:id="@+id/textViewSavedImagePrediction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/textViewSavedTabularPrediction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Update" />
-        <Button
-            android:id="@+id/buttonDelete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Delete"
-            android:backgroundTint="#FF0000"
-            android:layout_marginTop="16dp"/>
-
-        <Button
-            android:id="@+id/buttonCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/circular_progress"/>
 
     </LinearLayout>
 </ScrollView>

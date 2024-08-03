@@ -22,61 +22,50 @@
             android:textColor="#333333"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Name Input-->
-        <TextView
-            android:id="@+id/textViewNameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
-
-        <EditText
-            android:id="@+id/editTextName"
+        <!-- Name Input -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter patient's name"
-            android:padding="12dp"
-            android:background="@android:color/white"
-            android:layout_marginBottom="16dp"/>
+            android:hint="Name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Email Input -->
-        <TextView
-            android:id="@+id/textViewEmailLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
-
-        <EditText
-            android:id="@+id/editTextEmail"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter patient's email"
-            android:inputType="textEmailAddress"
-            android:padding="12dp"
-            android:background="@android:color/white"
-            android:layout_marginBottom="16dp"/>
+            android:hint="Email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Age Input -->
-        <TextView
-            android:id="@+id/textViewAgeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Age"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
-
-        <EditText
-            android:id="@+id/editTextAge"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter patient's age"
-            android:inputType="number"
-            android:padding="12dp"
-            android:background="@android:color/white"
-            android:layout_marginBottom="16dp"/>
+            android:hint="Age"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Medications Input -->
         <TextView

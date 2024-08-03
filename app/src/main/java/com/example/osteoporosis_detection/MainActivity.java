@@ -3,9 +3,13 @@ package com.example.osteoporosis_detection;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -86,8 +90,57 @@ public class MainActivity extends AppCompatActivity {
         textViewImagePrediction = findViewById(R.id.textViewImagePrediction);
         textViewTabularPrediction = findViewById(R.id.textViewTabularPrediction);
         progressBarResult = findViewById(R.id.progressBarResult);
+
+
+        customizeSpinner(spinnerMedications, R.array.medications_options);
+        customizeSpinner(spinnerHormonalChanges, R.array.hormonal_changes_options);
+        customizeSpinner(spinnerFamilyHistory, R.array.family_history_options);
+        customizeSpinner(spinnerBodyWeight, R.array.body_weight_options);
+        customizeSpinner(spinnerCalciumIntake, R.array.calcium_intake_options);
+        customizeSpinner(spinnerVitaminDIntake, R.array.vitamin_d_intake_options);
+        customizeSpinner(spinnerPhysicalActivity, R.array.physical_activity_options);
+        customizeSpinner(spinnerSmoking, R.array.smoking_options);
+        customizeSpinner(spinnerAlcoholConsumption, R.array.alcohol_consumption_options);
+        customizeSpinner(spinnerMedicalConditions, R.array.medical_conditions_options);
+        customizeSpinner(spinnerPriorFractures, R.array.prior_fractures_options);
     }
 
+    private void customizeSpinner(Spinner spinner, int arrayResourceId) {
+        // Create a custom ArrayAdapter
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this,
+                R.layout.spinner_item, getResources().getStringArray(arrayResourceId)) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                if (view instanceof TextView) {
+                    ((TextView) view).setTextColor(Color.BLACK);
+                    ((TextView) view).setTextSize(16);
+                    ((TextView) view).setPadding(20, 20, 20, 20);
+                }
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                if (view instanceof TextView) {
+                    ((TextView) view).setTextColor(Color.BLACK);
+                    ((TextView) view).setTextSize(16);
+                    ((TextView) view).setPadding(20, 20, 20, 20);
+                }
+                return view;
+            }
+        };
+
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        // Set custom background
+        spinner.setBackground(getResources().getDrawable(R.drawable.spinner_background, getTheme()));
+
+        // Set custom padding
+        spinner.setPadding(20, 20, 20, 20);
+    }
     private void setupListeners() {
         buttonSelectImage.setOnClickListener(v -> selectImage());
         buttonPredict.setOnClickListener(v -> makePrediction());
@@ -264,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         clearInputFields();
     }
+
 
     private void clearInputFields() {
         editTextName.setText("");
