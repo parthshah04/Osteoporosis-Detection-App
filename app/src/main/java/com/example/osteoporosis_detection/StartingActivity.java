@@ -107,7 +107,6 @@ public class StartingActivity extends AppCompatActivity {
                 }
                 return false;
             });
-
             popup.show();
         });
     }

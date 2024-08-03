@@ -13,25 +13,25 @@
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name" />
+            android:hint="@string/name" />
 
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email" />
+            android:hint="@string/email" />
 
         <EditText
             android:id="@+id/editTextAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Age"
+            android:hint="@string/age"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="X-Ray Image"
+            android:text="@string/x_ray_image"
             android:layout_marginTop="16dp"/>
 
         <ImageView
@@ -46,13 +46,13 @@
             android:id="@+id/buttonSelectImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select X-Ray Image"
+            android:text="@string/select_x_ray_image"
             android:layout_marginTop="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medications" />
+            android:text="@string/medications" />
 
         <Spinner
             android:id="@+id/spinnerMedications"
@@ -62,7 +62,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hormonal Changes" />
+            android:text="@string/hormonal_changes" />
 
         <Spinner
             android:id="@+id/spinnerHormonalChanges"
@@ -72,7 +72,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Family History" />
+            android:text="@string/family_history" />
 
         <Spinner
             android:id="@+id/spinnerFamilyHistory"
@@ -82,7 +82,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Body Weight" />
+            android:text="@string/body_weight" />
 
         <Spinner
             android:id="@+id/spinnerBodyWeight"
@@ -92,7 +92,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Calcium Intake" />
+            android:text="@string/calcium_intake" />
 
         <Spinner
             android:id="@+id/spinnerCalciumIntake"
@@ -102,7 +102,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vitamin D Intake" />
+            android:text="@string/vitamin_d_intake" />
 
         <Spinner
             android:id="@+id/spinnerVitaminDIntake"
@@ -112,7 +112,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Physical Activity" />
+            android:text="@string/physical_activity" />
 
         <Spinner
             android:id="@+id/spinnerPhysicalActivity"
@@ -122,7 +122,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Smoking" />
+            android:text="@string/smoking" />
 
         <Spinner
             android:id="@+id/spinnerSmoking"
@@ -132,7 +132,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alcohol Consumption" />
+            android:text="@string/alcohol_consumption" />
 
         <Spinner
             android:id="@+id/spinnerAlcoholConsumption"
@@ -142,7 +142,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medical Conditions" />
+            android:text="@string/medical_conditions" />
 
         <Spinner
             android:id="@+id/spinnerMedicalConditions"
@@ -152,7 +152,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prior Fractures" />
+            android:text="@string/prior_fractures" />
 
         <Spinner
             android:id="@+id/spinnerPriorFractures"
@@ -167,7 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/spinnerPriorFractures"
-            android:text="Make Prediction"/>
+            android:text="@string/make_prediction"/>
 
         <TextView
             android:id="@+id/textViewNoPrediction"
@@ -176,7 +176,7 @@
             android:layout_below="@id/buttonPredict"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:text="No prediction has been made yet."
+            android:text="@string/no_prediction_desc"
             android:textSize="18sp"
             android:visibility="gone" />
 
@@ -220,12 +220,12 @@
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Update" />
+            android:text="@string/update" />
         <Button
             android:id="@+id/buttonDelete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="@string/delete"
             android:backgroundTint="#FF0000"
             android:layout_marginTop="16dp"/>
 
@@ -233,7 +233,7 @@
             android:id="@+id/buttonCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:text="@string/cancel" />
 
     </LinearLayout>
 </ScrollView>

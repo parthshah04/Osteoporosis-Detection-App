@@ -10,7 +10,7 @@
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search patients"
+        android:queryHint="@string/search_patients"
         android:iconifiedByDefault="false"
         android:layout_marginBottom="16dp"/>
 
@@ -24,7 +24,7 @@
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add New Patient"
+        android:text="@string/add_new_patient"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp" />
 

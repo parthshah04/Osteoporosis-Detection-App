@@ -1,232 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#CDE8E5">
 
-        <!-- Header with title and menu -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+    <!-- Header with title and menu -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FFFFFF"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textColor="#333333"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/menuIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⋮"
+            android:textSize="24sp"
+            android:textColor="#333333"
+            android:layout_gravity="end"
+            android:padding="16dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:scrollbars="none">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#FFFFFF"
-            android:elevation="4dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Settings"
-                android:textColor="#333333"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:id="@+id/menuIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="⋮"
-                android:textSize="24sp"
-                android:textColor="#333333"
-                android:layout_gravity="end"
-                android:padding="16dp" />
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:scrollbars="none">
+                android:text="@string/display_and_theme"
+                android:textSize="14sp"
+                android:textColor="#808080"
+                android:paddingBottom="8dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Display and Theme"
-                    android:textSize="14sp"
-                    android:textColor="#808080"
-                    android:paddingBottom="8dp" />
+                android:orientation="horizontal"
+                android:background="@drawable/settings_card_background"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@drawable/settings_card_background"
-                    android:padding="16dp"
-                    android:layout_marginBottom="16dp">
+                    android:layout_width="0dp"
+                    android:layout_height="220dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="220dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="140dp"
+                        android:layout_height="150dp"
+                        android:contentDescription="Light Mode Image"
+                        android:src="@drawable/ic_light" />
 
-                        <ImageView
-                            android:layout_width="140dp"
-                            android:layout_height="150dp"
-                            android:contentDescription="Light Mode Image"
-                            android:src="@drawable/ic_light" />
-
-                        <RadioButton
-                            android:id="@+id/radio_light_mode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:text="Light mode"
-                            android:textColor="#000000" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="220dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="140dp"
-                            android:layout_height="150dp"
-                            android:contentDescription="Dark Mode Image"
-                            android:src="@drawable/ic_dark" />
-
-                        <RadioButton
-                            android:id="@+id/radio_dark_mode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:text="Dark mode"
-                            android:textColor="#000000" />
-                    </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/radio_light_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/light_mode"
+                        android:textColor="#000000" />
                 </LinearLayout>
-
-                <!-- About Device Section -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="About device"
-                    android:textSize="14sp"
-                    android:textColor="#808080"
-                    android:paddingBottom="8dp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/settings_card_background"
-                    android:padding="16dp"
-                    android:layout_marginBottom="16dp">
+                    android:layout_width="0dp"
+                    android:layout_height="220dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="34dp"
-                        android:layout_marginBottom="0dp"
-                        android:paddingStart="0dp"
-                        android:text="Osteo Vision"
-                        android:textColor="#000000"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="140dp"
+                        android:layout_height="150dp"
+                        android:contentDescription="Dark Mode Image"
+                        android:src="@drawable/ic_dark" />
 
-                    <TextView
+                    <RadioButton
+                        android:id="@+id/radio_dark_mode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Android version - 1.0"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
-                        android:paddingStart="0dp"
-                        android:layout_marginBottom="0dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Academic Project - Masters of Applied Computing"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
-                        android:paddingStart="0dp" />
+                        android:layout_marginTop="16dp"
+                        android:text="@string/dark_mode"
+                        android:textColor="#000000" />
                 </LinearLayout>
-
-                <!-- No title section with two equally divided blocks -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:layout_marginBottom="16dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:background="@drawable/settings_card_background"
-                        android:layout_marginEnd="8dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_pen"
-                            android:contentDescription="Subject icon"
-                            android:layout_gravity="start" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Subject"
-                            android:textColor="#000000"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:paddingTop="8dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Android Appl. Prog."
-                            android:textColor="#808080"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:background="@drawable/settings_card_background">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_university"
-                            android:contentDescription="WLU icon"
-                            android:layout_gravity="start" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Institution"
-                            android:textColor="#000000"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:paddingTop="8dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Wilfrid Laurier University"
-                            android:textColor="#808080"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+
+            <!-- About Device Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_device"
+                android:textSize="14sp"
+                android:textColor="#808080"
+                android:paddingBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/settings_card_background"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginBottom="0dp"
+                    android:paddingStart="0dp"
+                    android:text="@string/osteo_vision"
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/android_version"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:paddingStart="0dp"
+                    android:layout_marginBottom="0dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_description"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:paddingStart="0dp" />
+            </LinearLayout>
+
+            <!-- No title section with two equally divided blocks -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="@drawable/settings_card_background"
+                    android:layout_marginEnd="8dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_pen"
+                        android:contentDescription="Subject icon"
+                        android:layout_gravity="start" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/subject"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:paddingTop="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/setting_subject_desc"
+                        android:textColor="#808080"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="@drawable/settings_card_background">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_university"
+                        android:contentDescription="WLU icon"
+                        android:layout_gravity="start" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/institution"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:paddingTop="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wilfrid_laurier_university"
+                        android:textColor="#808080"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

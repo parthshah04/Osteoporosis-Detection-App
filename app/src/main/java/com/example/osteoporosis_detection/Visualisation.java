@@ -53,17 +53,17 @@ public class Visualisation extends AppCompatActivity {
             displayOsteoporosisDistribution();
         } catch (Exception e) {
             Log.e(TAG, "Error in onCreate: ", e);
-            showErrorMessage("An error occurred while initializing the visualization.");
+            showErrorMessage(getString(R.string.error_visualisation_message));
         }
     }
 
     private void displayTotalPatients() {
         try {
             int totalPatients = db.getTotalPatients();
-            totalPatientsTextView.setText("Total Patients: " + totalPatients);
+            totalPatientsTextView.setText(getString(R.string.total_patients) + totalPatients);
         } catch (Exception e) {
             Log.e(TAG, "Error in displayTotalPatients: ", e);
-            showErrorMessage("Failed to display total patients.");
+            showErrorMessage(getString(R.string.failed_to_display_total_patients));
         }
     }
 
@@ -78,7 +78,7 @@ public class Visualisation extends AppCompatActivity {
                 entries.add(new BarEntry(i, count));
             }
 
-            BarDataSet dataSet = new BarDataSet(entries, "Age Groups");
+            BarDataSet dataSet = new BarDataSet(entries, getString(R.string.age_groups));
             dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
 
             BarData barData = new BarData(dataSet);
@@ -128,11 +128,11 @@ public class Visualisation extends AppCompatActivity {
 
             // Set chart title
             TextView ageChartTitle = findViewById(R.id.ageChartTitle);
-            ageChartTitle.setText("Age Group Distribution");
+            ageChartTitle.setText(R.string.age_group_distribution);
             ageChartTitle.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             Log.e(TAG, "Error in displayAgeGroupDistribution: ", e);
-            showErrorMessage("Failed to display age group distribution.");
+            showErrorMessage(getString(R.string.failed_to_display_age_group_distribution));
         }
     }
 
@@ -142,19 +142,19 @@ public class Visualisation extends AppCompatActivity {
             int[] counts = db.getOsteoporosisCountBasedOnAverage(threshold);
 
             if (counts[0] == 0 && counts[1] == 0) {
-                showErrorMessage("No data available for osteoporosis distribution.");
+                showErrorMessage(getString(R.string.no_data_available_for_osteoporosis_distribution));
                 return;
             }
 
             List<PieEntry> entries = new ArrayList<>();
             if (counts[0] > 0) {
-                entries.add(new PieEntry(counts[0], "Without Osteoporosis"));
+                entries.add(new PieEntry(counts[0], getString(R.string.without_osteoporosis)));
             }
             if (counts[1] > 0) {
-                entries.add(new PieEntry(counts[1], "With Osteoporosis"));
+                entries.add(new PieEntry(counts[1], getString(R.string.with_osteoporosis)));
             }
 
-            PieDataSet dataSet = new PieDataSet(entries, "Osteoporosis Distribution");
+            PieDataSet dataSet = new PieDataSet(entries, getString(R.string.osteoporosis_distribution));
             dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
             dataSet.setValueTextSize(14f);
 
@@ -165,7 +165,7 @@ public class Visualisation extends AppCompatActivity {
             osteoporosisPieChart.setUsePercentValues(true);
             osteoporosisPieChart.getDescription().setEnabled(false);
             osteoporosisPieChart.setEntryLabelTextSize(14f);
-            osteoporosisPieChart.setCenterText("Osteoporosis\nDistribution");
+            osteoporosisPieChart.setCenterText(getString(R.string.osteoporosis_distribution_space));
             osteoporosisPieChart.setCenterTextSize(18f);
             osteoporosisPieChart.setHoleRadius(40f);
             osteoporosisPieChart.setTransparentCircleRadius(45f);
@@ -175,12 +175,12 @@ public class Visualisation extends AppCompatActivity {
 
             // Set chart title
             TextView pieChartTitle = findViewById(R.id.pieChartTitle);
-            pieChartTitle.setText("Osteoporosis Distribution");
+            pieChartTitle.setText(R.string.osteoporosis_distribution);
             pieChartTitle.setVisibility(View.VISIBLE);
 
         } catch (Exception e) {
             Log.e(TAG, "Error in displayOsteoporosisDistribution: " + e.getMessage(), e);
-            showErrorMessage("Failed to display osteoporosis distribution.");
+            showErrorMessage(getString(R.string.failed_to_display_osteoporosis_distribution));
         }
     }
 
