@@ -11,7 +11,10 @@
     <color name="selectedColor">#007AFF</color>
     <color name="unselectedColor">#808080</color>
 
-    <!-- Add these lines -->
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
+
+    <!-- Bottom Navigation Colors -->
+    <color name="bottomNavSelected">#6750A4</color>
+    <color name="bottomNavUnselected">#79747E</color>
 </resources>
