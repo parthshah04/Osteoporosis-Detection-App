@@ -99,7 +99,7 @@
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Prediction"
+                android:contentDescription="Patients"
                 android:padding="8dp"
                 android:src="@drawable/prediction" />
 

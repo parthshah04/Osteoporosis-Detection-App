@@ -88,7 +88,7 @@ public class EditPatientActivity extends AppCompatActivity {
         patientId = getIntent().getIntExtra("PATIENT_ID", -1);
         if (patientId == -1) {
             Log.e(TAG, "Invalid patient ID received");
-            Toast.makeText(EditPatientActivity.this, R.string.error_patient_not_found, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error: Patient not found", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -166,7 +166,7 @@ public class EditPatientActivity extends AppCompatActivity {
                             Log.d(TAG, "New image selected. Path: " + xrayImagePath);
                         } catch (Exception e) {
                             Log.e(TAG, "Error loading image: ", e);
-                            Toast.makeText(EditPatientActivity.this, R.string.failed_to_load_image, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -217,12 +217,12 @@ public class EditPatientActivity extends AppCompatActivity {
         try {
             if (tfliteTabular == null || tfliteVGG19 == null) {
                 Log.e(TAG, "Models not loaded.");
-                textViewResult.setText(R.string.error_models_not_loaded);
+                textViewResult.setText("Error: Models not loaded.");
                 return;
             }
 
             if (editTextAge.getText().toString().isEmpty()) {
-                textViewResult.setText(R.string.please_enter_age);
+                textViewResult.setText("Please enter age.");
                 return;
             }
 
@@ -232,7 +232,7 @@ public class EditPatientActivity extends AppCompatActivity {
 
             if (xrayImagePath == null || xrayImagePath.isEmpty()) {
                 Log.e(TAG, "No image selected.");
-                textViewResult.setText(R.string.please_select_an_image);
+                textViewResult.setText("Please select an image.");
                 return;
             }
 
@@ -240,11 +240,11 @@ public class EditPatientActivity extends AppCompatActivity {
             Log.d(TAG, "Image prediction: " + imagePrediction);
 
             float finalConfidenceScore = (tabularPrediction + imagePrediction) / 2;
-            String resultText = getString(R.string.prediction_desc) + String.format("%.2f", finalConfidenceScore * 100) + "%";
+            String resultText = "The anticipated rate of osteoporosis occurrence is currently: " + String.format("%.2f", finalConfidenceScore * 100) + "%";
             textViewResult.setText(resultText);
 
-            textViewImagePrediction.setText(getString(R.string.prediction_of_image_data) + (imagePrediction > 0.5 ? getString(R.string.osteoporosis) : " Normal"));
-            textViewTabularPrediction.setText(getString(R.string.prediction_of_tabular_data) + (tabularPrediction > 0.5 ? getString(R.string.osteoporosis) : " Normal"));
+            textViewImagePrediction.setText("Image Data Prediction: " + (imagePrediction > 0.5 ? "Osteoporosis" : "Normal"));
+            textViewTabularPrediction.setText("Tabular Data Prediction: " + (tabularPrediction > 0.5 ? "Osteoporosis" : "Normal"));
 
             progressBarResult.setProgress((int) (finalConfidenceScore * 100));
 
@@ -253,7 +253,7 @@ public class EditPatientActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Log.e(TAG, "Error making prediction: ", e);
-            textViewResult.setText(R.string.error_in_prediction + e.getMessage());
+            textViewResult.setText("Error in prediction: " + e.getMessage());
         }
     }
 
@@ -439,15 +439,15 @@ public class EditPatientActivity extends AppCompatActivity {
             textViewTabularPrediction.setVisibility(View.VISIBLE);
             progressBarResult.setVisibility(View.VISIBLE);
             textViewNoPrediction.setVisibility(View.GONE);
-            buttonPredict.setText(R.string.update_prediction);
+            buttonPredict.setText("Update Prediction");
         } else {
             textViewResult.setVisibility(View.GONE);
             textViewImagePrediction.setVisibility(View.GONE);
             textViewTabularPrediction.setVisibility(View.GONE);
             progressBarResult.setVisibility(View.GONE);
             textViewNoPrediction.setVisibility(View.VISIBLE);
-            textViewNoPrediction.setText(R.string.no_prediction_desc);
-            buttonPredict.setText(R.string.make_prediction);
+            textViewNoPrediction.setText("No prediction has been made yet.");
+            buttonPredict.setText("Make Prediction");
         }
     }
 
@@ -457,7 +457,7 @@ public class EditPatientActivity extends AppCompatActivity {
         String age = editTextAge.getText().toString().trim();
 
         if (name.isEmpty() || email.isEmpty() || age.isEmpty()) {
-            Toast.makeText(EditPatientActivity.this, R.string.please_fill_in_all_fields, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -486,10 +486,10 @@ public class EditPatientActivity extends AppCompatActivity {
         );
 
         if (updated) {
-            Toast.makeText(EditPatientActivity.this, R.string.patient_data_updated_successfully, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Patient data updated successfully", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            Toast.makeText(EditPatientActivity.this, R.string.failed_to_update_patient_data, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed to update patient data", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -506,16 +506,16 @@ public class EditPatientActivity extends AppCompatActivity {
 
     private void confirmDelete() {
         new AlertDialog.Builder(this)
-                .setTitle(R.string.delete_patient)
-                .setMessage(R.string.delete_confirmation)
-                .setPositiveButton(R.string.delete, (dialog, which) -> deletePatient())
-                .setNegativeButton(R.string.cancel, null)
+                .setTitle("Delete Patient")
+                .setMessage("Are you sure you want to delete this patient? This action cannot be undone.")
+                .setPositiveButton("Delete", (dialog, which) -> deletePatient())
+                .setNegativeButton("Cancel", null)
                 .show();
     }
     private void deletePatient() {
         boolean deleted = db.deletePatient(patientId);
         if (deleted) {
-            Toast.makeText(EditPatientActivity.this, R.string.patient_deleted_successfully, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Patient deleted successfully", Toast.LENGTH_SHORT).show();
             // Delete the associated X-ray image if it exists
             if (xrayImagePath != null && !xrayImagePath.isEmpty()) {
                 File imageFile = new File(xrayImagePath);
@@ -526,7 +526,7 @@ public class EditPatientActivity extends AppCompatActivity {
             setResult(RESULT_OK);  // Set the result to OK
             finish();
         } else {
-            Toast.makeText(EditPatientActivity.this, R.string.failed_to_delete_patient, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed to delete patient", Toast.LENGTH_SHORT).show();
         }
     }
 
