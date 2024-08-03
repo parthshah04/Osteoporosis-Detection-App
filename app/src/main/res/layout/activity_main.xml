@@ -16,74 +16,63 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/patient_information"
+            android:text="Patient Information"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#333333"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Name Input-->
-        <TextView
-            android:id="@+id/textViewNameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
-
-        <EditText
-            android:id="@+id/editTextName"
+        <!-- Name Input -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_patient_s_name"
-            android:padding="12dp"
-            android:background="@android:color/white"
-            android:layout_marginBottom="16dp"/>
+            android:hint="Name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Email Input -->
-        <TextView
-            android:id="@+id/textViewEmailLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
-
-        <EditText
-            android:id="@+id/editTextEmail"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_patient_s_email"
-            android:inputType="textEmailAddress"
-            android:padding="12dp"
-            android:background="@android:color/white"
-            android:layout_marginBottom="16dp"/>
+            android:hint="Email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Age Input -->
-        <TextView
-            android:id="@+id/textViewAgeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/age"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
-
-        <EditText
-            android:id="@+id/editTextAge"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_patient_s_age"
-            android:inputType="number"
-            android:padding="12dp"
-            android:background="@android:color/white"
-            android:layout_marginBottom="16dp"/>
+            android:hint="Age"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Medications Input -->
         <TextView
             android:id="@+id/textViewMedicationsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/medications"
+            android:text="Medications"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -101,7 +90,7 @@
             android:id="@+id/textViewHormonalChangesLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hormonal_changes"
+            android:text="Hormonal Changes"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -119,7 +108,7 @@
             android:id="@+id/textViewFamilyHistoryLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/family_history"
+            android:text="Family History"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -137,7 +126,7 @@
             android:id="@+id/textViewBodyWeightLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/body_weight"
+            android:text="Body Weight"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -155,7 +144,7 @@
             android:id="@+id/textViewCalciumIntakeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/calcium_intake"
+            android:text="Calcium Intake"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -173,7 +162,7 @@
             android:id="@+id/textViewVitaminDIntakeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/vitamin_d_intake"
+            android:text="Vitamin-D Intake"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -191,7 +180,7 @@
             android:id="@+id/textViewPhysicalActivityLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/physical_activity"
+            android:text="Physical Activity"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -209,7 +198,7 @@
             android:id="@+id/textViewSmokingLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/smoking"
+            android:text="Smoking"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -227,7 +216,7 @@
             android:id="@+id/textViewAlcoholConsumptionLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/alcohol_consumption"
+            android:text="Alcohol Consumption"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -245,7 +234,7 @@
             android:id="@+id/textViewMedicalConditionsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/medical_conditions"
+            android:text="Medical Conditions"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -263,7 +252,7 @@
             android:id="@+id/textViewPriorFracturesLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/prior_fractures"
+            android:text="Prior Fractures"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
 
@@ -281,7 +270,7 @@
             android:id="@+id/buttonSelectImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/select_x_ray_image"
+            android:text="Select X-ray Image"
             android:backgroundTint="#4CAF50"
             android:textColor="@android:color/white"
             android:layout_marginTop="16dp"
@@ -300,7 +289,7 @@
             android:id="@+id/buttonPredict"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prognosticate"
+            android:text="Prognosticate"
             android:backgroundTint="#2196F3"
             android:textColor="@android:color/white"
             android:layout_marginBottom="16dp"/>
@@ -310,7 +299,7 @@
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/save"
+            android:text="Save"
             android:backgroundTint="#FF9800"
             android:textColor="@android:color/white"
             android:layout_marginBottom="24dp"/>
@@ -319,7 +308,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prediction_results"
+            android:text="Prediction Results"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#333333"
@@ -329,7 +318,7 @@
             android:id="@+id/textViewResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prediction_desc"
+            android:text="The anticipated rate of osteoporosis occurrence is currently:"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"/>
 
@@ -337,7 +326,7 @@
             android:id="@+id/textViewImagePrediction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prediction_of_image_data"
+            android:text="Prediction of Image Data:"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"/>
 
@@ -345,7 +334,7 @@
             android:id="@+id/textViewTabularPrediction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prediction_of_tabular_data"
+            android:text="Prediction of Tabular Data:"
             android:textSize="16sp"
             android:layout_marginBottom="16dp"/>
 
