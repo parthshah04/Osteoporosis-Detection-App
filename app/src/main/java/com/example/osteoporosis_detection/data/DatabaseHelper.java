@@ -118,7 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_USERS, null, values);
     }
 
-    public long insertPredictionData(String name, String email, String age, Float tabularPrediction, Float imagePrediction, String result,
+    public void insertPredictionData(String name, String email, String age, String tabularPrediction, String imagePrediction, String result,
                                      int medications, int hormonalChanges, int familyHistory, int bodyWeight, int calciumIntake, int vitaminDIntake,
                                      int physicalActivity, int smoking, int alcoholConsumption, int medicalConditions, int priorFractures,
                                      String xrayImagePath, float finalConfidenceScore, boolean hasPrediction) {
@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(COLUMN_EMAIL, email);
             values.put(COLUMN_AGE, age);
             values.put(COLUMN_TABULAR_PREDICTION, tabularPrediction);
-            values.put(COLUMN_IMAGE_PREDICTION, imagePrediction != null ? imagePrediction : 0f);
+            values.put(COLUMN_IMAGE_PREDICTION, imagePrediction);
             values.put(COLUMN_RESULT, result);
             values.put(COLUMN_MEDICATIONS, medications);
             values.put(COLUMN_HORMONAL_CHANGES, hormonalChanges);
@@ -149,11 +149,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             long newRowId = db.insertOrThrow(TABLE_PREDICTIONS, null, values);
             Log.d(TAG, "New row inserted with ID: " + newRowId);
-            return newRowId;
         } catch (SQLException e) {
             Log.e(TAG, "Error inserting data: " + e.getMessage());
             e.printStackTrace();
-            return -1;
         }
     }
 
@@ -207,11 +205,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean deletePatient(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = COLUMN_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(id)};
-
-        int rowsDeleted = db.delete(TABLE_PREDICTIONS, selection, selectionArgs);
-        return rowsDeleted > 0;
+        String whereClause = COLUMN_ID + " = ?";
+        String[] whereArgs = {String.valueOf(id)};
+        int result = db.delete(TABLE_PREDICTIONS, whereClause, whereArgs);
+        return result > 0;
     }
     public Cursor searchPatients(String query) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -516,4 +513,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         db.update(TABLE_USERS, values, COLUMN_EMAIL + "=?", new String[]{email});
     }
+
 }

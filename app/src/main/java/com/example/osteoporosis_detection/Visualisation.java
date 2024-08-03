@@ -1,6 +1,5 @@
 package com.example.osteoporosis_detection;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +21,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -36,10 +36,6 @@ public class Visualisation extends AppCompatActivity {
     private HorizontalBarChart ageGroupChart;
     private PieChart osteoporosisPieChart;
 
-    private void log(String message) {
-        Log.d(TAG, message);
-        System.out.println(TAG + ": " + message); // This will appear in the Run tab
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,29 +82,54 @@ public class Visualisation extends AppCompatActivity {
             dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
 
             BarData barData = new BarData(dataSet);
+            barData.setValueTextSize(12f);
+            barData.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return String.valueOf((int) value);
+                }
+            });
             ageGroupChart.setData(barData);
 
-            //X -Axis
+            // Y-Axis
             XAxis xAxis = ageGroupChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setDrawGridLines(false);
             xAxis.setGranularity(1f);
             xAxis.setValueFormatter(new IndexAxisValueFormatter(ageGroups));
 
-            //Y -Axis
 
+            // X Axis
             YAxis leftAxis = ageGroupChart.getAxisLeft();
             leftAxis.setDrawGridLines(false);
             leftAxis.setAxisMinimum(0f);
-
+            leftAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return String.valueOf((int) value);
+                }
+            });
+            leftAxis.setDrawLabels(false);
+            leftAxis.setDrawAxisLine(false);
+            // X-Axis
             YAxis rightAxis = ageGroupChart.getAxisRight();
-            rightAxis.setEnabled(false);
+            rightAxis.setEnabled(false);  // This removes the numbers from the top
 
-            ageGroupChart.getDescription().setEnabled(false);
-            ageGroupChart.setDrawValueAboveBar(true);
             ageGroupChart.setFitBars(true);
+            ageGroupChart.getDescription().setEnabled(false);
+            ageGroupChart.getLegend().setEnabled(false);  // Disable legend if not needed
+            ageGroupChart.setDrawValueAboveBar(true);
             ageGroupChart.animateY(1000);
+
+            // Adjust the top padding to remove extra space
+            ageGroupChart.setExtraTopOffset(-30f);
+
             ageGroupChart.invalidate();
+
+            // Set chart title
+            TextView ageChartTitle = findViewById(R.id.ageChartTitle);
+            ageChartTitle.setText("Age Group Distribution");
+            ageChartTitle.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             Log.e(TAG, "Error in displayAgeGroupDistribution: ", e);
             showErrorMessage("Failed to display age group distribution.");
@@ -117,15 +138,10 @@ public class Visualisation extends AppCompatActivity {
 
     private void displayOsteoporosisDistribution() {
         try {
-            float threshold = 0.25f; // 50% threshold
-            log("Using threshold: " + threshold);
-
+            float threshold = 0.75f; // 75% threshold
             int[] counts = db.getOsteoporosisCountBasedOnAverage(threshold);
 
-            log("Received counts - With Osteoporosis: " + counts[1] + ", Without Osteoporosis: " + counts[0]);
-
             if (counts[0] == 0 && counts[1] == 0) {
-                log("No data available for osteoporosis distribution.");
                 showErrorMessage("No data available for osteoporosis distribution.");
                 return;
             }
@@ -133,11 +149,9 @@ public class Visualisation extends AppCompatActivity {
             List<PieEntry> entries = new ArrayList<>();
             if (counts[0] > 0) {
                 entries.add(new PieEntry(counts[0], "Without Osteoporosis"));
-                log("Added entry for without osteoporosis: " + counts[0]);
             }
             if (counts[1] > 0) {
                 entries.add(new PieEntry(counts[1], "With Osteoporosis"));
-                log("Added entry for with osteoporosis: " + counts[1]);
             }
 
             PieDataSet dataSet = new PieDataSet(entries, "Osteoporosis Distribution");
@@ -159,45 +173,17 @@ public class Visualisation extends AppCompatActivity {
             osteoporosisPieChart.getLegend().setEnabled(true);
             osteoporosisPieChart.invalidate();
 
-            log("Pie chart data set: " + entries);
+            // Set chart title
+            TextView pieChartTitle = findViewById(R.id.pieChartTitle);
+            pieChartTitle.setText("Osteoporosis Distribution");
+            pieChartTitle.setVisibility(View.VISIBLE);
 
         } catch (Exception e) {
-            log("Error in displayOsteoporosisDistribution: " + e.getMessage());
-            e.printStackTrace();
+            Log.e(TAG, "Error in displayOsteoporosisDistribution: " + e.getMessage(), e);
             showErrorMessage("Failed to display osteoporosis distribution.");
         }
     }
 
-
-    private void displayIndividualPredictions() {
-        Cursor cursor = null;
-        try {
-            cursor = db.getAllPredictions();
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID));
-                    float finalScore = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FINAL_CONFIDENCE_SCORE));
-                    float imageScore = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_IMAGE_PREDICTION));
-
-                    String finalScoreDisplay = String.format("%.2f%%", finalScore * 100);
-                    String imageScoreDisplay = String.format("%.2f%%", imageScore * 100);
-
-                    Log.d(TAG, "Patient " + id +
-                            " - Final Score: " + finalScoreDisplay +
-                            ", Image Score: " + imageScoreDisplay);
-                } while (cursor.moveToNext());
-            } else {
-                Log.d(TAG, "No prediction data available.");
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error in displayIndividualPredictions: ", e);
-            showErrorMessage("Failed to display individual predictions.");
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-    }
     private void showErrorMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         TextView noDataText = findViewById(R.id.noDataText);

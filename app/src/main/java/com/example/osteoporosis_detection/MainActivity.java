@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.osteoporosis_detection.data.DatabaseHelper;
+
 import org.tensorflow.lite.Interpreter;
 
 import java.io.File;
@@ -27,8 +29,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-
-import com.example.osteoporosis_detection.data.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -250,12 +250,18 @@ public class MainActivity extends AppCompatActivity {
         int priorFractures = spinnerPriorFractures.getSelectedItemPosition();
 
         String result = predictionMade ? textViewResult.getText().toString() : "";
+        String tabularPredictionValue = predictionMade ? this.tabularPredictionText : "";
+        String imagePredictionValue = predictionMade ? this.imagePredictionText : "";
+        float finalConfidenceScore = predictionMade ? this.finalConfidenceScore : 0f;
 
-        db.insertPredictionData(name, email, age, tabularPredictionText, imagePredictionText, result, medications, hormonalChanges, familyHistory,
+
+        db.insertPredictionData(name, email, age, tabularPredictionValue, imagePredictionValue, result, medications, hormonalChanges, familyHistory,
                 bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore, predictionMade);
         Log.d(TAG, "Data saved. Prediction made: " + predictionMade);
         Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
 
+        Intent intent = new Intent(MainActivity.this, TabularActivity.class);
+        startActivity(intent);
         clearInputFields();
     }
 
