@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
             // Load user data
             loadUserData(email);
         } else {
-            Toast.makeText(this, "Error: No email provided", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_no_email_provided, Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -91,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
                 profileImage.setImageBitmap(bitmap);
             }
         } else {
-            Toast.makeText(this, "Error: User not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_user_not_found, Toast.LENGTH_SHORT).show();
         }
         if (cursor != null) {
             cursor.close();
@@ -123,16 +123,16 @@ public class ProfileActivity extends AppCompatActivity {
         byte[] imageBytes = stream.toByteArray();
 
         dbHelper.updateUserProfileImage(email, imageBytes);
-        Toast.makeText(this, "Profile image updated", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ProfileActivity.this, R.string.profile_image_updated, Toast.LENGTH_SHORT).show();
     }
 
     private void updatePassword() {
         String newPassword = profilePassword.getText().toString().trim();
         if (!newPassword.isEmpty()) {
             dbHelper.updateUserPassword(email, newPassword);
-            Toast.makeText(this, "Password updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileActivity.this, R.string.password_updated, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileActivity.this, R.string.password_cannot_be_empty, Toast.LENGTH_SHORT).show();
         }
     }
 }

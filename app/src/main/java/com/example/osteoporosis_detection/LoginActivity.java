@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 String email = s.toString().trim();
                 if (!isValidEmail(email)) {
-                    emailInput.setError("Invalid email format");
+                    emailInput.setError(getString(R.string.invalid_email_format));
                 } else {
                     emailInput.setError(null);
                 }
@@ -79,10 +79,10 @@ public class LoginActivity extends AppCompatActivity {
                     loginUser(email, password);
                 } else {
                     if (!isValidEmail(email)) {
-                        emailInput.setError("Invalid email format");
+                        emailInput.setError(getString(R.string.invalid_email_format));
                     }
                     if (password.isEmpty()) {
-                        passwordInput.setError("Password cannot be empty");
+                        passwordInput.setError(getString(R.string.password_cannot_be_empty));
                     }
                 }
             }
@@ -106,13 +106,13 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("email", email);
             editor.apply();
 
-            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, R.string.login_successful, Toast.LENGTH_SHORT).show();
             // Navigate to StartingActivity after successful login
             navigateToStartingActivity(email);
         } else {
             // User does not exist or invalid credentials
             Log.d(TAG, "Invalid email or password");
-            Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, R.string.invalid_email_or_password, Toast.LENGTH_SHORT).show();
         }
         if (cursor != null) {
             cursor.close();

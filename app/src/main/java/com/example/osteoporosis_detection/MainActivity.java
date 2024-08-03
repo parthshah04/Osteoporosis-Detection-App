@@ -135,13 +135,13 @@ public class MainActivity extends AppCompatActivity {
             // Check if models are loaded
             if (tfliteTabular == null || tfliteVGG19 == null) {
                 Log.e(TAG, "Models not loaded.");
-                textViewResult.setText("Error: Models not loaded.");
+                textViewResult.setText(R.string.error_models_not_loaded);
                 return;
             }
 
             // Check if Age input is empty
             if (editTextAge.getText().toString().isEmpty()) {
-                textViewResult.setText("Please enter age.");
+                textViewResult.setText(R.string.please_enter_age);
                 return;
             }
 
@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
 
             // Perform inference using VGG-19 model
             if (xRayImage == null) {
-                Log.e(TAG, "No image selected.");
-                textViewResult.setText("Please select an image.");
+                Log.e(TAG, getString(R.string.no_image_selected));
+                textViewResult.setText(R.string.please_select_an_image);
                 return;
             }
             float imagePrediction = predictImageModel(xRayImage);
@@ -175,12 +175,12 @@ public class MainActivity extends AppCompatActivity {
 
             // Combine predictions using confidence score
             float finalConfidenceScore = (tabularPrediction + imagePrediction) / 2;
-            String resultText = "The anticipated rate of osteoporosis occurrence is currently: " + (finalConfidenceScore * 100) + "%";
+            String resultText = getString(R.string.prediction_desc) + (finalConfidenceScore * 100) + "%";
             textViewResult.setText(resultText);
 
             // Update individual predictions
-            String imagePredictionText = "Prediction of Image Data: " + (imagePrediction * 100) + "%";
-            String tabularPredictionText = "Prediction of Tabular Data: " + (tabularPrediction * 100) + "%";
+            String imagePredictionText = getString(R.string.prediction_of_image_data) + (imagePrediction * 100) + "%";
+            String tabularPredictionText = getString(R.string.prediction_of_tabular_data) + (tabularPrediction * 100) + "%";
             textViewImagePrediction.setText(imagePredictionText);
             textViewTabularPrediction.setText(tabularPredictionText);
 
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Log.e(TAG, "Error making prediction: ", e);
-            textViewResult.setText("Error in prediction.");
+            textViewResult.setText(R.string.error_in_prediction);
             predictionMade = false;
         }
     }
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (name.isEmpty() || email.isEmpty() || age.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.please_fill_in_all_fields, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
         db.insertPredictionData(name, email, age, tabularPredictionText, imagePredictionText, result, medications, hormonalChanges, familyHistory,
                 bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore, predictionMade);
         Log.d(TAG, "Data saved. Prediction made: " + predictionMade);
-        Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, R.string.data_saved_successfully, Toast.LENGTH_SHORT).show();
 
         clearInputFields();
     }

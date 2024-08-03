@@ -35,10 +35,10 @@ public class Section2Fragment extends Fragment {
         });
 
         List<FAQ> faqList = new ArrayList<>();
-        faqList.add(new FAQ("What is osteoporosis?", "Osteoporosis is a severe disease which can weaken the bones significantly."));
-        faqList.add(new FAQ("How is osteoporosis diagnosed?", "Osteoporosis is diagnosed through bone density tests."));
-        faqList.add(new FAQ("What are the risk factors?", "Risk factors include age, gender, and lifestyle choices."));
-        faqList.add(new FAQ("How can osteoporosis be prevented?", "Prevention includes a healthy diet and regular exercise."));
+        faqList.add(new FAQ(getString(R.string.faq_q1), getString(R.string.faq_a1)));
+        faqList.add(new FAQ(getString(R.string.faq_q2), getString(R.string.faq_a2)));
+        faqList.add(new FAQ(getString(R.string.faq_q3), getString(R.string.faq_a3)));
+        faqList.add(new FAQ(getString(R.string.faq_q4), getString(R.string.faq_a4)));
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

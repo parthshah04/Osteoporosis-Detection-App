@@ -29,14 +29,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
-            android:text="Change Profile Image" />
+            android:text="@string/change_profile_picture" />
 
         <!-- Name -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Name"
+            android:text="@string/name"
             android:textStyle="bold" />
         <EditText
             android:id="@+id/profileName"
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Designation"
+            android:text="@string/designation"
             android:textStyle="bold" />
         <EditText
             android:id="@+id/profileDesignation"
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Phone Number"
+            android:text="@string/phone_number"
             android:textStyle="bold" />
         <EditText
             android:id="@+id/profilePhone"
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Email"
+            android:text="@string/email"
             android:textStyle="bold" />
         <EditText
             android:id="@+id/profileEmail"
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Password"
+            android:text="@string/password"
             android:textStyle="bold" />
         <EditText
             android:id="@+id/profilePassword"
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:text="Update Password" />
+            android:text="@string/update_password" />
 
     </LinearLayout>
 </ScrollView>
