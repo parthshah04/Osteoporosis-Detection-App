@@ -1,27 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <!-- Header with title and menu -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FFFFFF"
+        android:elevation="4dp">
 
-        <!-- Container for Section1Fragment (About) -->
-        <FrameLayout
-            android:id="@+id/fragment_container_section1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- Expandable Container for Section3CardsFragment (Meet Our Developers) -->
         <TextView
-            android:id="@+id/section3_heading"
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About"
+            android:textColor="#333333"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/menuIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⋮"
+            android:textSize="24sp"
+            android:textColor="#333333"
+            android:layout_gravity="end"
+            android:padding="16dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="#CDE8E5"> <!-- Background color for the entire scroll view -->
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_heading"
+            android:orientation="vertical">
+
+            <!-- Container for Section1Fragment (About) -->
+            <FrameLayout
+                android:id="@+id/fragment_container_section1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Expandable Container for Section3CardsFragment (Meet Our Developers) -->
+            <TextView
+                android:id="@+id/section3_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#4D869C"
             android:text="Know who we are......"
             android:textColor="@android:color/white"
             android:padding="16dp"
@@ -29,27 +66,27 @@
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
-        <LinearLayout
-            android:id="@+id/expandable_section3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_marginBottom="16dp">
-
-            <FrameLayout
-                android:id="@+id/fragment_container_section3"
+            <LinearLayout
+                android:id="@+id/expandable_section3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
-        </LinearLayout>
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
 
-        <!-- Expandable Container for Section2Fragment (FAQs) -->
-        <TextView
-            android:id="@+id/section2_heading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_heading"
+                <FrameLayout
+                    android:id="@+id/fragment_container_section3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"/>
+            </LinearLayout>
+
+            <!-- Expandable Container for Section2Fragment (FAQs) -->
+            <TextView
+                android:id="@+id/section2_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#4D869C"
             android:text="if you have a question......."
             android:textColor="@android:color/white"
             android:padding="16dp"
@@ -57,46 +94,47 @@
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
-        <LinearLayout
-            android:id="@+id/expandable_section2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_marginBottom="16dp">
-
-            <FrameLayout
-                android:id="@+id/fragment_container_section2"
+            <LinearLayout
+                android:id="@+id/expandable_section2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <!-- Link to InstructionActivity -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp">
-
-            <TextView
-                android:id="@+id/text_more_info"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Want to know more about how to use the app.."
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:layout_marginEnd="8dp"/>
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
 
-            <ImageView
-                android:id="@+id/icon_next"
-                android:layout_width="36dp"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:contentDescription="Next"
-                android:focusable="true"
-                android:src="@drawable/next" />
+                <FrameLayout
+                    android:id="@+id/fragment_container_section2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <!-- Link to InstructionActivity -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:id="@+id/text_more_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Want to know more about how to use the app.."
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginEnd="8dp"/>
+
+                <ImageView
+                    android:id="@+id/icon_next"
+                    android:layout_width="36dp"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:contentDescription="Next"
+                    android:focusable="true"
+                    android:src="@drawable/next" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

@@ -1,20 +1,37 @@
 package com.example.osteoporosis_detection;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 public class AboutActivity extends AppCompatActivity {
 
+    private TextView menuIcon;
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        menuIcon = findViewById(R.id.menuIcon);
+        setupMenuIcon();
+
+        sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
 
         if (savedInstanceState == null) {
             // Load the Section1Fragment (About)
@@ -54,5 +71,39 @@ public class AboutActivity extends AppCompatActivity {
                 expandableSection.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void setupMenuIcon() {
+        menuIcon.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(AboutActivity.this, menuIcon);
+            popup.getMenuInflater().inflate(R.menu.header_menu, popup.getMenu());
+
+            popup.setOnMenuItemClickListener(item -> {
+                int itemId = item.getItemId();
+                if (itemId == R.id.menu_settings) {
+                    startActivity(new Intent(AboutActivity.this, SettingsActivity.class));
+                    return true;
+                } else if (itemId == R.id.menu_about) {
+                    // Already on About page, do nothing
+                    return true;
+                } else if (itemId == R.id.menu_logout) {
+                    logout();
+                    return true;
+                }
+                return false;
+            });
+
+            popup.show();
+        });
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(AboutActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

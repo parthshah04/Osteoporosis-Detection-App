@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/home"
+        android:title="Home" />
+    <item
+        android:id="@+id/navigation_registration"
+        android:icon="@drawable/add"
+        android:title="Registration" />
+    <item
+        android:id="@+id/navigation_prediction"
+        android:icon="@drawable/prediction"
+        android:title="Prediction" />
+    <item
+        android:id="@+id/navigation_visualization"
+        android:icon="@drawable/visualisation"
+        android:title="Visualization" />
+    <item
+        android:id="@+id/navigation_doctors_profile"
+        android:icon="@drawable/profile"
+        android:title="Doctor's Profile" />
+</menu>
