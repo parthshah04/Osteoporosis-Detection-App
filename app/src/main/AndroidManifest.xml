@@ -9,7 +9,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/doctor"
-        android:label="@string/app_name"
+        android:label="@string/osteo_vision"
         android:roundIcon="@drawable/doctor"
         android:supportsRtl="true"
         android:theme="@style/Theme.OsteoporosisDetection"
@@ -40,7 +40,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="Registration"
+            android:label="@string/registration"
             android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -49,7 +49,7 @@
         <activity
             android:name=".TabularActivity"
             android:exported="false"
-            android:label="Patients"
+            android:label="@string/patients"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -66,7 +66,7 @@
         <activity
             android:name=".ProfileActivity"
             android:exported="false"
-            android:label="Profile"
+            android:label="@string/profile"
             android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -75,7 +75,7 @@
         <activity
             android:name=".Visualisation"
             android:exported="false"
-            android:label="Visualisation"
+            android:label="@string/visualisation"
             android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -84,7 +84,7 @@
         <activity
             android:name=".InstructionActivity"
             android:exported="true"
-            android:label="Instructions"
+            android:label="@string/instructions"
             android:parentActivityName=".AboutActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -93,7 +93,8 @@
         <activity
             android:name=".AboutActivity"
             android:exported="true"
-            android:label="About"
+            android:label="@string/about"
+            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar"
             android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -102,7 +103,8 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="true"
-            android:label="Settings"
+            android:label="@string/settings"
+            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar"
             android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Instructions"
+                android:text="@string/instructions"
                 android:textColor="@android:color/black"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login and Authentication"
+            android:text="@string/login_and_authentication"
             android:textSize="14sp"
             android:textColor="#808080"
             android:paddingBottom="8dp" />
@@ -63,7 +63,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Patients"
+            android:text="@string/add_patients"
             android:textSize="14sp"
             android:textColor="#808080"
             android:paddingBottom="8dp" />
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Patient Details"
+            android:text="@string/patient_details"
             android:textSize="14sp"
             android:textColor="#808080"
             android:paddingBottom="8dp" />
@@ -113,7 +113,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prediction and Results"
+            android:text="@string/prediction_and_results"
             android:textSize="14sp"
             android:textColor="#808080"
             android:paddingBottom="8dp" />
@@ -138,7 +138,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Visualization and Profile"
+            android:text="@string/visualization_and_profile"
             android:textSize="14sp"
             android:textColor="#808080"
             android:paddingBottom="8dp" />

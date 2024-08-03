@@ -65,7 +65,7 @@ public class TabularActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 Log.e(TAG, "Error on item click: ", e);
-                Toast.makeText(this, "Error opening patient details: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.error_opening_patient_details) + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -106,7 +106,7 @@ public class TabularActivity extends AppCompatActivity {
                 int emailIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_EMAIL);
 
                 if (idIndex == -1 || nameIndex == -1 || emailIndex == -1) {
-                    throw new IllegalArgumentException("One or more required columns are missing from the cursor.");
+                    throw new IllegalArgumentException(getString(R.string.missing_columns));
                 }
 
                 do {
@@ -121,7 +121,7 @@ public class TabularActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             Log.e(TAG, "Error loading patient data: ", e);
-            Toast.makeText(this, "Error loading patient data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.error_loading_patient_data) + e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -129,7 +129,7 @@ public class TabularActivity extends AppCompatActivity {
         }
 
         if (patientList.isEmpty()) {
-            Toast.makeText(this, "No patients found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_patients_found, Toast.LENGTH_SHORT).show();
         }
 
         if (adapter == null) {

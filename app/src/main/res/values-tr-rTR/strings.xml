@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="medications_options">
+        <item>Hiçbiri</item>
+        <item>Kortikosteroidler</item>
+    </string-array>
+    <string-array name="hormonal_changes_options">
+        <item>Normal</item>
+        <item>Menopoz Sonrası</item>
+    </string-array>
+    <string-array name="family_history_options">
+        <item>Evet</item>
+        <item>Hayir</item>
+    </string-array>
+    <string-array name="body_weight_options">
+        <item>Düşük kilolu</item>
+        <item>Normal</item>
+    </string-array>
+    <string-array name="calcium_intake_options">
+        <item>Düşük</item>
+        <item>Yeterli</item>
+    </string-array>
+    <string-array name="vitamin_d_intake_options">
+        <item>Yeterli</item>
+        <item>Yetersiz</item>
+    </string-array>
+    <string-array name="physical_activity_options">
+        <item>Aktif</item>
+        <item>Sedentary</item>
+    </string-array>
+    <string-array name="smoking_options">
+        <item>Evet</item>
+        <item>Hayir</item>
+    </string-array>
+    <string-array name="alcohol_consumption_options">
+        <item>Ilıman</item>
+        <item>Hiçbiri</item>
+    </string-array>
+    <string-array name="medical_conditions_options">
+        <item>Romatizmal eklem iltihabı</item>
+        <item>Hiçbiri</item>
+        <item>Hipertiroidizm</item>
+    </string-array>
+    <string-array name="prior_fractures_options">
+        <item>Evet</item>
+        <item>Hayir</item>
+    </string-array>
+
+    <string name="title_activity_login">Giriş Etkinliği</string>
+    <string name="prompt_email">E-posta</string>
+    <string name="prompt_password">Şifre</string>
+    <string name="action_sign_in">Giriş veya Kayıt</string>
+    <string name="action_sign_in_short">Kayıt olmak</string>
+    <string name="welcome">Hoş geldin!</string>
+    <string name="invalid_username">Geçerli bir kullanıcı adı değil</string>
+    <string name="invalid_password">Şifre > 5 karakterden oluşmalıdır</string>
+    <string name="login_failed">Giriş başarısız oldu</string>
+    <string name="insight_to_osteo_vision">Osteo Vizyon Hakkında Bilgi</string>
+    <string name="skip">Atlamak</string>
+    <string name="start_diagnosis">Teşhisi Başlat</string>
+    <string name="simplified_process_exact_outcomes_empower_your_life">Basitleştirilmiş süreç, kesin sonuçlar, hayatınızı güçlendirin.</string>
+    <string name="login">Giriş yapmak</string>
+    <string name="password">Şifre</string>
+    <string name="email">E-posta</string>
+    <string name="beyond_conventional_care">GELENEKSEL BAKIMIN ÖTESİNDE</string>
+    <string name="hello_blank_fragment">Merhaba boş parça</string>
+    <string name="invalid_email_format">Geçersiz e-posta formatı</string>
+    <string name="password_cannot_be_empty">Şifre Boş Olamaz</string>
+    <string name="invalid_email_or_password">Geçersiz e-posta veya şifre</string>
+    <string name="login_successful">Giriş başarılı</string>
+    <string name="registration_starting">Kayıt</string>
+    <string name="prediction_starting">Tahmin</string>
+    <string name="visualization_starting">Görselleştirme</string>
+    <string name="doctors_profile_starting">Doktor Profili</string>
+    <string name="home_starting">Ev</string>
+    <string name="settings_starting">Ayarlar</string>
+    <string name="about_starting">Hakkında</string>
+    <string name="logout">Çıkış Yap</string>
+    <string name="light_mode">Işık Modu</string>
+    <string name="dark_mode">Karanlık Mod</string>
+    <string name="about_device">Cihaz hakkında</string>
+    <string name="android_version">Android Sürümü - 1.0</string>
+    <string name="setting_description">Akademik Proje - Uygulamalı Hesaplama Yüksek Lisansı</string>
+    <string name="subject">Ders</string>
+    <string name="setting_subject_desc">Android Uygulama Programlama</string>
+    <string name="institution">Kurum</string>
+    <string name="wilfrid_laurier_university">Wilfrid Laurier Üniversitesi</string>
+    <string name="about_dropdown_1">Biz Kimiz?</string>
+    <string name="about_dropdown_2">SSS</string>
+    <string name="about_desc">Uygulamanın nasıl kullanılacağı hakkında daha fazla bilgi edinmek ister misiniz?</string>
+    <string name="team">Bizim takım</string>
+    <string name="faq">Sıkça Sorulan Sorular (SSS)</string>
+    <string name="excellence_in_osteoporosis">Osteoporoz Bakımında Yapay Zeka Mükemmelliği</string>
+    <string name="version">Sürüm: 1.0</string>
+    <string name="about_full_description">Kemik sağlığını iyileştirmeye kendimizi adamış olarak, hassas ve güvenilir osteoporoz teşhisi sunmak, güçlü ve sağlıklı kalmanıza yardımcı olmak için en son teknolojiye sahip yapay zekadan yararlanıyoruz.</string>
+    <string name="faq_q1">Osteoporoz nedir?</string>
+    <string name="faq_a1">Osteoporoz, kemikleri önemli ölçüde zayıflatabilen ciddi bir hastalıktır.</string>
+    <string name="faq_q2">Osteoporoz nasıl teşhis edilir?</string>
+    <string name="faq_a2">Osteoporozun tanısı kemik yoğunluğu testleri ile konur.</string>
+    <string name="faq_q3">Risk faktörleri nelerdir?</string>
+    <string name="faq_a3">Risk faktörleri yaş, cinsiyet ve yaşam tarzı seçimlerini içerir.</string>
+    <string name="faq_q4">Osteoporoz nasıl önlenebilir?</string>
+    <string name="faq_a4">Önleme sağlıklı bir diyet ve düzenli egzersizi içerir.</string>
+    <string name="add_new_patient">Yeni Hasta Ekle</string>
+    <string name="search_patients">Hastaları arayın</string>
+    <string name="error_opening_patient_details">Hasta Ayrıntıları Açılırken Hata:</string>
+    <string name="error_loading_patient_data">Hasta Verileri Yüklenirken Hata:</string>
+    <string name="no_patients_found">Hasta Bulunamadı!</string>
+    <string name="missing_columns">İmleçte bir veya daha fazla gerekli sütun eksik.</string>
+    <string name="change_profile_picture">Profil resmini değiştir</string>
+    <string name="name">İsim</string>
+    <string name="designation">Tanım</string>
+    <string name="phone_number">Telefon numarası</string>
+    <string name="update_password">Şifre güncelle</string>
+    <string name="question">Soru</string>
+    <string name="answer">Cevap</string>
+    <string name="patient_information">Hasta bilgisi</string>
+    <string name="age">Yaş</string>
+    <string name="enter_patient_s_name">Hastanın Adını Girin</string>
+    <string name="enter_patient_s_email">Hastanın E-postasını Girin</string>
+    <string name="enter_patient_s_age">Hastanın Yaşını Girin</string>
+    <string name="medications">İlaçlar</string>
+    <string name="hormonal_changes">Hormonal Değişiklikler</string>
+    <string name="family_history">Aile öyküsü</string>
+    <string name="body_weight">Vücut ağırlığı</string>
+    <string name="calcium_intake">Kalsiyum Alımı</string>
+    <string name="vitamin_d_intake">D Vitamini Alımı</string>
+    <string name="physical_activity">Fiziksel aktivite</string>
+    <string name="smoking">Sigara içmek</string>
+    <string name="alcohol_consumption">Alkol tüketimi</string>
+    <string name="medical_conditions">Tıbbi durumlar</string>
+    <string name="prior_fractures">Önceki Kırıklar</string>
+    <string name="select_x_ray_image">Röntgen Görüntüsünü Seçin</string>
+    <string name="prognosticate">Öngörüde Bulunmak</string>
+    <string name="save">Kaydetmek</string>
+    <string name="prediction_results">Tahmin Sonuçları</string>
+    <string name="prediction_desc">Beklenen osteoporoz oluşma oranı şu anda:</string>
+    <string name="prediction_of_image_data">Görüntü Verilerinin Tahmini:</string>
+    <string name="prediction_of_tabular_data">Tablo Verilerinin Tahmini:</string>
+    <string name="error_models_not_loaded">Hata: Modeller yüklenmedi!</string>
+    <string name="please_enter_age">Lütfen Yaşınızı Giriniz!</string>
+    <string name="no_image_selected">Resim Seçilmedi!</string>
+    <string name="please_select_an_image">Lütfen Bir Resim Seçiniz!</string>
+    <string name="error_in_prediction">Tahminde Hata!</string>
+    <string name="please_fill_in_all_fields">Lütfen bütün boşlukları doldurun!</string>
+    <string name="data_saved_successfully">Veri başarıyla kaydedildi!</string>
+    <string name="display_and_theme">Ekran ve Tema</string>
+    <string name="prediction">Tahmin</string>
+    <string name="registration">Kayıt</string>
+    <string name="profile">Profil</string>
+    <string name="visualisation">Görselleştirme</string>
+    <string name="instructions">Talimatlar</string>
+    <string name="about">Hakkında</string>
+    <string name="settings">Ayarlar</string>
+    <string name="error_no_email_provided">Hata: E-posta sağlanmadı</string>
+    <string name="error_user_not_found">Hata: Kullanıcı Bulunamadı!</string>
+    <string name="profile_image_updated">Profil Resmi Güncellendi</string>
+    <string name="password_updated">Password Updated</string>
+    <string name="osteo_vision">OSTEO VİZYONU</string>
+    <string name="patients">Hastalar</string>
+    <string name="osteoporosis">Osteoporoz</string>
+    <string name="x_ray_image">Röntgen Görüntüsü</string>
+    <string name="make_prediction">Tahmin etmek</string>
+    <string name="no_prediction_desc">Henüz bir tahmin yapılmadı!</string>
+    <string name="update">Güncelleme</string>
+    <string name="delete">Silmek</string>
+    <string name="cancel">İptal etmek</string>
+    <string name="error_patient_not_found">Hata: Hasta bulunamadı!</string>
+    <string name="failed_to_load_image">Resim yüklenemedi</string>
+    <string name="update_prediction">Tahmini Güncelle</string>
+    <string name="patient_data_updated_successfully">Hasta Verileri Başarıyla Güncellendi!</string>
+    <string name="failed_to_update_patient_data">Hasta Verileri Güncellenemedi!</string>
+    <string name="delete_patient">Hastayı Sil</string>
+    <string name="delete_confirmation">Bu hastayı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</string>
+    <string name="patient_deleted_successfully">Hasta Başarıyla Silindi!</string>
+    <string name="failed_to_delete_patient">Hasta Silinemedi!</string>
+    <string name="patient_visualisation">Hasta Görselleştirme</string>
+    <string name="error_visualisation_message">Görselleştirme başlatılırken bir hata oluştu.</string>
+    <string name="total_patients">Toplam Hasta Sayısı: </string>
+    <string name="failed_to_display_total_patients">Toplam hasta sayısı görüntülenemedi.</string>
+    <string name="age_groups">Yaş grupları</string>
+    <string name="age_group_distribution">Yaş Grubu Dağılımı</string>
+    <string name="failed_to_display_age_group_distribution">Yaş grubu dağılımı görüntülenemedi.</string>
+    <string name="no_data_available_for_osteoporosis_distribution">Osteoporoz dağılımına ilişkin veri mevcut değildir.</string>
+    <string name="without_osteoporosis">Osteoporoz olmadan</string>
+    <string name="with_osteoporosis">Osteoporozlu</string>
+    <string name="osteoporosis_distribution">Osteoporoz Dağılımı</string>
+    <string name="osteoporosis_distribution_space">Osteoporoz\nDağılımı</string>
+    <string name="failed_to_display_osteoporosis_distribution">Osteoporoz dağılımı görüntülenemedi.</string>
+    <string name="login_and_authentication">Giriş ve Kimlik Doğrulama</string>
+    <string name="add_patients">Hasta Ekle</string>
+    <string name="patient_details">Hasta Detayları</string>
+    <string name="prediction_and_results">Tahmin ve Sonuçlar</string>
+    <string name="visualization_and_profile">Görselleştirme ve Profil</string>
+</resources>

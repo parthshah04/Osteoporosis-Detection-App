@@ -8,19 +8,38 @@
     android:background="#f4f4f4"
     tools:context=".StartingActivity">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="OSTEO VISION"
-        android:textColor="#333333"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Header with title and menu -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/osteo_vision"
+            android:textColor="#333333"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/menuIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⋮"
+            android:textSize="24sp"
+            android:textColor="#333333"
+            android:layout_gravity="end"
+            android:padding="16dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Existing icon layout -->
     <RelativeLayout
         android:id="@+id/iconLayout"
         android:layout_width="wrap_content"
@@ -28,12 +47,11 @@
         android:layout_centerInParent="true"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationBar"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.971">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="0.5">
 
         <!-- Registration Icon -->
         <LinearLayout
@@ -60,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Registration"
+                android:text="@string/registration"
                 android:textColor="#333333"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -81,7 +99,7 @@
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Prediction"
+                android:contentDescription="Patients"
                 android:padding="8dp"
                 android:src="@drawable/prediction" />
 
@@ -90,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Patients"
+                android:text="@string/patients"
                 android:textColor="#333333"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -120,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Visualization"
+                android:text="@string/visualisation"
                 android:textColor="#333333"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -150,117 +168,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Doctor's Profile"
+                android:text="@string/doctors_profile_starting"
                 android:textColor="#333333"
                 android:textSize="14sp" />
         </LinearLayout>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/bottomNavigationBar"
-        android:layout_width="0dp"
+    <!-- Updated Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="#FFFFFF"
-        android:elevation="8dp"
-        android:padding="8dp"
-        android:showDividers="middle"
-        android:divider="?android:attr/dividerHorizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:menu="@menu/bottom_nav_menu" />
 
-        <!-- Home Icon -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/homeIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/home"
-                android:contentDescription="Home"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="8dp" />
-
-            <TextView
-                android:id="@+id/homeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Home"
-                android:textColor="#333333"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp" />
-        </LinearLayout>
-
-        <!-- Settings Icon -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/settingsIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/settings"
-                android:contentDescription="Settings"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="8dp" />
-
-            <TextView
-                android:id="@+id/settingsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Settings"
-                android:textColor="#333333"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp" />
-        </LinearLayout>
-
-        <!-- About Icon -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/aboutIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/about"
-                android:contentDescription="About"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="8dp" />
-
-            <TextView
-                android:id="@+id/aboutText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="About"
-                android:textColor="#333333"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Logout Button -->
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
-            android:text="Osteo-Vision"
+            android:text="@string/osteo_vision"
             android:textSize="35sp"
             android:textStyle="bold" />
 
@@ -27,7 +27,7 @@
             android:id="@+id/textViewSubHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AI Excellence in Osteoporosis Care"
+            android:text="@string/excellence_in_osteoporosis"
             android:textSize="18sp"
             android:paddingBottom="16dp"
             android:textStyle="bold"/>
@@ -50,7 +50,7 @@
             android:padding="8dp"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:text="Version: 1.0"
+            android:text="@string/version"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -66,7 +66,7 @@
                 android:id="@+id/textViewMissionStatement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dedicated to improving bone health, we leverage cutting-edge AI to offer precise and reliable osteoporosis diagnosis, helping you stay strong and healthy."
+                android:text="@string/about_full_description"
                 android:textSize="16sp"
                 android:gravity="center"
                 android:padding="8dp"

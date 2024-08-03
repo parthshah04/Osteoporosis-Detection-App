@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Meet Our Awesome Developers"
+            android:text="@string/team"
             android:textSize="24sp"
             android:textStyle="bold"
             android:paddingBottom="16dp"
@@ -56,7 +56,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="must2530@mylaurier.ca"
-                    android:textSize="16sp"/>
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="235842530"
+                    android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -88,7 +94,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Developer 2"
+                    android:text="Parth Shah"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:paddingBottom="4dp"/>
@@ -96,8 +102,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dev2@example.com"
-                    android:textSize="16sp"/>
+                    android:text="shah2120@mylaurier.ca"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="235842120"
+                    android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -129,7 +141,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Developer 3"
+                    android:text="Shahzar Ali"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:paddingBottom="4dp"/>
@@ -137,8 +149,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dev3@example.com"
-                    android:textSize="16sp"/>
+                    android:text="kham5150@mylaurier.ca"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="235825150"
+                    android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -170,7 +188,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Developer 4"
+                    android:text="Guneet Singh"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:paddingBottom="4dp"/>
@@ -178,8 +196,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dev4@example.com"
-                    android:textSize="16sp"/>
+                    android:text="sing3790@mylaurier.ca"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="235843790"
+                    android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -211,7 +235,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Developer 5"
+                    android:text="Shreya Sharma"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:paddingBottom="4dp"/>
@@ -219,8 +243,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dev5@example.com"
-                    android:textSize="16sp"/>
+                    android:text="shar7530@mylaurier.ca"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="235847530"
+                    android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
