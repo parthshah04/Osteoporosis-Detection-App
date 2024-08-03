@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Osteo-Vision</string>
-
     <string-array name="medications_options">
         <item>None</item>
         <item>Corticosteroids</item>
@@ -158,5 +156,40 @@
     <string name="profile_image_updated">Profile Image Updated</string>
     <string name="password_updated">Password Updated</string>
     <string name="osteo_vision">OSTEO VISION</string>
+    <string name="patients">Patients</string>
+    <string name="osteoporosis">Osteoporosis</string>
+    <string name="x_ray_image">X-Ray Image</string>
+    <string name="make_prediction">Make Prediction</string>
+    <string name="no_prediction_desc">No prediction has been made yet!</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_patient_not_found">Error: Patient not found!</string>
+    <string name="failed_to_load_image">Failed to load image</string>
+    <string name="update_prediction">Update Prediction</string>
+    <string name="patient_data_updated_successfully">Patient Data Updated Successfully!</string>
+    <string name="failed_to_update_patient_data">Failed to Update Patient Data!</string>
+    <string name="delete_patient">Delete Patient</string>
+    <string name="delete_confirmation">Are you sure you want to delete this patient? This action cannot be undone.</string>
+    <string name="patient_deleted_successfully">Patient Deleted Successfully!</string>
+    <string name="failed_to_delete_patient">Failed to Delete Patient!</string>
+    <string name="patient_visualisation">Patient Visualisation</string>
+    <string name="error_visualisation_message">An error occurred while initializing the visualization.</string>
+    <string name="total_patients">Total Patients: </string>
+    <string name="failed_to_display_total_patients">Failed to display total patients.</string>
+    <string name="age_groups">Age Groups</string>
+    <string name="age_group_distribution">Age Group Distribution</string>
+    <string name="failed_to_display_age_group_distribution">Failed to display age group distribution.</string>
+    <string name="no_data_available_for_osteoporosis_distribution">No data available for osteoporosis distribution.</string>
+    <string name="without_osteoporosis">Without Osteoporosis</string>
+    <string name="with_osteoporosis">With Osteoporosis</string>
+    <string name="osteoporosis_distribution">Osteoporosis Distribution</string>
+    <string name="osteoporosis_distribution_space">Osteoporosis\nDistribution</string>
+    <string name="failed_to_display_osteoporosis_distribution">Failed to display osteoporosis distribution.</string>
+    <string name="login_and_authentication">Login and Authentication</string>
+    <string name="add_patients">Add Patients</string>
+    <string name="patient_details">Patient Details</string>
+    <string name="prediction_and_results">Prediction and Results</string>
+    <string name="visualization_and_profile">Visualization and Profile</string>
 
 </resources>
