@@ -5,16 +5,20 @@ import static android.content.ContentValues.TAG;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.osteoporosis_detection.util.EncryptionUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDB";
-    private static final int DATABASE_VERSION = 13; // Incremented version for schema change
+    private static final int DATABASE_VERSION = 14; // Incremented version for schema change
     private static final String TABLE_USERS = "users";
     private static final String TABLE_PREDICTIONS = "predictions";
     public static final String COLUMN_ID = "id";
@@ -48,6 +52,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    private void log(String message) {
+        Log.d(TAG, message);
+        System.out.println(TAG + ": " + message);
+    }
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
@@ -116,27 +124,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                      String xrayImagePath, float finalConfidenceScore, boolean hasPrediction) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, name);
-        values.put(COLUMN_EMAIL, email);
-        values.put(COLUMN_AGE, age);
-        values.put(COLUMN_TABULAR_PREDICTION, tabularPrediction);
-        values.put(COLUMN_IMAGE_PREDICTION, imagePrediction);
-        values.put(COLUMN_RESULT, result);
-        values.put(COLUMN_MEDICATIONS, medications);
-        values.put(COLUMN_HORMONAL_CHANGES, hormonalChanges);
-        values.put(COLUMN_FAMILY_HISTORY, familyHistory);
-        values.put(COLUMN_BODY_WEIGHT, bodyWeight);
-        values.put(COLUMN_CALCIUM_INTAKE, calciumIntake);
-        values.put(COLUMN_VITAMIN_D_INTAKE, vitaminDIntake);
-        values.put(COLUMN_PHYSICAL_ACTIVITY, physicalActivity);
-        values.put(COLUMN_SMOKING, smoking);
-        values.put(COLUMN_ALCOHOL_CONSUMPTION, alcoholConsumption);
-        values.put(COLUMN_MEDICAL_CONDITIONS, medicalConditions);
-        values.put(COLUMN_PRIOR_FRACTURES, priorFractures);
-        values.put(COLUMN_XRAY_IMAGE_PATH, xrayImagePath);
-        values.put(COLUMN_FINAL_CONFIDENCE_SCORE, finalConfidenceScore);
-        values.put(COLUMN_HAS_PREDICTION, hasPrediction ? 1 : 0);
-        db.insert(TABLE_PREDICTIONS, null, values);
+
+        try {
+            values.put(COLUMN_NAME, name);
+            values.put(COLUMN_EMAIL, email);
+            values.put(COLUMN_AGE, age);
+            values.put(COLUMN_TABULAR_PREDICTION, tabularPrediction);
+            values.put(COLUMN_IMAGE_PREDICTION, imagePrediction);
+            values.put(COLUMN_RESULT, result);
+            values.put(COLUMN_MEDICATIONS, medications);
+            values.put(COLUMN_HORMONAL_CHANGES, hormonalChanges);
+            values.put(COLUMN_FAMILY_HISTORY, familyHistory);
+            values.put(COLUMN_BODY_WEIGHT, bodyWeight);
+            values.put(COLUMN_CALCIUM_INTAKE, calciumIntake);
+            values.put(COLUMN_VITAMIN_D_INTAKE, vitaminDIntake);
+            values.put(COLUMN_PHYSICAL_ACTIVITY, physicalActivity);
+            values.put(COLUMN_SMOKING, smoking);
+            values.put(COLUMN_ALCOHOL_CONSUMPTION, alcoholConsumption);
+            values.put(COLUMN_MEDICAL_CONDITIONS, medicalConditions);
+            values.put(COLUMN_PRIOR_FRACTURES, priorFractures);
+            values.put(COLUMN_XRAY_IMAGE_PATH, xrayImagePath);
+            values.put(COLUMN_FINAL_CONFIDENCE_SCORE, finalConfidenceScore);
+            values.put(COLUMN_HAS_PREDICTION, hasPrediction ? 1 : 0);
+
+            long newRowId = db.insertOrThrow(TABLE_PREDICTIONS, null, values);
+            Log.d(TAG, "New row inserted with ID: " + newRowId);
+        } catch (SQLException e) {
+            Log.e(TAG, "Error inserting data: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public Cursor getAllPatients() {
@@ -189,11 +205,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean deletePatient(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = COLUMN_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(id)};
-
-        int rowsDeleted = db.delete(TABLE_PREDICTIONS, selection, selectionArgs);
-        return rowsDeleted > 0;
+        String whereClause = COLUMN_ID + " = ?";
+        String[] whereArgs = {String.valueOf(id)};
+        int result = db.delete(TABLE_PREDICTIONS, whereClause, whereArgs);
+        return result > 0;
     }
     public Cursor searchPatients(String query) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -272,6 +287,183 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    public int getTotalPatients() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_PREDICTIONS, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+    public void checkDataInsertion() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_PREDICTIONS;
+        Cursor cursor = db.rawQuery(query, null);
+
+        log("Total records in predictions table: " + cursor.getCount());
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                float finalScore = cursor.getFloat(cursor.getColumnIndex(COLUMN_FINAL_CONFIDENCE_SCORE));
+                float imageScore = cursor.getFloat(cursor.getColumnIndex(COLUMN_IMAGE_PREDICTION));
+                int hasPrediction = cursor.getInt(cursor.getColumnIndex(COLUMN_HAS_PREDICTION));
+
+                log("Record " + id + ": Final Score = " + finalScore +
+                        ", Image Score = " + imageScore +
+                        ", Has Prediction = " + hasPrediction);
+            } while (cursor.moveToNext());
+        } else {
+            log("No records found in predictions table");
+        }
+        cursor.close();
+    }
+    public int[] getOsteoporosisCountBasedOnAverage(float threshold) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " +
+                COLUMN_ID + ", " +
+                COLUMN_FINAL_CONFIDENCE_SCORE + ", " +
+                COLUMN_IMAGE_PREDICTION +
+                " FROM " + TABLE_PREDICTIONS +
+                " WHERE " + COLUMN_HAS_PREDICTION + " = 1";
+
+        log("Executing query: " + query);
+        log("Threshold: " + threshold);
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        int[] counts = new int[2]; // [0] for without osteoporosis, [1] for with osteoporosis
+
+        log("Cursor count: " + cursor.getCount());
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                float finalScore = cursor.getFloat(cursor.getColumnIndex(COLUMN_FINAL_CONFIDENCE_SCORE));
+                float imageScore = cursor.getFloat(cursor.getColumnIndex(COLUMN_IMAGE_PREDICTION));
+
+                // Use the higher of the two scores
+                float highestScore = finalScore;
+
+                log("Patient " + id + " - Final Score: " + finalScore + ", Image Score: " + imageScore + ", Highest Score: " + highestScore);
+
+                if (highestScore > threshold) {
+                    counts[1]++; // With osteoporosis
+                    log("Patient " + id + " classified as having osteoporosis");
+                } else {
+                    counts[0]++; // Without osteoporosis
+                    log("Patient " + id + " classified as not having osteoporosis");
+                }
+
+            } while (cursor.moveToNext());
+        } else {
+            log("Cursor is empty");
+        }
+        cursor.close();
+
+        log("Final counts - With Osteoporosis: " + counts[1] + ", Without Osteoporosis: " + counts[0]);
+        return counts;
+    }
+
+    public void checkRawData() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_PREDICTIONS;
+        Cursor cursor = db.rawQuery(query, null);
+
+        log("Total records in predictions table: " + cursor.getCount());
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                float finalScore = cursor.getFloat(cursor.getColumnIndex(COLUMN_FINAL_CONFIDENCE_SCORE));
+                float imageScore = cursor.getFloat(cursor.getColumnIndex(COLUMN_IMAGE_PREDICTION));
+                int hasPrediction = cursor.getInt(cursor.getColumnIndex(COLUMN_HAS_PREDICTION));
+
+                log("Record " + id + ":");
+                log("  Final Score: " + finalScore);
+                log("  Image Score: " + imageScore);
+                log("  Has Prediction: " + hasPrediction);
+            } while (cursor.moveToNext());
+        } else {
+            log("No records found in predictions table");
+        }
+        cursor.close();
+    }
+
+
+    public Map<String, Integer> getAgeGroupDistribution() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Map<String, Integer> ageGroupCounts = new HashMap<>();
+        String query = "SELECT " +
+                "CASE " +
+                "WHEN CAST(" + COLUMN_AGE + " AS INTEGER) BETWEEN 0 AND 20 THEN '0-20' " +
+                "WHEN CAST(" + COLUMN_AGE + " AS INTEGER) BETWEEN 21 AND 40 THEN '21-40' " +
+                "WHEN CAST(" + COLUMN_AGE + " AS INTEGER) BETWEEN 41 AND 60 THEN '41-60' " +
+                "WHEN CAST(" + COLUMN_AGE + " AS INTEGER) BETWEEN 61 AND 80 THEN '61-80' " +
+                "ELSE '80+' END AS age_group, " +
+                "COUNT(*) AS count " +
+                "FROM " + TABLE_PREDICTIONS +
+                " GROUP BY age_group";
+
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String ageGroup = cursor.getString(0);
+                int count = cursor.getInt(1);
+                ageGroupCounts.put(ageGroup, count);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return ageGroupCounts;
+    }
+
+    public float getAverageTabularPrediction() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT AVG(CAST(" + COLUMN_FINAL_CONFIDENCE_SCORE + " AS FLOAT)) FROM " + TABLE_PREDICTIONS +
+                " WHERE " + COLUMN_HAS_PREDICTION + " = 1";
+        Cursor cursor = db.rawQuery(query, null);
+        float avg = 0;
+        if (cursor.moveToFirst()) {
+            avg = cursor.getFloat(0);
+        }
+        cursor.close();
+        return avg;
+    }
+
+    public Cursor getAllPredictions() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + COLUMN_ID + ", " +
+                COLUMN_FINAL_CONFIDENCE_SCORE + ", " +
+                COLUMN_IMAGE_PREDICTION +
+                " FROM " + TABLE_PREDICTIONS +
+                " WHERE " + COLUMN_HAS_PREDICTION + " = 1";
+        return db.rawQuery(query, null);
+    }
+
+    public Map<String, Object> getPatientPredictionData(int patientId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + COLUMN_TABULAR_PREDICTION + ", " +
+                COLUMN_IMAGE_PREDICTION + ", " +
+                COLUMN_FINAL_CONFIDENCE_SCORE + ", " +
+                COLUMN_HAS_PREDICTION +
+                " FROM " + TABLE_PREDICTIONS +
+                " WHERE " + COLUMN_ID + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(patientId)});
+        Map<String, Object> predictionData = new HashMap<>();
+
+        if (cursor.moveToFirst()) {
+            predictionData.put("tabularPrediction", cursor.getString(0));
+            predictionData.put("imagePrediction", cursor.getString(1));
+            predictionData.put("finalConfidenceScore", cursor.getFloat(2));
+            predictionData.put("hasPrediction", cursor.getInt(3) == 1);
+        }
+        cursor.close();
+        return predictionData;
+    }
+
     public Cursor getUserByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         if (email == null) {
@@ -280,6 +472,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_EMAIL + "=?";
         return db.rawQuery(query, new String[]{email});
     }
+
 
     public void updateUserProfileImage(String email, byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -320,4 +513,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         db.update(TABLE_USERS, values, COLUMN_EMAIL + "=?", new String[]{email});
     }
+
 }
