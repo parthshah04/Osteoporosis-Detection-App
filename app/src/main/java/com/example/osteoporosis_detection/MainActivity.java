@@ -17,9 +17,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.osteoporosis_detection.data.DatabaseHelper;
+
 import org.tensorflow.lite.Interpreter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -27,8 +28,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-
-import com.example.osteoporosis_detection.data.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private Interpreter tfliteTabular;
     private DatabaseHelper db;
     private float finalConfidenceScore;
-    private String imagePredictionText;
-    private String tabularPredictionText;
+    private float imagePrediction;
+    private float tabularPrediction;
     private boolean predictionMade = false;
 
     @Override
@@ -161,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             tabularInput[11] = spinnerPriorFractures.getSelectedItemPosition();
 
             // Perform inference using tabular model
-            float tabularPrediction = predictTabularModel(tabularInput);
+            tabularPrediction = predictTabularModel(tabularInput);
             Log.d(TAG, "Tabular prediction: " + tabularPrediction);
 
             // Perform inference using VGG-19 model
@@ -170,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 textViewResult.setText("Please select an image.");
                 return;
             }
-            float imagePrediction = predictImageModel(xRayImage);
+            imagePrediction = predictImageModel(xRayImage);
             Log.d(TAG, "Image prediction: " + imagePrediction);
 
             // Combine predictions using confidence score
@@ -188,9 +187,6 @@ public class MainActivity extends AppCompatActivity {
             progressBarResult.setProgress((int) (finalConfidenceScore * 100));
 
             // Store these values for saving to database
-            this.finalConfidenceScore = finalConfidenceScore;
-            this.imagePredictionText = imagePredictionText;
-            this.tabularPredictionText = tabularPredictionText;
 
             predictionMade = true;
 
@@ -259,17 +255,25 @@ public class MainActivity extends AppCompatActivity {
 
        // boolean hasPrediction = !textViewResult.getText().toString().isEmpty();
         String result = predictionMade ? textViewResult.getText().toString() : "";
-        String tabularPredictionText = predictionMade ? this.tabularPredictionText : "";
-        String imagePredictionText = predictionMade ? this.imagePredictionText : "";
+        Float tabularPredictionValue = predictionMade ? this.tabularPrediction : 0f;
+        Float imagePredictionValue = predictionMade ? this.imagePrediction : 0f;
         float finalConfidenceScore = predictionMade ? this.finalConfidenceScore : 0f;
 
-        // Save data to database
-        db.insertPredictionData(name, email, age, tabularPredictionText, imagePredictionText, result, medications, hormonalChanges, familyHistory,
-                bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore, predictionMade);
-        Log.d(TAG, "Data saved. Prediction made: " + predictionMade);
-        Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
 
-        clearInputFields();
+        long newRowId = db.insertPredictionData(name, email, age, tabularPredictionValue, imagePredictionValue, result,
+                medications, hormonalChanges, familyHistory, bodyWeight, calciumIntake,
+                vitaminDIntake, physicalActivity, smoking, alcoholConsumption,
+                medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore, predictionMade);
+
+        // Save data to database
+        if (newRowId != -1) {
+            Log.d(TAG, "Data saved successfully. Row ID: " + newRowId);
+            Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+            clearInputFields();
+        } else {
+            Log.e(TAG, "Failed to save data");
+            Toast.makeText(this, "Failed to save data", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void clearInputFields() {

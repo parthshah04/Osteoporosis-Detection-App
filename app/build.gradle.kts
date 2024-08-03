@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation("org.tensorflow:tensorflow-lite:2.11.0")
     implementation("org.tensorflow:tensorflow-lite-support:0.4.3")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(libs.annotation)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
