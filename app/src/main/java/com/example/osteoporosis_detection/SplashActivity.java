@@ -2,6 +2,7 @@ package com.example.osteoporosis_detection;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -22,6 +23,15 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if the user is logged in
+        if (isUserLoggedIn()) {
+            // If logged in, navigate directly to StartingActivity
+            navigateToStarting();
+            return; // Return here to prevent further execution of the splash screen setup
+        }
+
+        // If not logged in, proceed with splash screen
         setContentView(R.layout.activity_splash);
 
         // Initialize ViewPager and adapter
@@ -61,12 +71,25 @@ public class SplashActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         // Remove any pending posts of navigateToLogin runnable
-        handler.removeCallbacks(navigateToLogin);
+        if (handler != null) {
+            handler.removeCallbacks(navigateToLogin);
+        }
     }
 
     private void navigateToLogin() {
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
         startActivity(intent);
         finish(); // Finish the SplashActivity to prevent returning to it
+    }
+
+    private void navigateToStarting() {
+        Intent intent = new Intent(SplashActivity.this, StartingActivity.class);
+        startActivity(intent);
+        finish(); // Finish the SplashActivity to prevent returning to it
+    }
+
+    private boolean isUserLoggedIn() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        return sharedPreferences.getBoolean("isLoggedIn", false);
     }
 }

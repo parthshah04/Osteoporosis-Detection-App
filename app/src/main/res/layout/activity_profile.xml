@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".ProfileActivity"
+    android:background="#CDE8E5"> <!-- Background color for the entire scroll view -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +21,7 @@
             android:contentDescription="Profile Image"
             android:clickable="true"
             android:focusable="true" />
-<!--        android:src="@drawable/default_profile"-->
+        <!--        android:src="@drawable/default_profile"-->
 
         <!-- Change Profile Image Button -->
         <Button
@@ -37,7 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Name"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:background="#4D869C"
+        android:textColor="#FFFFFF" />
         <EditText
             android:id="@+id/profileName"
             android:layout_width="match_parent"
@@ -52,7 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Designation"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:background="#4D869C"
+        android:textColor="#FFFFFF" />
         <EditText
             android:id="@+id/profileDesignation"
             android:layout_width="match_parent"
@@ -67,7 +72,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Phone Number"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:background="#4D869C"
+        android:textColor="#FFFFFF" />
         <EditText
             android:id="@+id/profilePhone"
             android:layout_width="match_parent"
@@ -82,7 +89,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Email"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:background="#4D869C"
+        android:textColor="#FFFFFF" />
         <EditText
             android:id="@+id/profileEmail"
             android:layout_width="match_parent"
@@ -97,7 +106,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Password"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:background="#4D869C"
+        android:textColor="#FFFFFF" />
         <EditText
             android:id="@+id/profilePassword"
             android:layout_width="match_parent"

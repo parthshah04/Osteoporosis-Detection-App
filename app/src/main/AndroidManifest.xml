@@ -93,8 +93,8 @@
         <activity
             android:name=".AboutActivity"
             android:exported="true"
-            android:label="About"
-            android:parentActivityName=".StartingActivity">
+            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar"
+        android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
@@ -102,8 +102,8 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="true"
-            android:label="Settings"
-            android:parentActivityName=".StartingActivity">
+            android:theme="@style/Theme.OsteoporosisDetection.NoActionBar"
+        android:parentActivityName=".StartingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StartingActivity" />
