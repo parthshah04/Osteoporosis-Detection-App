@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.osteoporosis_detection.data.DatabaseHelper;
 
-public class DeleteUserActivity extends AppCompatActivity {
+public abstract class DeleteUserActivity extends AppCompatActivity {
 
     private static final String TAG = "DeleteUserActivity";
 
@@ -28,4 +28,6 @@ public class DeleteUserActivity extends AppCompatActivity {
         // Finish the activity after deleting the user
         finish();
     }
+
+    protected abstract DatabaseHelper createDatabaseHelper();
 }

@@ -21,12 +21,12 @@ import com.example.osteoporosis_detection.data.DatabaseHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText emailInput;
-    private EditText passwordInput;
-    private Button loginButton;
+    EditText emailInput;
+    EditText passwordInput;
+    Button loginButton;
     private ImageButton eyeButton;
-    private DatabaseHelper dbHelper;
-    private SharedPreferences sharedPreferences;
+    DatabaseHelper dbHelper;
+    SharedPreferences sharedPreferences;
     private boolean isPasswordVisible = false; // Track password visibility
     private static final String TAG = "LoginActivity";
 

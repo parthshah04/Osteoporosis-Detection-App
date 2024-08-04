@@ -11,19 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
-            android:elevation="0dp">
+            android:background="@color/headercolor"
+            android:elevation="0dp"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
+                android:background="@color/headercolor"
                 android:gravity="center_vertical">
 
                 <ImageView
@@ -42,8 +44,8 @@
                     android:paddingStart="0dp"
                     android:paddingEnd="16dp"
                     android:text="@string/profile"
-                    android:textColor="#333333"
-                    android:textSize="24sp"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -68,14 +70,6 @@
             android:layout_gravity="center"
             android:contentDescription="Profile Image"
             android:scaleType="centerCrop" />
-
-        <ProgressBar
-            android:id="@+id/loadingProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            style="?android:attr/progressBarStyleLarge"/>
 
         <!-- Change Profile Image Button -->
 

@@ -24,6 +24,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/photo_areeb"
+                android:background="@drawable/rounded_image"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"/>
 
@@ -69,7 +70,8 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/photo_parth"
+                android:src="@drawable/parth_cards"
+                android:background="@drawable/rounded_image"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"/>
 
@@ -115,7 +117,7 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/osteoporosis"
+                android:src="@drawable/shahz_card"
                 android:background="@drawable/rounded_image"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"/>
@@ -162,7 +164,7 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/osteoporosis"
+                android:src="@drawable/guneet_card"
                 android:background="@drawable/rounded_image"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"/>
@@ -209,7 +211,7 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/osteoporosis"
+                android:src="@drawable/shreya_card"
                 android:background="@drawable/rounded_image"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"/>

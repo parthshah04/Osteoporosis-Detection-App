@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -42,7 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
     private String email;
     private BottomNavigationView bottomNavigationView;
     private Button removeProfileImageButton;
-    private ProgressBar loadingProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
         //bottomNavigationView = findViewById(R.id.bottomNavigationView);
         menuIcon = findViewById(R.id.menuIcon);
         backIcon = findViewById(R.id.backIcon);
-        loadingProgressBar = findViewById(R.id.loadingProgressBar);
 
         // Set up toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -165,19 +162,24 @@ public class ProfileActivity extends AppCompatActivity {
                 if (imageBytes != null && imageBytes.length > 0) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                     profileImage.setImageBitmap(bitmap);
-                    Log.d("ProfileActivity", "Profile image loaded from database");
                 } else {
                     Log.d("ProfileActivity", "No image bytes found, setting default image");
+
+                    // Set the default image from resources
                     profileImage.setImageResource(R.drawable.profile);
                 }
             } else {
                 Log.d("ProfileActivity", "No profile photo column found, setting default image");
+
+                // If the COLUMN_PROFILE_PHOTO doesn't exist in the cursor, set the default image
                 profileImage.setImageResource(R.drawable.profile);
             }
             cursor.close();
         } else {
             Log.d("ProfileActivity", "User not found in database");
+
             Toast.makeText(this, R.string.error_user_not_found, Toast.LENGTH_SHORT).show();
+            // Set the default image if user is not found
             profileImage.setImageResource(R.drawable.profile);
         }
     }
@@ -187,45 +189,27 @@ public class ProfileActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-                profileImage.setImageBitmap(bitmap);  // Set the bitmap immediately
+                profileImage.setImageBitmap(bitmap);
                 saveProfileImage(bitmap);
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private void saveProfileImage(Bitmap bitmap) {
-        loadingProgressBar.setVisibility(View.VISIBLE);
-        profileImage.setVisibility(View.INVISIBLE);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] imageBytes = stream.toByteArray();
 
-        new Thread(() -> {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] imageBytes = stream.toByteArray();
-
-            boolean updateSuccess = dbHelper.updateUserProfileImage(email, imageBytes);
-
-            runOnUiThread(() -> {
-                loadingProgressBar.setVisibility(View.GONE);
-                profileImage.setVisibility(View.VISIBLE);
-
-                if (updateSuccess) {
-                    loadUserData(email);  // Reload user data
-                    Toast.makeText(ProfileActivity.this, R.string.profile_image_updated, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(ProfileActivity.this, "Failed to update profile image", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }).start();
+        dbHelper.updateUserProfileImage(email, imageBytes);
+        Toast.makeText(ProfileActivity.this, R.string.profile_image_updated, Toast.LENGTH_SHORT).show();
     }
 
     private void removeProfileImage() {
