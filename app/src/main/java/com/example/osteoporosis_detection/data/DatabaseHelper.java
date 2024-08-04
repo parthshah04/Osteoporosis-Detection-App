@@ -4,21 +4,26 @@ import static android.content.ContentValues.TAG;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.osteoporosis_detection.R;
 import com.example.osteoporosis_detection.util.EncryptionUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDB";
-    private static final int DATABASE_VERSION = 14; // Incremented version for schema change
+    private static final int DATABASE_VERSION = 15; // Incremented version for schema change
     private static final String TABLE_USERS = "users";
     private static final String TABLE_PREDICTIONS = "predictions";
     public static final String COLUMN_ID = "id";
@@ -41,15 +46,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_MEDICAL_CONDITIONS = "medical_conditions";
     public static final String COLUMN_PRIOR_FRACTURES = "prior_fractures";
     public static final String COLUMN_XRAY_IMAGE_PATH = "xray_image_path";
-    private static final String COLUMN_DESIGNATION = "designation";
-    private static final String COLUMN_PHONE = "phone";
+    public static final String COLUMN_DESIGNATION = "designation";
+    public static final String COLUMN_PHONE = "phone";
     private static final String COLUMN_PASSWORD = "password";
-    private static final String COLUMN_PROFILE_PHOTO = "profile_photo";
+    public static final String COLUMN_PROFILE_PHOTO = "profile_photo";
     private static final String SECRET_KEY = "5Tgb6Yhn7Ujm8Ik";
     public static final String COLUMN_HAS_PREDICTION = "has_prediction";
+    private Context context;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     private void log(String message) {
@@ -113,9 +120,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        values.put(COLUMN_PROFILE_PHOTO, "app/src/main/res/drawable/profile.png"); // Add a path or URL to the profile photo
+
+        // Convert drawable to byte array
+        byte[] profileImageBytes = getProfileImageBytes();
+        if (profileImageBytes != null) {
+            values.put(COLUMN_PROFILE_PHOTO, profileImageBytes);
+        }
 
         db.insert(TABLE_USERS, null, values);
+    }
+
+    private byte[] getProfileImageBytes() {
+        try {
+            InputStream inputStream = context.getResources().openRawResource(R.raw.profile);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int size;
+            while ((size = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, size);
+            }
+            inputStream.close();
+            return outputStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void insertPredictionData(String name, String email, String age, String tabularPrediction, String imagePrediction, String result,
@@ -473,11 +502,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, new String[]{email});
     }
 
-
     public void updateUserProfileImage(String email, byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PROFILE_PHOTO, imageBytes);
+        db.update(TABLE_USERS, values, COLUMN_EMAIL + "=?", new String[]{email});
+    }
+
+    public void removeUserProfileImage(String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.putNull(COLUMN_PROFILE_PHOTO);
         db.update(TABLE_USERS, values, COLUMN_EMAIL + "=?", new String[]{email});
     }
     /*public void updateXrayImage(int patientId, byte[] imageBytes) {
