@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/transparent"
+        android:background="@color/headercolor"
         android:elevation="0dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Add Patient"
-                android:textColor="#333333"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:paddingStart="16dp"
@@ -323,7 +323,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Select X-ray Image"
-            android:backgroundTint="#4CAF50"
+            android:backgroundTint="@color/buttoncolor2"
             android:textColor="@android:color/white"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"/>
@@ -342,7 +342,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Prognosticate"
-            android:backgroundTint="#2196F3"
+            android:backgroundTint="@color/buttoncolor"
             android:textColor="@android:color/white"
             android:layout_marginBottom="16dp"/>
 
@@ -352,7 +352,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:backgroundTint="#FF9800"
+            android:backgroundTint="@color/headercolor"
             android:textColor="@android:color/white"
             android:layout_marginBottom="24dp"/>
 
