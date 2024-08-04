@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 public class AboutActivity extends AppCompatActivity {
 
     private ImageView backIcon, menuIcon;
-    private SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +109,7 @@ public class AboutActivity extends AppCompatActivity {
         });
     }
 
-    private void logout() {
+    void logout() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
