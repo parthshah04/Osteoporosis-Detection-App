@@ -69,10 +69,11 @@
     <string name="login_successful">Login Successful</string>
     <string name="registration_starting">Registration</string>
     <string name="prediction_starting">Prediction</string>
-    <string name="visualization_starting">Visualization</string>
+    <string name="visualization_starting">Dashboard</string>
     <string name="doctors_profile_starting">Doctor\'s Profile</string>
     <string name="home_starting">Home</string>
     <string name="settings_starting">Settings</string>
+
     <string name="about_starting">About</string>
     <string name="logout">Logout</string>
     <string name="light_mode">Light Mode</string>

@@ -1,6 +1,7 @@
 package com.example.osteoporosis_detection;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -20,8 +21,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.osteoporosis_detection.data.DatabaseHelper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.tensorflow.lite.Interpreter;
 
@@ -56,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
     private String tabularPredictionText;
     private boolean predictionMade = false;
 
+    private ImageView backIcon, menuIcon;
+    private BottomNavigationView bottomNavigationView;
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +71,11 @@ public class MainActivity extends AppCompatActivity {
 
         initializeUIComponents();
         db = new DatabaseHelper(this);
+        sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
         setupListeners();
         loadModels();
+        setupToolbar();
+        setupBottomNavigation();
     }
 
     private void initializeUIComponents() {
@@ -91,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
         textViewTabularPrediction = findViewById(R.id.textViewTabularPrediction);
         progressBarResult = findViewById(R.id.progressBarResult);
 
+        backIcon = findViewById(R.id.backIcon);
+        menuIcon = findViewById(R.id.menuIcon);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         customizeSpinner(spinnerMedications, R.array.medications_options);
         customizeSpinner(spinnerHormonalChanges, R.array.hormonal_changes_options);
@@ -106,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void customizeSpinner(Spinner spinner, int arrayResourceId) {
-        // Create a custom ArrayAdapter
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this,
                 R.layout.spinner_item, getResources().getStringArray(arrayResourceId)) {
             @Override
@@ -132,19 +145,89 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-
-        // Set custom background
         spinner.setBackground(getResources().getDrawable(R.drawable.spinner_background, getTheme()));
-
-        // Set custom padding
         spinner.setPadding(20, 20, 20, 20);
     }
+
     private void setupListeners() {
         buttonSelectImage.setOnClickListener(v -> selectImage());
         buttonPredict.setOnClickListener(v -> makePrediction());
         buttonSave.setOnClickListener(v -> saveData());
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        backIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, StartingActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        menuIcon.setOnClickListener(v -> showMenu());
+    }
+
+    private void showMenu() {
+        PopupMenu popup = new PopupMenu(MainActivity.this, menuIcon);
+        popup.getMenuInflater().inflate(R.menu.header_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.menu_settings) {
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                return true;
+            } else if (itemId == R.id.menu_about) {
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                return true;
+            } else if (itemId == R.id.menu_logout) {
+                logout();
+                return true;
+            }
+            return false;
+        });
+
+        popup.show();
+    }
+
+    private void setupBottomNavigation() {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_home) {
+                startActivity(new Intent(MainActivity.this, StartingActivity.class));
+                return true;
+            } else if (itemId == R.id.navigation_registration) {
+                // We're already on the Registration page
+                return true;
+            } else if (itemId == R.id.navigation_prediction) {
+                startActivity(new Intent(MainActivity.this, TabularActivity.class));
+                return true;
+            } else if (itemId == R.id.navigation_visualization) {
+                startActivity(new Intent(MainActivity.this, Visualisation.class));
+                return true;
+            } else if (itemId == R.id.navigation_doctors_profile) {
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                return true;
+            }
+            return false;
+        });
+
+        bottomNavigationView.setSelectedItemId(R.id.navigation_registration);
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void loadModels() {
@@ -307,7 +390,6 @@ public class MainActivity extends AppCompatActivity {
         String imagePredictionValue = predictionMade ? this.imagePredictionText : "";
         float finalConfidenceScore = predictionMade ? this.finalConfidenceScore : 0f;
 
-
         db.insertPredictionData(name, email, age, tabularPredictionValue, imagePredictionValue, result, medications, hormonalChanges, familyHistory,
                 bodyWeight, calciumIntake, vitaminDIntake, physicalActivity, smoking, alcoholConsumption, medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore, predictionMade);
         Log.d(TAG, "Data saved. Prediction made: " + predictionMade);
@@ -317,7 +399,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         clearInputFields();
     }
-
 
     private void clearInputFields() {
         editTextName.setText("");
