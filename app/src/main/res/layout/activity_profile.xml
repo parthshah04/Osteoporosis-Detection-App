@@ -69,6 +69,14 @@
             android:contentDescription="Profile Image"
             android:scaleType="centerCrop" />
 
+        <ProgressBar
+            android:id="@+id/loadingProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleLarge"/>
+
         <!-- Change Profile Image Button -->
 
         <LinearLayout
