@@ -6,10 +6,13 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +24,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailInput;
     private EditText passwordInput;
     private Button loginButton;
+    private ImageButton eyeButton;
     private DatabaseHelper dbHelper;
     private SharedPreferences sharedPreferences;
+    private boolean isPasswordVisible = false; // Track password visibility
     private static final String TAG = "LoginActivity";
 
     @Override
@@ -34,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
         loginButton = findViewById(R.id.loginButton);
+        eyeButton = findViewById(R.id.eyeButton);
 
         dbHelper = new DatabaseHelper(this);
         sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
@@ -87,6 +93,24 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Set click listener for the eye button
+        eyeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPasswordVisible) {
+                    // Hide password
+                    passwordInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    eyeButton.setImageResource(R.drawable.eye_hide);
+                } else {
+                    // Show password
+                    passwordInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    eyeButton.setImageResource(R.drawable.ic_eye_open);
+                }
+                isPasswordVisible = !isPasswordVisible;
+                passwordInput.setSelection(passwordInput.getText().length()); // Move cursor to end
+            }
+        });
     }
 
     // Method to validate email format
@@ -96,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // Method to handle user login
     private void loginUser(String email, String password) {
-        Log.d(TAG, "Login successful" + email + password);
+        Log.d(TAG, "Login attempt with email: " + email);
         Cursor cursor = dbHelper.getUser(email, password);
         if (cursor != null && cursor.moveToFirst()) {
             Log.d(TAG, "Login successful");
