@@ -70,7 +70,7 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/photo_parth"
+                android:src="@drawable/parth_cards"
                 android:background="@drawable/rounded_image"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"/>
