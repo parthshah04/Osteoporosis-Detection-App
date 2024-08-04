@@ -1,12 +1,17 @@
 package com.example.osteoporosis_detection;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.osteoporosis_detection.data.DatabaseHelper;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -23,6 +28,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +41,9 @@ public class Visualisation extends AppCompatActivity {
     private TextView totalPatientsTextView;
     private HorizontalBarChart ageGroupChart;
     private PieChart osteoporosisPieChart;
+    private ImageView backIcon, menuIcon;
+    private BottomNavigationView bottomNavigationView;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +52,25 @@ public class Visualisation extends AppCompatActivity {
 
         try {
             db = new DatabaseHelper(this);
+            sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
 
             totalPatientsTextView = findViewById(R.id.totalPatientsTextView);
             ageGroupChart = findViewById(R.id.ageGroupChart);
             osteoporosisPieChart = findViewById(R.id.osteoporosisPieChart);
+            backIcon = findViewById(R.id.backIcon);
+            menuIcon = findViewById(R.id.menuIcon);
+            bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+            // Set up toolbar
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+
+            setupBackIcon();
+            setupMenuIcon();
+            setupBottomNavigation();
 
             displayTotalPatients();
             displayAgeGroupDistribution();
@@ -55,6 +79,75 @@ public class Visualisation extends AppCompatActivity {
             Log.e(TAG, "Error in onCreate: ", e);
             showErrorMessage(getString(R.string.error_visualisation_message));
         }
+    }
+
+    private void setupBackIcon() {
+        backIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(Visualisation.this, StartingActivity.class);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private void setupMenuIcon() {
+        menuIcon.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(Visualisation.this, menuIcon);
+            popup.getMenuInflater().inflate(R.menu.header_menu, popup.getMenu());
+
+            popup.setOnMenuItemClickListener(item -> {
+                int itemId = item.getItemId();
+                if (itemId == R.id.menu_settings) {
+                    startActivity(new Intent(Visualisation.this, SettingsActivity.class));
+                    return true;
+                } else if (itemId == R.id.menu_about) {
+                    startActivity(new Intent(Visualisation.this, AboutActivity.class));
+                    return true;
+                } else if (itemId == R.id.menu_logout) {
+                    logout();
+                    return true;
+                }
+                return false;
+            });
+
+            popup.show();
+        });
+    }
+
+    private void setupBottomNavigation() {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_home) {
+                startActivity(new Intent(Visualisation.this, StartingActivity.class));
+                return true;
+            } else if (itemId == R.id.navigation_registration) {
+                startActivity(new Intent(Visualisation.this, MainActivity.class));
+                return true;
+            } else if (itemId == R.id.navigation_prediction) {
+                startActivity(new Intent(Visualisation.this, TabularActivity.class));
+                return true;
+            } else if (itemId == R.id.navigation_visualization) {
+                // We're already on the Visualisation page
+                return true;
+            } else if (itemId == R.id.navigation_doctors_profile) {
+                startActivity(new Intent(Visualisation.this, ProfileActivity.class));
+                return true;
+            }
+            return false;
+        });
+
+        // Set the visualization item as selected
+        bottomNavigationView.setSelectedItemId(R.id.navigation_visualization);
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(Visualisation.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void displayTotalPatients() {
@@ -97,7 +190,6 @@ public class Visualisation extends AppCompatActivity {
             xAxis.setDrawGridLines(false);
             xAxis.setGranularity(1f);
             xAxis.setValueFormatter(new IndexAxisValueFormatter(ageGroups));
-
 
             // X Axis
             YAxis leftAxis = ageGroupChart.getAxisLeft();

@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class AboutActivity extends AppCompatActivity {
 
-    private TextView menuIcon;
+    private ImageView backIcon, menuIcon;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -22,15 +22,8 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-
-        menuIcon = findViewById(R.id.menuIcon);
-        setupMenuIcon();
-
+        initializeUIComponents();
+        setupToolbar();
         sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
 
         if (savedInstanceState == null) {
@@ -57,6 +50,49 @@ public class AboutActivity extends AppCompatActivity {
         iconNext.setOnClickListener(moreInfoClickListener);
     }
 
+    private void initializeUIComponents() {
+        backIcon = findViewById(R.id.backIcon);
+        menuIcon = findViewById(R.id.menuIcon);
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        backIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(AboutActivity.this, StartingActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        menuIcon.setOnClickListener(v -> showMenu());
+    }
+
+    private void showMenu() {
+        PopupMenu popup = new PopupMenu(AboutActivity.this, menuIcon);
+        popup.getMenuInflater().inflate(R.menu.header_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.menu_settings) {
+                startActivity(new Intent(AboutActivity.this, SettingsActivity.class));
+                return true;
+            } else if (itemId == R.id.menu_about) {
+                // Already on About page, do nothing
+                return true;
+            } else if (itemId == R.id.menu_logout) {
+                logout();
+                return true;
+            }
+            return false;
+        });
+
+        popup.show();
+    }
+
     private void setupExpandableSection(int headingId, int expandableId, int containerId, Fragment fragment) {
         TextView heading = findViewById(headingId);
         View expandableSection = findViewById(expandableId);
@@ -73,36 +109,13 @@ public class AboutActivity extends AppCompatActivity {
         });
     }
 
-    private void setupMenuIcon() {
-        menuIcon.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(AboutActivity.this, menuIcon);
-            popup.getMenuInflater().inflate(R.menu.header_menu, popup.getMenu());
-
-            popup.setOnMenuItemClickListener(item -> {
-                int itemId = item.getItemId();
-                if (itemId == R.id.menu_settings) {
-                    startActivity(new Intent(AboutActivity.this, SettingsActivity.class));
-                    return true;
-                } else if (itemId == R.id.menu_about) {
-                    // Already on About page, do nothing
-                    return true;
-                } else if (itemId == R.id.menu_logout) {
-                    logout();
-                    return true;
-                }
-                return false;
-            });
-
-            popup.show();
-        });
-    }
-
     private void logout() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
 
         Intent intent = new Intent(AboutActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }

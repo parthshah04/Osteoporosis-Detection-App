@@ -1,6 +1,7 @@
 package com.example.osteoporosis_detection;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -26,6 +27,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.osteoporosis_detection.data.DatabaseHelper;
 
@@ -45,13 +48,14 @@ import java.util.Objects;
 public class EditPatientActivity extends AppCompatActivity {
 
     private static final String TAG = "EditPatientActivity";
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     private EditText editTextName, editTextEmail, editTextAge;
     private Spinner spinnerMedications, spinnerHormonalChanges, spinnerFamilyHistory,
             spinnerBodyWeight, spinnerCalciumIntake, spinnerVitaminDIntake,
             spinnerPhysicalActivity, spinnerSmoking, spinnerAlcoholConsumption,
             spinnerMedicalConditions, spinnerPriorFractures;
-    private Button buttonSave, buttonCancel, buttonPredict, buttonSelectImage, buttonDelete;;
+    private Button buttonSave, buttonCancel, buttonPredict, buttonSelectImage, buttonDelete;
     private ImageView imageViewXray;
     private TextView textViewResult, textViewImagePrediction, textViewTabularPrediction, textViewNoPrediction;
     private ProgressBar progressBarResult;
@@ -73,17 +77,22 @@ public class EditPatientActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> imagePickerLauncher;
 
+    private ImageView backIcon, menuIcon;
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_patient);
 
         initializeViews();
+        setupToolbar();
         setupSpinners();
         setupImagePicker();
         loadModels();
 
         db = new DatabaseHelper(this);
+        sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
 
         patientId = getIntent().getIntExtra("PATIENT_ID", -1);
         if (patientId == -1) {
@@ -129,6 +138,57 @@ public class EditPatientActivity extends AppCompatActivity {
         textViewNoPrediction = findViewById(R.id.textViewNoPrediction);
         progressBarResult = findViewById(R.id.progressBarResult);
         buttonDelete = findViewById(R.id.buttonDelete);
+        backIcon = findViewById(R.id.backIcon);
+        menuIcon = findViewById(R.id.menuIcon);
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        backIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(EditPatientActivity.this, TabularActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        menuIcon.setOnClickListener(v -> showMenu());
+    }
+
+    private void showMenu() {
+        PopupMenu popup = new PopupMenu(EditPatientActivity.this, menuIcon);
+        popup.getMenuInflater().inflate(R.menu.header_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.menu_settings) {
+                startActivity(new Intent(EditPatientActivity.this, SettingsActivity.class));
+                return true;
+            } else if (itemId == R.id.menu_about) {
+                startActivity(new Intent(EditPatientActivity.this, AboutActivity.class));
+                return true;
+            } else if (itemId == R.id.menu_logout) {
+                logout();
+                return true;
+            }
+            return false;
+        });
+
+        popup.show();
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(EditPatientActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void setupSpinners() {
@@ -213,6 +273,7 @@ public class EditPatientActivity extends AppCompatActivity {
         long declaredLength = fileDescriptor.getDeclaredLength();
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
     }
+
     private void makePrediction() {
         try {
             if (tfliteTabular == null || tfliteVGG19 == null) {
@@ -493,17 +554,6 @@ public class EditPatientActivity extends AppCompatActivity {
         }
     }
 
-    private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor == null) return null;
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String path = cursor.getString(column_index);
-        cursor.close();
-        return path;
-    }
-
     private void confirmDelete() {
         new AlertDialog.Builder(this)
                 .setTitle("Delete Patient")
@@ -512,6 +562,7 @@ public class EditPatientActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .show();
     }
+
     private void deletePatient() {
         boolean deleted = db.deletePatient(patientId);
         if (deleted) {
