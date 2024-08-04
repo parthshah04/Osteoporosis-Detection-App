@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".LoginActivity"
     android:padding="16dp">
 
@@ -34,23 +35,19 @@
         android:layout_marginBottom="16dp"
         android:drawableStart="@drawable/username"
         android:drawablePadding="12dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-    <!-- Password Input with eye button -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/emailInput"
         android:layout_marginTop="16dp">
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:textColor="@color/black">
-
+            app:hintEnabled="false"
+            android:textColorHint="@color/bottom_nav_item_color">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordInput"
                 android:layout_width="match_parent"
@@ -60,10 +57,9 @@
                 android:drawablePadding="12dp"
                 android:inputType="textPassword"
                 android:padding="12dp"
-                android:textColor="@color/black"
+                android:hint="@string/password"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </com.google.android.material.textfield.TextInputLayout>
-
         <ImageButton
             android:id="@+id/eyeButton"
             android:layout_width="48dp"
@@ -74,6 +70,7 @@
             android:contentDescription="toggle_password_visibility"
             android:scaleType="centerInside" />
     </FrameLayout>
+
 
     <!-- Login Button -->
     <Button
