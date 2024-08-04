@@ -2,22 +2,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <!-- Catchy Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/team"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:paddingBottom="16dp"
-            android:gravity="center_horizontal"/>
 
         <!-- Card 1 -->
         <LinearLayout
@@ -32,8 +23,7 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/osteoporosis"
-                android:background="@drawable/rounded_image"
+                android:src="@drawable/photo_areeb"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"/>
 
@@ -47,7 +37,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="M. Areeb"
+                    android:text="Mustaquim Areeb"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:paddingBottom="4dp"/>
@@ -61,7 +51,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="235842530"
+                    android:text="Std ID: 235842530"
                     android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -79,8 +69,7 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/osteoporosis"
-                android:background="@drawable/rounded_image"
+                android:src="@drawable/photo_parth"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"/>
 
@@ -108,7 +97,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="235842120"
+                    android:text="Std ID: 235842120"
                     android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -155,7 +144,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="235825150"
+                    android:text="Std ID: 235825150"
                     android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -202,7 +191,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="235843790"
+                    android:text="Std ID: 235843790"
                     android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -249,7 +238,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="235847530"
+                    android:text="Std ID: 235847530"
                     android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>

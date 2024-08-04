@@ -85,12 +85,11 @@
     <string name="subject">Ders</string>
     <string name="setting_subject_desc">Android Uygulama Programlama</string>
     <string name="institution">Kurum</string>
-    <string name="wilfrid_laurier_university">Wilfrid Laurier Üniversitesi</string>
+    <string name="wilfrid_laurier_university">Wilfrid Laurier Üniversitesi\n</string>
     <string name="about_dropdown_1">Biz Kimiz?</string>
     <string name="about_dropdown_2">SSS</string>
     <string name="about_desc">Uygulamanın nasıl kullanılacağı hakkında daha fazla bilgi edinmek ister misiniz?</string>
     <string name="team">Bizim takım</string>
-    <string name="faq">Sıkça Sorulan Sorular (SSS)</string>
     <string name="excellence_in_osteoporosis">Osteoporoz Bakımında Yapay Zeka Mükemmelliği</string>
     <string name="version">Sürüm: 1.0</string>
     <string name="about_full_description">Kemik sağlığını iyileştirmeye kendimizi adamış olarak, hassas ve güvenilir osteoporoz teşhisi sunmak, güçlü ve sağlıklı kalmanıza yardımcı olmak için en son teknolojiye sahip yapay zekadan yararlanıyoruz.</string>
@@ -109,6 +108,7 @@
     <string name="no_patients_found">Hasta Bulunamadı!</string>
     <string name="missing_columns">İmleçte bir veya daha fazla gerekli sütun eksik.</string>
     <string name="change_profile_picture">Profil resmini değiştir</string>
+    <string name="remove_profile_picture">Profil resmini kaldır</string>
     <string name="name">İsim</string>
     <string name="designation">Tanım</string>
     <string name="phone_number">Telefon numarası</string>
@@ -183,8 +183,8 @@
     <string name="age_group_distribution">Yaş Grubu Dağılımı</string>
     <string name="failed_to_display_age_group_distribution">Yaş grubu dağılımı görüntülenemedi.</string>
     <string name="no_data_available_for_osteoporosis_distribution">Osteoporoz dağılımına ilişkin veri mevcut değildir.</string>
-    <string name="without_osteoporosis">Osteoporoz olmadan</string>
-    <string name="with_osteoporosis">Osteoporozlu</string>
+    <string name="without_osteoporosis">Normal</string>
+    <string name="with_osteoporosis">Kemik erimesi</string>
     <string name="osteoporosis_distribution">Osteoporoz Dağılımı</string>
     <string name="osteoporosis_distribution_space">Osteoporoz\nDağılımı</string>
     <string name="failed_to_display_osteoporosis_distribution">Osteoporoz dağılımı görüntülenemedi.</string>

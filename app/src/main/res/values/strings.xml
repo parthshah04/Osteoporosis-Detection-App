@@ -84,12 +84,11 @@
     <string name="subject">Subject</string>
     <string name="setting_subject_desc">Android Application Programming</string>
     <string name="institution">Institution</string>
-    <string name="wilfrid_laurier_university">Wilfrid Laurier University</string>
-    <string name="about_dropdown_1">Who We Are?</string>
-    <string name="about_dropdown_2">FAQ</string>
-    <string name="about_desc">Want to know more about how to use the app?</string>
+    <string name="wilfrid_laurier_university">Wilfrid Laurier University\n</string>
+    <string name="about_dropdown_1">Contribution - Our Team</string>
+    <string name="about_dropdown_2">Frequently Asked Questions</string>
+    <string name="about_desc">Get to know the App..</string>
     <string name="team">Our Team</string>
-    <string name="faq">Frequently Asked Questions (FAQs)</string>
     <string name="excellence_in_osteoporosis">AI Excellence in Osteoporosis Care</string>
     <string name="version">Version: 1.0</string>
     <string name="about_full_description">Dedicated to improving bone health, we leverage cutting-edge AI to offer precise and reliable osteoporosis diagnosis, helping you stay strong and healthy.</string>
@@ -107,7 +106,8 @@
     <string name="error_loading_patient_data">Error Loading Patient Data: </string>
     <string name="no_patients_found">No Patients Found!</string>
     <string name="missing_columns">One or more required columns are missing from the cursor.</string>
-    <string name="change_profile_picture">Change Profile Picture</string>
+    <string name="change_profile_picture">Change Picture</string>
+    <string name="remove_profile_picture">Remove Picture</string>
     <string name="name">Name</string>
     <string name="designation">Designation</string>
     <string name="phone_number">Phone Number</string>
@@ -182,8 +182,8 @@
     <string name="age_group_distribution">Age Group Distribution</string>
     <string name="failed_to_display_age_group_distribution">Failed to display age group distribution.</string>
     <string name="no_data_available_for_osteoporosis_distribution">No data available for osteoporosis distribution.</string>
-    <string name="without_osteoporosis">Without Osteoporosis</string>
-    <string name="with_osteoporosis">With Osteoporosis</string>
+    <string name="without_osteoporosis">Normal</string>
+    <string name="with_osteoporosis">Osteoporosis</string>
     <string name="osteoporosis_distribution">Osteoporosis Distribution</string>
     <string name="osteoporosis_distribution_space">Osteoporosis\nDistribution</string>
     <string name="failed_to_display_osteoporosis_distribution">Failed to display osteoporosis distribution.</string>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F0F0F0"
+    android:background="@color/white"
     tools:context=".EditPatientActivity">
 
     <!-- Header with title and menu -->
@@ -13,7 +13,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#FFFFFF"
+        android:background="@color/headercolor"
         android:elevation="4dp">
 
         <LinearLayout
@@ -35,8 +35,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Edit Patient"
-                android:textColor="#333333"
+                android:text="Patient Details"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:paddingStart="16dp"
@@ -322,7 +322,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Select X-ray Image"
-                android:backgroundTint="#4CAF50"
+                android:backgroundTint="@color/buttoncolor2"
                 android:textColor="@android:color/white"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"/>
@@ -341,7 +341,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Prognosticate"
-                android:backgroundTint="#2196F3"
+                android:backgroundTint="@color/buttoncolor"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="16dp"/>
 
@@ -351,7 +351,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Save Changes"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="@color/headercolor"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="16dp"/>
 
@@ -371,7 +371,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cancel"
-                android:backgroundTint="#9E9E9E"
+                android:backgroundTint="@color/darkcolor"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="24dp"/>
 

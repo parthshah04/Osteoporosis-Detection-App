@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     android:layout_marginBottom="8dp"
+    android:background="@color/white"
     android:elevation="2dp">
 
     <LinearLayout
@@ -22,14 +24,17 @@
             android:text="@string/question"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
 
         <ImageView
             android:id="@+id/expandIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/arrow_down_float"
-            app:tint="@android:color/black"/>
+            app:tint="@android:color/black"
+            android:paddingEnd="8dp" />
     </LinearLayout>
 
     <TextView
@@ -39,9 +44,8 @@
         android:text="@string/answer"
         android:textSize="16sp"
         android:visibility="gone"
-        android:background="@drawable/rounded_answer"
         android:paddingTop="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="16dp"/>
+        android:paddingBottom="16dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp" />
 </LinearLayout>

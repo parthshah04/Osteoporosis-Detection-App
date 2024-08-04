@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:padding="16dp">
 
     <LinearLayout
@@ -10,28 +11,6 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- First Section: About the App -->
-
-        <!-- App Name -->
-        <TextView
-            android:id="@+id/textViewAppName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:text="@string/osteo_vision"
-            android:textSize="35sp"
-            android:textStyle="bold" />
-
-        <!-- One Liner Sub Heading -->
-        <TextView
-            android:id="@+id/textViewSubHeading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/excellence_in_osteoporosis"
-            android:textSize="18sp"
-            android:paddingBottom="16dp"
-            android:textStyle="bold"/>
-
         <!-- App Logo -->
         <ImageView
             android:id="@+id/imageViewAppLogo"
@@ -39,9 +18,18 @@
             android:layout_height="206dp"
             android:contentDescription="App Logo"
             android:paddingBottom="16dp"
-            android:src="@drawable/osteoporosis" />
+            android:src="@drawable/osteovision_logo2" />
 
         <!-- Version Number -->
+        <TextView
+            android:id="@+id/textViewSubHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:text="@string/excellence_in_osteoporosis"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/textViewVersionNumber"
             android:layout_width="wrap_content"
@@ -51,27 +39,22 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:text="@string/version"
+            android:backgroundTint="@color/colorQuestionSection"
             android:textSize="14sp"
             android:textStyle="bold" />
 
-        <!-- Mission Statement Container -->
-        <LinearLayout
+        <!-- Mission Statement Text -->
+        <TextView
+            android:id="@+id/textViewMissionStatement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/text_background"
+            android:layout_marginTop="16dp"
+            android:text="@string/about_full_description"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:textAlignment="center"
             android:padding="8dp"
-            android:layout_marginTop="16dp">
-
-            <TextView
-                android:id="@+id/textViewMissionStatement"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/about_full_description"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:padding="8dp"
-                android:justificationMode="inter_word"
-                android:textStyle="bold"/>
-        </LinearLayout>
+            android:justificationMode="inter_word"
+            android:textStyle="italic"/>
     </LinearLayout>
 </ScrollView>

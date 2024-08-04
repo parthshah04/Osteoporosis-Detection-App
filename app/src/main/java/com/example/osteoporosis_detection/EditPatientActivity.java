@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -90,7 +91,7 @@ public class EditPatientActivity extends AppCompatActivity {
         setupSpinners();
         setupImagePicker();
         loadModels();
-
+        setAgeInputFilter(editTextAge);
         db = new DatabaseHelper(this);
         sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
 
@@ -158,6 +159,23 @@ public class EditPatientActivity extends AppCompatActivity {
         menuIcon.setOnClickListener(v -> showMenu());
     }
 
+    private void setAgeInputFilter(EditText editText) {
+        editText.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(3),
+                (source, start, end, dest, dstart, dend) -> {
+                    try {
+                        String newVal = dest.subSequence(0, dstart) + source.toString() + dest.subSequence(dend, dest.length());
+                        int input = Integer.parseInt(newVal);
+                        if (input > 120) {
+                            return "";
+                        }
+                    } catch (NumberFormatException nfe) {
+                        // Do nothing
+                    }
+                    return null;
+                }
+        });
+    }
     private void showMenu() {
         PopupMenu popup = new PopupMenu(EditPatientActivity.this, menuIcon);
         popup.getMenuInflater().inflate(R.menu.header_menu, popup.getMenu());
@@ -294,6 +312,17 @@ public class EditPatientActivity extends AppCompatActivity {
             if (xrayImagePath == null || xrayImagePath.isEmpty()) {
                 Log.e(TAG, "No image selected.");
                 textViewResult.setText("Please select an image.");
+                return;
+            }
+            String ageString = editTextAge.getText().toString();
+            if (ageString.isEmpty()) {
+                Toast.makeText(this, "Please enter age", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            int age = Integer.parseInt(ageString);
+            if (age < 5 || age > 120) {
+                Toast.makeText(this, "Age must be between 5 and 120", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -515,13 +544,24 @@ public class EditPatientActivity extends AppCompatActivity {
     private void savePatientData() {
         String name = editTextName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
-        String age = editTextAge.getText().toString().trim();
+        String ageString = editTextAge.getText().toString().trim();
 
-        if (name.isEmpty() || email.isEmpty() || age.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || ageString.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        int age;
+        try {
+            age = Integer.parseInt(ageString);
+            if (age < 5 || age > 120) {
+                Toast.makeText(this, "Age must be between 5 and 120", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Please enter a valid age", Toast.LENGTH_SHORT).show();
+            return;
+        }
         int medications = spinnerMedications.getSelectedItemPosition();
         int hormonalChanges = spinnerHormonalChanges.getSelectedItemPosition();
         int familyHistory = spinnerFamilyHistory.getSelectedItemPosition();
@@ -540,7 +580,7 @@ public class EditPatientActivity extends AppCompatActivity {
         float finalConfidenceScore = progressBarResult.getProgress() / 100f;
 
         boolean updated = db.updatePredictionData(
-                patientId, name, email, age, tabularPrediction, imagePrediction, result,
+                patientId, name, email, ageString, tabularPrediction, imagePrediction, result,
                 medications, hormonalChanges, familyHistory, bodyWeight, calciumIntake,
                 vitaminDIntake, physicalActivity, smoking, alcoholConsumption,
                 medicalConditions, priorFractures, xrayImagePath, finalConfidenceScore, hasPrediction

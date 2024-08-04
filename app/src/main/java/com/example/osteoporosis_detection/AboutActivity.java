@@ -33,8 +33,8 @@ public class AboutActivity extends AppCompatActivity {
             transaction1.commit();
 
             // Setup expandable sections
-            setupExpandableSection(R.id.section3_heading, R.id.expandable_section3, R.id.fragment_container_section3, new Section3CardsFragment());
-            setupExpandableSection(R.id.section2_heading, R.id.expandable_section2, R.id.fragment_container_section2, new Section2Fragment());
+            setupExpandableSection(R.id.section3_header, R.id.expandable_section3, R.id.fragment_container_section3, R.id.section3_arrow, new Section3CardsFragment());
+            setupExpandableSection(R.id.section2_header, R.id.expandable_section2, R.id.fragment_container_section2, R.id.section2_arrow, new Section2Fragment());
         }
 
         // Set up click listener for more info
@@ -93,18 +93,21 @@ public class AboutActivity extends AppCompatActivity {
         popup.show();
     }
 
-    private void setupExpandableSection(int headingId, int expandableId, int containerId, Fragment fragment) {
-        TextView heading = findViewById(headingId);
+    private void setupExpandableSection(int headerId, int expandableId, int containerId, int arrowId, Fragment fragment) {
+        View header = findViewById(headerId);
         View expandableSection = findViewById(expandableId);
+        ImageView arrow = findViewById(arrowId);
 
-        heading.setOnClickListener(v -> {
+        header.setOnClickListener(v -> {
             if (expandableSection.getVisibility() == View.GONE) {
                 expandableSection.setVisibility(View.VISIBLE);
+                arrow.setRotation(180); // Rotate arrow when expanded
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(containerId, fragment);
                 transaction.commit();
             } else {
                 expandableSection.setVisibility(View.GONE);
+                arrow.setRotation(0); // Reset arrow rotation when collapsed
             }
         });
     }
