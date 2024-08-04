@@ -190,7 +190,7 @@
     <string name="login_and_authentication">Login and Authentication</string>
     <string name="add_patients">Add Patients</string>
     <string name="patient_details">Patient Details</string>
-    <string name="prediction_and_results">Prediction and Results</string>
-    <string name="visualization_and_profile">Visualization and Profile</string>
+    <string name="prediction_and_results">Visual Analysis</string>
+    <string name="visualization_and_profile">Doctor Profile</string>
 
 </resources>

@@ -36,7 +36,7 @@
                 android:layout_weight="1"
                 android:text="Instructions"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"/>
@@ -75,8 +75,8 @@
             android:paddingBottom="16dp">
 
             <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="113dp"
+                android:layout_height="wrap_content"
                 android:contentDescription="Instructions Icon"
                 android:src="@drawable/ic_instructions" />
 
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_and_authentication"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#333333"
             android:paddingBottom="8dp" />
@@ -110,9 +110,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="- Details about the section\n- Details about the section\n - Details about the section."
+                android:text="1. Enter your provided credentials to access the app.\n2. Use your unique username and password.\n3. Contact support if you encounter login issues."
                 android:textSize="14sp"
-                android:textColor="#808080" />
+                android:textColor="#808080"
+                android:lineSpacingExtra="8dp"/>
         </LinearLayout>
 
         <!-- Title: Add Patients -->
@@ -120,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_patients"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#333333"
             android:paddingBottom="8dp" />
@@ -136,9 +137,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="- Details about the section\n- Details about the section\n - Details about the section."
+                android:text="1. Register new patients by entering their details.\n2. Input patient symptoms in the provided table.\n3. Upload X-ray images for instant prediction or save for later analysis."
                 android:textSize="14sp"
-                android:textColor="#808080" />
+                android:textColor="#808080"
+                android:lineSpacingExtra="8dp"/>
         </LinearLayout>
 
         <!-- Title: Patient Details -->
@@ -146,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/patient_details"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#333333"
             android:paddingBottom="8dp" />
@@ -162,9 +164,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="- Details about the section\n- Details about the section\n - Details about the section."
+                android:text="1. View a comprehensive list of registered patients.\n2. Click on a patient to access and update their specific information.\n3. Delete patient records permanently if necessary.
+"
                 android:textSize="14sp"
-                android:textColor="#808080"/>
+                android:textColor="#808080"
+                android:lineSpacingExtra="8dp"/>
         </LinearLayout>
 
         <!-- Title: Prediction and Results -->
@@ -172,7 +176,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/prediction_and_results"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#333333"
             android:paddingBottom="8dp" />
@@ -188,9 +192,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="- Details about the section\n- Details about the section\n - Details about the section."
+                android:text="1. Explore data visualizations including osteoporosis distribution graphs.\n2. View total patient counts and age group breakdowns.\n3. Gain insights through interactive charts and graphs."
                 android:textSize="14sp"
-                android:textColor="#808080"/>
+                android:textColor="#808080"
+                android:lineSpacingExtra="8dp"/>
         </LinearLayout>
 
         <!-- Title: Visualization and Profile -->
@@ -198,7 +203,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/visualization_and_profile"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#333333"
             android:paddingBottom="8dp" />
@@ -214,9 +219,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="- Details about the section\n- Details about the section\n - Details about the section."
+                android:text="1. Update your profile photo and password for security.\n2. Note that name, designation, phone number, and email cannot be edited.\n3. Ensure your profile information is current and accurate."
                 android:textSize="14sp"
-                android:textColor="#808080" />
+                android:textColor="#808080"
+                android:lineSpacingExtra="8dp"/>
         </LinearLayout>
 
     </LinearLayout>
