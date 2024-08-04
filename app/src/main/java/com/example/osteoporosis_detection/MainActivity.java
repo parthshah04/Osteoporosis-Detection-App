@@ -315,17 +315,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Age should be between 5 and 120", Toast.LENGTH_SHORT).show();
                 return;
             }
-            String ageString = editTextAge.getText().toString();
             if (ageString.isEmpty()) {
                 Toast.makeText(this, "Please enter age", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            int age = Integer.parseInt(ageString);
-            if (age < 5 || age > 120) {
-                Toast.makeText(this, "Age must be between 5 and 120", Toast.LENGTH_SHORT).show();
-                return;
-            }
             float[] tabularInput = extractTabularInput();
             float tabularPrediction = predictTabularModel(tabularInput);
             Log.d(TAG, "Tabular prediction: " + tabularPrediction);
