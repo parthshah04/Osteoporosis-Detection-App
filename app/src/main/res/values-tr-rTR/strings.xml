@@ -85,12 +85,11 @@
     <string name="subject">Ders</string>
     <string name="setting_subject_desc">Android Uygulama Programlama</string>
     <string name="institution">Kurum</string>
-    <string name="wilfrid_laurier_university">Wilfrid Laurier Üniversitesi</string>
+    <string name="wilfrid_laurier_university">Wilfrid Laurier Üniversitesi\n</string>
     <string name="about_dropdown_1">Biz Kimiz?</string>
     <string name="about_dropdown_2">SSS</string>
     <string name="about_desc">Uygulamanın nasıl kullanılacağı hakkında daha fazla bilgi edinmek ister misiniz?</string>
     <string name="team">Bizim takım</string>
-    <string name="faq">Sıkça Sorulan Sorular (SSS)</string>
     <string name="excellence_in_osteoporosis">Osteoporoz Bakımında Yapay Zeka Mükemmelliği</string>
     <string name="version">Sürüm: 1.0</string>
     <string name="about_full_description">Kemik sağlığını iyileştirmeye kendimizi adamış olarak, hassas ve güvenilir osteoporoz teşhisi sunmak, güçlü ve sağlıklı kalmanıza yardımcı olmak için en son teknolojiye sahip yapay zekadan yararlanıyoruz.</string>

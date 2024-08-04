@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="@color/white"
     tools:context=".StartingActivity">
 
     <!-- Header with title -->
@@ -16,7 +16,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/transparent"
+        android:background="@color/headercolor"
         android:elevation="0dp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="-98dp">
@@ -25,9 +25,10 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
+            android:paddingStart="16dp"
             android:text="OSTEO VISION"
-            android:textColor="#333333"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -42,24 +43,22 @@
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Updated Bottom Navigation -->
+
     <RelativeLayout
         android:id="@+id/iconLayout"
         android:layout_width="368dp"
-        android:layout_height="272dp"
+        android:layout_height="280dp"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="60dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0.916">
+        app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
         <!-- Registration Icon -->
         <LinearLayout
             android:id="@+id/registrationIconLayout"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -69,8 +68,8 @@
 
             <ImageButton
                 android:id="@+id/registrationIcon"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Registration"
                 android:padding="8dp"
@@ -81,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Registration"
+                android:text="Add patient"
                 android:textColor="#333333"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -89,7 +88,7 @@
         <!-- Prediction Icon -->
         <LinearLayout
             android:id="@+id/predictionIconLayout"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_margin="8dp"
@@ -99,8 +98,8 @@
 
             <ImageButton
                 android:id="@+id/predictionIcon"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Prediction"
                 android:padding="8dp"
@@ -111,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Prediction"
+                android:text="Manage Patients"
                 android:textColor="#333333"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -119,7 +118,7 @@
         <!-- Visualization Icon -->
         <LinearLayout
             android:id="@+id/visualizationIconLayout"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/registrationIconLayout"
             android:layout_alignParentStart="true"
@@ -129,8 +128,8 @@
 
             <ImageButton
                 android:id="@+id/visualizationIcon"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Visualization"
                 android:padding="8dp"
@@ -141,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Visualization"
+                android:text="Visual Analysis"
                 android:textColor="#333333"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -149,7 +148,7 @@
         <!-- Doctor's Profile Icon -->
         <LinearLayout
             android:id="@+id/doctorsProfileIconLayout"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/predictionIconLayout"
             android:layout_margin="8dp"
@@ -159,8 +158,8 @@
 
             <ImageButton
                 android:id="@+id/doctorsProfileIcon"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Doctor's Profile"
                 android:padding="8dp"
@@ -189,5 +188,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="242dp"
+        android:layout_height="216dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:srcCompat="@drawable/osteovision_logo2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

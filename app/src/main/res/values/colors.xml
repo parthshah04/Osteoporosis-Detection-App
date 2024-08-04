@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
     <!-- Other colors -->
     <color name="colorAccent">#FF4081</color>
-    <color name="colorQuestionSection">#7AB2B2</color>
-    <color name="colorAnswerSection">#CDE8E5</color>
+    <color name="colorQuestionSection">#EEF5FF</color>
+    <color name="colorAnswerSection">#F5F5F5</color>
     <color name="colorBackground">#EEF7FF</color>
 
     <color name="selectedColor">#007AFF</color>
@@ -14,4 +14,14 @@
     <!-- Add these lines -->
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
+
+<!--    header color-->
+    <color name="headercolor">#053970</color>
+    <color name="buttoncolor">#0060AD</color>
+    <color name="buttoncolor2">#019AED</color>
+    <color name="darkcolor">#052952</color>
+<!--   textbox color -->
+    <color name="textbox">#F5F5F5</color>
+<!--    Body color-->
+    <color name="bodycolor">#C9EAFD</color>
 </resources>

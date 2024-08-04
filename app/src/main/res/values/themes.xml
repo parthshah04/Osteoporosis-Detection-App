@@ -3,6 +3,8 @@
     <style name="Base.Theme.OsteoporosisDetection" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/headercolor</item>
+        <item name="android:windowLightStatusBar">false</item> <!-- Set to false for white status bar text/icons -->
     </style>
 
     <style name="Theme.OsteoporosisDetection" parent="Base.Theme.OsteoporosisDetection" />
