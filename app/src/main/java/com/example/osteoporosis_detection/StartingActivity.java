@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +21,7 @@ public class StartingActivity extends AppCompatActivity {
     private ImageButton registrationIcon, predictionIcon, visualizationIcon, doctorsProfileIcon;
     private SharedPreferences sharedPreferences;
     private BottomNavigationView bottomNavigationView;
-    private TextView menuIcon;
+    private ImageView menuIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,9 @@ public class StartingActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         });
+
+        // Set the home item as selected
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
     }
 
     private void setupMenuIcon() {
@@ -107,6 +111,7 @@ public class StartingActivity extends AppCompatActivity {
                 }
                 return false;
             });
+
             popup.show();
         });
     }
@@ -117,6 +122,7 @@ public class StartingActivity extends AppCompatActivity {
         editor.apply();
 
         Intent intent = new Intent(StartingActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
