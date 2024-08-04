@@ -116,7 +116,7 @@ public class StartingActivity extends AppCompatActivity {
         });
     }
 
-    private void logout() {
+    void logout() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();

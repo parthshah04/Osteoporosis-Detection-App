@@ -61,8 +61,8 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.0.0")
     testImplementation("org.mockito:mockito-inline:4.0.0")
-    testImplementation("org.robolectric:robolectric:4.8")
-    testImplementation("org.robolectric:shadows-framework:4.9") // Use this instead of shadows-core
+    testImplementation("org.robolectric:robolectric:4.10.3")
+    testImplementation("org.robolectric:shadows-framework:4.9")
     testImplementation("androidx.test.ext:junit:1.1.3")
     testImplementation("androidx.test:core:1.4.0")
 

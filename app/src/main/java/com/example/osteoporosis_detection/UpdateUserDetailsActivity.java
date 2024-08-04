@@ -10,6 +10,7 @@ import com.example.osteoporosis_detection.data.DatabaseHelper;
 public class UpdateUserDetailsActivity extends AppCompatActivity {
 
     private static final String TAG = "UpdateUserDetails";
+    public DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

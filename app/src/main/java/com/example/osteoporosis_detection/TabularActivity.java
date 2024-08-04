@@ -29,17 +29,17 @@ public class TabularActivity extends AppCompatActivity {
     private ListView listViewPatients;
     private Button buttonBack;
     private SearchView searchView;
-    private DatabaseHelper db;
-    private ArrayList<String> patientList;
-    private ArrayList<Integer> patientIds;
-    private ArrayList<String> originalPatientList;
-    private ArrayList<Integer> originalPatientIds;
+    DatabaseHelper db;
+    ArrayList<String> patientList;
+    ArrayList<Integer> patientIds;
+    ArrayList<String> originalPatientList;
+    ArrayList<Integer> originalPatientIds;
     private ArrayAdapter<String> adapter;
     private ActivityResultLauncher<Intent> editPatientLauncher;
 
     private ImageView backIcon, menuIcon;
-    private BottomNavigationView bottomNavigationView;
-    private SharedPreferences sharedPreferences;
+    BottomNavigationView bottomNavigationView;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +154,7 @@ public class TabularActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.navigation_prediction);
     }
 
-    private void logout() {
+    void logout() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
@@ -191,7 +191,7 @@ public class TabularActivity extends AppCompatActivity {
         refreshPatientData();
     }
 
-    private void loadPatientData() {
+    void loadPatientData() {
         Cursor cursor = null;
         try {
             cursor = db.getAllPatients();
@@ -250,7 +250,7 @@ public class TabularActivity extends AppCompatActivity {
         });
     }
 
-    private void filterPatients(String query) {
+    void filterPatients(String query) {
         ArrayList<String> filteredList = new ArrayList<>();
         ArrayList<Integer> filteredIds = new ArrayList<>();
 
