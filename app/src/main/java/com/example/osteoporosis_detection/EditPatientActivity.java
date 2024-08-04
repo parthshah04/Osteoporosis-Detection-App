@@ -23,6 +23,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.view.animation.DecelerateInterpolator;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -80,7 +83,9 @@ public class EditPatientActivity extends AppCompatActivity {
 
     private ImageView backIcon, menuIcon;
     private SharedPreferences sharedPreferences;
-
+    private ProgressBar circularProgressBar;
+    private TextView textViewCircularProgress;
+    private float finalConfidenceScore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,6 +146,9 @@ public class EditPatientActivity extends AppCompatActivity {
         buttonDelete = findViewById(R.id.buttonDelete);
         backIcon = findViewById(R.id.backIcon);
         menuIcon = findViewById(R.id.menuIcon);
+        circularProgressBar = findViewById(R.id.circularProgressBar);
+        textViewCircularProgress = findViewById(R.id.textViewCircularProgress);
+        textViewResult = findViewById(R.id.textViewResult);
     }
 
     private void setupToolbar() {
@@ -329,14 +337,32 @@ public class EditPatientActivity extends AppCompatActivity {
             float imagePrediction = predictImageModel(xrayImagePath);
             Log.d(TAG, "Image prediction: " + imagePrediction);
 
-            float finalConfidenceScore = (tabularPrediction + imagePrediction) / 2;
+            finalConfidenceScore = (tabularPrediction + imagePrediction) / 2;
+            int progressValue = (int) (finalConfidenceScore * 100);
             String resultText = "The anticipated rate of osteoporosis occurrence is currently: " + String.format("%.2f", finalConfidenceScore * 100) + "%";
             textViewResult.setText(resultText);
 
             textViewImagePrediction.setText("Image Data Prediction: " + (imagePrediction > 0.5 ? "Osteoporosis" : "Normal"));
             textViewTabularPrediction.setText("Tabular Data Prediction: " + (tabularPrediction > 0.5 ? "Osteoporosis" : "Normal"));
 
-            progressBarResult.setProgress((int) (finalConfidenceScore * 100));
+            progressBarResult.setProgress(progressValue);
+            ObjectAnimator animation = ObjectAnimator.ofInt(circularProgressBar, "progress", 0, progressValue);
+            animation.setDuration(1000); // Duration of the animation in milliseconds
+            animation.setInterpolator(new DecelerateInterpolator());
+            animation.start();
+
+// Animate the text inside the circular progress bar
+            ValueAnimator animator = ValueAnimator.ofInt(0, progressValue);
+            animator.setDuration(1000); // Duration should match the progress bar animation
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    textViewCircularProgress.setText(animation.getAnimatedValue().toString() + "%");
+                }
+            });
+            animator.start();
+            // Update circular progress
+            circularProgressBar.setProgress(progressValue);
+            textViewCircularProgress.setText(progressValue + "%");
 
             hasPrediction = true;
             updatePredictionViews();
@@ -432,7 +458,27 @@ public class EditPatientActivity extends AppCompatActivity {
                 textViewResult.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_RESULT)));
                 textViewImagePrediction.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_IMAGE_PREDICTION)));
                 textViewTabularPrediction.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TABULAR_PREDICTION)));
-                progressBarResult.setProgress((int)(cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FINAL_CONFIDENCE_SCORE)) * 100));
+                finalConfidenceScore = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FINAL_CONFIDENCE_SCORE));
+                int progressValue = (int)(finalConfidenceScore * 100);
+                progressBarResult.setProgress(progressValue);
+
+                circularProgressBar.setProgress(progressValue);
+                textViewCircularProgress.setText(progressValue + "%");
+
+                ObjectAnimator animation = ObjectAnimator.ofInt(circularProgressBar, "progress", 0, progressValue);
+                animation.setDuration(1000); // Duration of the animation in milliseconds
+                animation.setInterpolator(new DecelerateInterpolator());
+                animation.start();
+
+                // Animate the text inside the circular progress bar
+                ValueAnimator animator = ValueAnimator.ofInt(0, progressValue);
+                animator.setDuration(1000); // Duration should match the progress bar animation
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        textViewCircularProgress.setText(animation.getAnimatedValue().toString() + "%");
+                    }
+                });
+                animator.start();
             }
 
             updatePredictionViews();
@@ -528,6 +574,8 @@ public class EditPatientActivity extends AppCompatActivity {
             textViewImagePrediction.setVisibility(View.VISIBLE);
             textViewTabularPrediction.setVisibility(View.VISIBLE);
             progressBarResult.setVisibility(View.VISIBLE);
+            circularProgressBar.setVisibility(View.VISIBLE);
+            textViewCircularProgress.setVisibility(View.VISIBLE);
             textViewNoPrediction.setVisibility(View.GONE);
             buttonPredict.setText("Update Prediction");
         } else {
@@ -535,6 +583,8 @@ public class EditPatientActivity extends AppCompatActivity {
             textViewImagePrediction.setVisibility(View.GONE);
             textViewTabularPrediction.setVisibility(View.GONE);
             progressBarResult.setVisibility(View.GONE);
+            circularProgressBar.setVisibility(View.GONE);
+            textViewCircularProgress.setVisibility(View.GONE);
             textViewNoPrediction.setVisibility(View.VISIBLE);
             textViewNoPrediction.setText("No prediction has been made yet.");
             buttonPredict.setText("Make Prediction");
@@ -577,7 +627,6 @@ public class EditPatientActivity extends AppCompatActivity {
         String result = textViewResult.getText().toString();
         String imagePrediction = textViewImagePrediction.getText().toString();
         String tabularPrediction = textViewTabularPrediction.getText().toString();
-        float finalConfidenceScore = progressBarResult.getProgress() / 100f;
 
         boolean updated = db.updatePredictionData(
                 patientId, name, email, ageString, tabularPrediction, imagePrediction, result,

@@ -336,46 +336,6 @@
                 android:background="@android:color/darker_gray"
                 android:layout_marginBottom="16dp"/>
 
-            <Button
-                android:id="@+id/buttonPredict"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Prognosticate"
-                android:backgroundTint="@color/buttoncolor"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="16dp"/>
-
-            <!-- Save button -->
-            <Button
-                android:id="@+id/buttonSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Save Changes"
-                android:backgroundTint="@color/headercolor"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="16dp"/>
-
-            <!-- Delete button -->
-            <Button
-                android:id="@+id/buttonDelete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Delete Patient"
-                android:backgroundTint="#F44336"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="16dp"/>
-
-            <!-- Cancel button -->
-            <Button
-                android:id="@+id/buttonCancel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:backgroundTint="@color/darkcolor"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="24dp"/>
-
-            <!-- Result Section -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -417,6 +377,77 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="16dp"
                 android:visibility="gone"/>
+
+            <!-- Circular Progress Indicator -->
+            <FrameLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+
+                <ProgressBar
+                    android:id="@+id/circularProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/circular_progress" />
+
+                <TextView
+                    android:id="@+id/textViewCircularProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="0%"/>
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/buttonPredict"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prognosticate"
+                android:backgroundTint="@color/buttoncolor"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Save button -->
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Changes"
+                android:backgroundTint="@color/headercolor"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Delete button -->
+            <Button
+                android:id="@+id/buttonDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Patient"
+                android:backgroundTint="#F44336"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Cancel button -->
+            <Button
+                android:id="@+id/buttonCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:backgroundTint="@color/darkcolor"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Result Section -->
+
 
             <!-- Circular Progress Bar -->
             <ProgressBar
