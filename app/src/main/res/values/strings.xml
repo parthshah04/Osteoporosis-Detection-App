@@ -84,12 +84,11 @@
     <string name="subject">Subject</string>
     <string name="setting_subject_desc">Android Application Programming</string>
     <string name="institution">Institution</string>
-    <string name="wilfrid_laurier_university">Wilfrid Laurier University</string>
-    <string name="about_dropdown_1">Who We Are?</string>
-    <string name="about_dropdown_2">FAQ</string>
-    <string name="about_desc">Want to know more about how to use the app?</string>
+    <string name="wilfrid_laurier_university">Wilfrid Laurier University\n</string>
+    <string name="about_dropdown_1">Contribution - Our Team</string>
+    <string name="about_dropdown_2">Frequently Asked Questions</string>
+    <string name="about_desc">Get to know the App..</string>
     <string name="team">Our Team</string>
-    <string name="faq">Frequently Asked Questions (FAQs)</string>
     <string name="excellence_in_osteoporosis">AI Excellence in Osteoporosis Care</string>
     <string name="version">Version: 1.0</string>
     <string name="about_full_description">Dedicated to improving bone health, we leverage cutting-edge AI to offer precise and reliable osteoporosis diagnosis, helping you stay strong and healthy.</string>
