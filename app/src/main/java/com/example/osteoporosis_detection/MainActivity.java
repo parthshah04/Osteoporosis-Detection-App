@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,12 +73,31 @@ public class MainActivity extends AppCompatActivity {
         initializeUIComponents();
         db = new DatabaseHelper(this);
         sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        editTextAge = findViewById(R.id.editTextAge);
+        setAgeInputFilter(editTextAge);
         setupListeners();
         loadModels();
         setupToolbar();
         setupBottomNavigation();
     }
 
+    private void setAgeInputFilter(EditText editText) {
+        editText.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(3),
+                (source, start, end, dest, dstart, dend) -> {
+                    try {
+                        String newVal = dest.subSequence(0, dstart) + source.toString() + dest.subSequence(dend, dest.length());
+                        int input = Integer.parseInt(newVal);
+                        if (input > 120) {
+                            return "";
+                        }
+                    } catch (NumberFormatException nfe) {
+                        // Do nothing
+                    }
+                    return null;
+                }
+        });
+    }
     private void initializeUIComponents() {
         editTextAge = findViewById(R.id.editTextAge);
         editTextName = findViewById(R.id.editTextName);
@@ -280,7 +300,17 @@ public class MainActivity extends AppCompatActivity {
                 textViewResult.setText(R.string.please_select_an_image);
                 return;
             }
+            String ageString = editTextAge.getText().toString();
+            if (ageString.isEmpty()) {
+                Toast.makeText(this, "Please enter age", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
+            int age = Integer.parseInt(ageString);
+            if (age < 5 || age > 120) {
+                Toast.makeText(this, "Age must be between 5 and 120", Toast.LENGTH_SHORT).show();
+                return;
+            }
             float[] tabularInput = extractTabularInput();
             float tabularPrediction = predictTabularModel(tabularInput);
             Log.d(TAG, "Tabular prediction: " + tabularPrediction);

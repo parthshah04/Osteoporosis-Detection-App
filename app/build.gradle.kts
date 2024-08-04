@@ -41,6 +41,7 @@ dependencies {
     implementation("org.tensorflow:tensorflow-lite-support:0.4.3")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("com.google.android.material:material:1.5.0")
+    implementation("androidx.cardview:cardview:1.0.0")
     implementation(libs.annotation)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
