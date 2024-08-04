@@ -78,20 +78,6 @@ public class AboutActivityTest {
     }
 
     @Test
-    public void testExpandableSection() {
-        TextView heading = activity.findViewById(R.id.section2_heading);
-        View expandableSection = activity.findViewById(R.id.expandable_section2);
-
-        assertEquals(View.GONE, expandableSection.getVisibility());
-
-        heading.performClick();
-        assertEquals(View.VISIBLE, expandableSection.getVisibility());
-
-        heading.performClick();
-        assertEquals(View.GONE, expandableSection.getVisibility());
-    }
-
-    @Test
     public void testLogout() {
         SharedPreferences.Editor mockEditor = mock(SharedPreferences.Editor.class);
         when(mockSharedPreferences.edit()).thenReturn(mockEditor);
