@@ -104,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
         radioDarkMode.setChecked(themeMode == AppCompatDelegate.MODE_NIGHT_YES);
     }
 
-    private void logout() {
+    void logout() {
         SharedPreferences userPrefs = getSharedPreferences("UserSession", MODE_PRIVATE);
         SharedPreferences.Editor editor = userPrefs.edit();
         editor.clear();
