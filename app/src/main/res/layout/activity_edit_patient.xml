@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/colorBackground"
     tools:context=".EditPatientActivity">
 
     <!-- Header with title and menu -->
@@ -70,7 +70,7 @@
                 android:text="Edit Patient Information"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="#333333"
+                android:textColor="@color/black"
                 android:layout_marginBottom="16dp"/>
 
             <!-- Name Input -->
@@ -336,6 +336,77 @@
                 android:background="@android:color/darker_gray"
                 android:layout_marginBottom="16dp"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prediction Results"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/textViewResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="The anticipated rate of osteoporosis occurrence is currently:"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/textViewImagePrediction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prediction of Image Data:"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/textViewTabularPrediction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prediction of Tabular Data:"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/textViewNoPrediction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No prediction has been made yet."
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"/>
+
+            <!-- Circular Progress Indicator -->
+            <FrameLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+
+                <ProgressBar
+                    android:id="@+id/circularProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/circular_progress" />
+
+                <TextView
+                    android:id="@+id/textViewCircularProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="0%"/>
+
+            </FrameLayout>
+
             <Button
                 android:id="@+id/buttonPredict"
                 android:layout_width="match_parent"
@@ -376,47 +447,7 @@
                 android:layout_marginBottom="24dp"/>
 
             <!-- Result Section -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Prediction Results"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#333333"
-                android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:id="@+id/textViewResult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="The anticipated rate of osteoporosis occurrence is currently:"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/textViewImagePrediction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Prediction of Image Data:"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/textViewTabularPrediction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Prediction of Tabular Data:"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"/>
-
-            <TextView
-                android:id="@+id/textViewNoPrediction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="No prediction has been made yet."
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"
-                android:visibility="gone"/>
 
             <!-- Circular Progress Bar -->
             <ProgressBar

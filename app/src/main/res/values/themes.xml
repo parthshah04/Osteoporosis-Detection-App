@@ -1,10 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.OsteoporosisDetection" parent="Theme.Material3.DayNight">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:statusBarColor">@color/headercolor</item>
-        <item name="android:windowLightStatusBar">false</item> <!-- Set to false for white status bar text/icons -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
     </style>
 
     <style name="Theme.OsteoporosisDetection" parent="Base.Theme.OsteoporosisDetection" />

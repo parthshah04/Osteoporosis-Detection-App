@@ -1,5 +1,7 @@
 package com.example.osteoporosis_detection;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
@@ -11,6 +13,7 @@ import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView backIcon, menuIcon;
     private BottomNavigationView bottomNavigationView;
     private SharedPreferences sharedPreferences;
+    private ProgressBar circularProgressBar;
+    private TextView textViewCircularProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
         textViewImagePrediction = findViewById(R.id.textViewImagePrediction);
         textViewTabularPrediction = findViewById(R.id.textViewTabularPrediction);
         progressBarResult = findViewById(R.id.progressBarResult);
+        circularProgressBar = findViewById(R.id.circularProgressBar);
+        textViewCircularProgress = findViewById(R.id.textViewCircularProgress);
+
 
         backIcon = findViewById(R.id.backIcon);
         menuIcon = findViewById(R.id.menuIcon);
@@ -297,20 +305,21 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (editTextAge.getText().toString().isEmpty()) {
-                textViewResult.setText(R.string.please_select_an_image);
+                textViewResult.setText(R.string.please_enter_age);
                 return;
             }
+
             String ageString = editTextAge.getText().toString();
+            int age = Integer.parseInt(ageString);
+            if (age < 5 || age > 120) {
+                Toast.makeText(this, "Age should be between 5 and 120", Toast.LENGTH_SHORT).show();
+                return;
+            }
             if (ageString.isEmpty()) {
                 Toast.makeText(this, "Please enter age", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            int age = Integer.parseInt(ageString);
-            if (age < 5 || age > 120) {
-                Toast.makeText(this, "Age must be between 5 and 120", Toast.LENGTH_SHORT).show();
-                return;
-            }
             float[] tabularInput = extractTabularInput();
             float tabularPrediction = predictTabularModel(tabularInput);
             Log.d(TAG, "Tabular prediction: " + tabularPrediction);
@@ -324,21 +333,42 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Image prediction: " + imagePrediction);
 
             finalConfidenceScore = (tabularPrediction + imagePrediction) / 2;
+            int progressValue = (int) (finalConfidenceScore * 100);
+
             String resultText = getString(R.string.prediction_desc) + String.format("%.2f", finalConfidenceScore * 100) + "%";
             textViewResult.setText(resultText);
 
-            imagePredictionText = getString(R.string.prediction_of_image_data) + (imagePrediction > 0.5 ? getString(R.string.osteoporosis) : " Normal");
-            tabularPredictionText = getString(R.string.prediction_of_tabular_data) + (tabularPrediction > 0.5 ? getString(R.string.osteoporosis) : " Normal");
+            imagePredictionText = getString(R.string.prediction_of_image_data) + (imagePrediction > 0.5 ? getString(R.string.osteoporosis) : "Normal");
+            tabularPredictionText = getString(R.string.prediction_of_tabular_data) + (tabularPrediction > 0.5 ? getString(R.string.osteoporosis) : "Normal");
             textViewImagePrediction.setText(imagePredictionText);
             textViewTabularPrediction.setText(tabularPredictionText);
 
-            progressBarResult.setProgress((int) (finalConfidenceScore * 100));
+            // Update the linear progress bar
+            progressBarResult.setProgress(progressValue);
+            ObjectAnimator animation = ObjectAnimator.ofInt(circularProgressBar, "progress", 0, progressValue);
+            animation.setDuration(1000); // Duration of the animation in milliseconds
+            animation.setInterpolator(new DecelerateInterpolator());
+            animation.start();
+
+            //Animate the text inside the circular progress bar
+            ValueAnimator animator = ValueAnimator.ofInt(0, progressValue);
+            animator.setDuration(1000); // Duration should match the progress bar animation
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    textViewCircularProgress.setText(animation.getAnimatedValue().toString() + "%");
+                }
+            });
+            animator.start();
+
+            // Update circular progress bar and its text
+            circularProgressBar.setProgress(progressValue);
+            textViewCircularProgress.setText(progressValue + "%");
 
             predictionMade = true;
 
         } catch (Exception e) {
             Log.e(TAG, "Error making prediction: ", e);
-            textViewResult.setText(R.string.please_fill_in_all_fields);
+            textViewResult.setText("Error");
             predictionMade = false;
         }
     }
@@ -452,6 +482,8 @@ public class MainActivity extends AppCompatActivity {
         textViewTabularPrediction.setText("");
         progressBarResult.setProgress(0);
         predictionMade = false;
+        circularProgressBar.setProgress(0);
+        textViewCircularProgress.setText("0%");
     }
 
     private String saveImageToInternalStorage(Bitmap bitmap) {
