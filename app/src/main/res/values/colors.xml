@@ -2,26 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
-    <!-- Other colors -->
+    <color name="colorPrimary">#053970</color>
+    <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBackground">#FFFFFF</color>
     <color name="colorQuestionSection">#EEF5FF</color>
     <color name="colorAnswerSection">#F5F5F5</color>
-    <color name="colorBackground">#EEF7FF</color>
-
     <color name="selectedColor">#007AFF</color>
     <color name="unselectedColor">#808080</color>
-
-    <!-- Add these lines -->
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-
-<!--    header color-->
     <color name="headercolor">#053970</color>
     <color name="buttoncolor">#0060AD</color>
     <color name="buttoncolor2">#019AED</color>
     <color name="darkcolor">#052952</color>
-<!--   textbox color -->
     <color name="textbox">#F5F5F5</color>
-<!--    Body color-->
     <color name="bodycolor">#C9EAFD</color>
+    <color name="textColorPrimary">#000000</color>
+    <color name="textColorSecondary">#808080</color>
+    <color name="black_remain">#FF000000</color>
 </resources>
