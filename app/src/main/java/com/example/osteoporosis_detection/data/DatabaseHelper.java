@@ -502,11 +502,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, new String[]{email});
     }
 
-    public void updateUserProfileImage(String email, byte[] imageBytes) {
+    public boolean updateUserProfileImage(String email, byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PROFILE_PHOTO, imageBytes);
-        db.update(TABLE_USERS, values, COLUMN_EMAIL + "=?", new String[]{email});
+
+        int rowsAffected = db.update(TABLE_USERS, values, COLUMN_EMAIL + " = ?", new String[]{email});
+        db.close();
+
+        return rowsAffected > 0;
     }
 
     public void removeUserProfileImage(String email) {
