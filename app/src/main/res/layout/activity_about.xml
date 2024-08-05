@@ -34,7 +34,7 @@
                 android:layout_weight="1"
                 android:paddingStart="0dp"
                 android:paddingEnd="16dp"
-                android:text="About"
+                android:text="@string/about"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />

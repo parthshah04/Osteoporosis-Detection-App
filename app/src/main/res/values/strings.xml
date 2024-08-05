@@ -192,5 +192,16 @@
     <string name="patient_details">Patient Details</string>
     <string name="prediction_and_results">Visual Analysis</string>
     <string name="visualization_and_profile">Doctor Profile</string>
+    <string name="manage_patients">Manage Patients</string>
+    <string name="visual_analysis">Visual Analysis</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="patient_list">Patient List</string>
+    <string name="edit_patient_information">Edit Patient Information</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="login_authentication_instructions">1. Enter your provided credentials to access the app.\n2. Use your unique username and password.\n3. Contact support if you encounter login issues.</string>
+    <string name="add_patients_instructions">1. Register new patients by entering their details.\n2. Input patient symptoms in the provided table.\n3. Upload X-ray images for instant prediction or save for later analysis.</string>
+    <string name="patient_details_instructions">1. View a comprehensive list of registered patients.\n2. Click on a patient to access and update their specific information.\n3. Delete patient records permanently if necessary.</string>
+    <string name="visual_instructions">1. Explore data visualizations including osteoporosis distribution graphs.\n2. View total patient counts and age group breakdowns.\n3. Gain insights through interactive charts and graphs.</string>
+    <string name="doctors_profile_instructions">1. Update your profile photo and password for security.\n2. Note that name, designation, phone number, and email cannot be edited.\n3. Ensure your profile information is current and accurate.</string>
 
 </resources>
