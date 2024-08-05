@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/colorBackground"
     tools:context=".EditPatientActivity">
 
     <!-- Header with title and menu -->
@@ -70,7 +70,7 @@
                 android:text="@string/edit_patient_information"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="#333333"
+                android:textColor="@color/black"
                 android:layout_marginBottom="16dp"/>
 
             <!-- Name Input -->
@@ -342,7 +342,7 @@
                 android:text="@string/prediction_results"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#333333"
+                android:textColor="@color/black"
                 android:layout_marginBottom="8dp"/>
 
             <TextView

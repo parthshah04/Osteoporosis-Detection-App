@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorBackground"
     tools:context=".StartingActivity">
 
     <!-- Header with title -->
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:paddingStart="16dp"
-            android:text="@string/osteo_vision"
+            android:text="OSTEO VISION"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -73,15 +73,15 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Registration"
                 android:padding="8dp"
-                android:src="@drawable/add" />
+                android:src="@drawable/ic_addition" />
 
             <TextView
                 android:id="@+id/registrationText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/add_patients"
-                android:textColor="#333333"
+                android:text="Add patient"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -110,8 +110,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/manage_patients"
-                android:textColor="#333333"
+                android:text="Manage Patients"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -140,8 +140,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/visual_analysis"
-                android:textColor="#333333"
+                android:text="Visual Analysis"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -170,8 +170,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/doctors_profile_starting"
-                android:textColor="#333333"
+                android:text="Doctor's Profile"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
     </RelativeLayout>
@@ -197,6 +197,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:srcCompat="@drawable/osteovision_logo2" />
+        app:srcCompat="@drawable/logo_transparent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
