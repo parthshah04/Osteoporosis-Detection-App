@@ -41,7 +41,7 @@ import java.nio.channels.FileChannel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
+    public static final int PICK_IMAGE_REQUEST = 1;
     private static final String TAG = "MainActivity";
 
     private EditText editTextAge, editTextName, editTextEmail;
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.navigation_registration);
     }
 
-    private void logout() {
+    public void logout() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();

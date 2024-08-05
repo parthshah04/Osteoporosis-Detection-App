@@ -149,4 +149,5 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish(); // Finish LoginActivity to prevent returning to it
     }
+
 }
