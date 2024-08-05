@@ -1,15 +1,22 @@
-<!-- res/values-night/colors.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorQuestionSection">#4A7070</color>
-    <color name="colorAnswerSection">#91B6B5</color>
-    <color name="colorBackground">#121212</color>
-    <color name="selectedColor">#007AFF</color>
-    <color name="unselectedColor">#B0B0B0</color>
-
-    <!-- Add these lines -->
-    <color name="colorPrimary">#BB86FC</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="black">#FFFFFF</color>
+    <color name="white">#FF000000</color>
+    <color name="colorPrimary">#FAC68F</color>
+    <color name="colorPrimaryDark">#C8FF4C</color>
+    <color name="colorAccent">#00BF7E</color>
+    <color name="colorBackground">#FF000000</color>
+    <color name="colorQuestionSection">#110A00</color>
+    <color name="colorAnswerSection">#0A0A0A</color>
+    <color name="selectedColor">#FF8500</color>
+    <color name="unselectedColor">#7F7F7F</color>
+    <color name="headercolor">#FAC68F</color>
+    <color name="buttoncolor">#FF9F52</color>
+    <color name="buttoncolor2">#FE6512</color>
+    <color name="darkcolor">#FAD6AD</color>
+    <color name="textbox">#0A0A0A</color>
+    <color name="bodycolor">#361502</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#7F7F7F</color>
+    <color name="black_remain">#FF000000</color>
 </resources>

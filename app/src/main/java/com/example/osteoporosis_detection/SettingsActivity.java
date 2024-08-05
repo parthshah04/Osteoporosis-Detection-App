@@ -3,6 +3,7 @@ package com.example.osteoporosis_detection;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -54,11 +55,10 @@ public class SettingsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        backIcon.setOnClickListener(v -> {
-            Intent intent = new Intent(SettingsActivity.this, StartingActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        TextView titleTextView = findViewById(R.id.title);
+        titleTextView.setText(R.string.settings);
+
+        backIcon.setOnClickListener(v -> onBackPressed());
 
         menuIcon.setOnClickListener(v -> showMenu());
     }
@@ -86,6 +86,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void applyTheme(int themeMode) {
+        Log.d("SettingsActivity", "Applying theme: " + (themeMode == AppCompatDelegate.MODE_NIGHT_YES ? "Dark" : "Light"));
+
         // Save the selected theme
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("theme", themeMode);
@@ -96,6 +98,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Apply the theme
         AppCompatDelegate.setDefaultNightMode(themeMode);
+
+        // Recreate the activity to apply the theme
         recreate();
     }
 
@@ -104,7 +108,7 @@ public class SettingsActivity extends AppCompatActivity {
         radioDarkMode.setChecked(themeMode == AppCompatDelegate.MODE_NIGHT_YES);
     }
 
-    void logout() {
+    private void logout() {
         SharedPreferences userPrefs = getSharedPreferences("UserSession", MODE_PRIVATE);
         SharedPreferences.Editor editor = userPrefs.edit();
         editor.clear();
@@ -112,6 +116,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(SettingsActivity.this, StartingActivity.class);
         startActivity(intent);
         finish();
     }
