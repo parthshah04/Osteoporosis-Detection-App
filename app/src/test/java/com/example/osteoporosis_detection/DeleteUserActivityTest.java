@@ -26,11 +26,6 @@ public class DeleteUserActivityTest {
         activity = Robolectric.buildActivity(TestDeleteUserActivity.class).create().get();
     }
 
-//    @Test
-//    public void testUserDeletion() {
-//        verify(mockDatabaseHelper).deleteUserByEmail("parth@gmail.com");
-//    }
-
     @Test
     public void testActivityFinishesAfterDeletion() {
         assert(activity.isFinishing());

@@ -86,30 +86,4 @@ public class FAQAdapterTest {
         verify(mockQuestionTextView).setText("Question 1");
         verify(mockAnswerTextView).setText("Answer 1");
     }
-
-//    @Test
-//    public void testItemClick_ExpandAnswer() {
-//        FAQAdapter.FAQViewHolder holder = new FAQAdapter.FAQViewHolder(mockItemView);
-//        when(mockAnswerTextView.getVisibility()).thenReturn(View.GONE);
-//
-//        adapter.onBindViewHolder(holder, 0);
-//        holder.itemView.performClick();
-//
-//        verify(mockAnswerTextView).setVisibility(View.VISIBLE);
-//        verify(mockExpandIcon).setImageResource(android.R.drawable.arrow_up_float);
-//    }
-
-//    @Test
-//    public void testItemClick_CollapseAnswer() {
-//        FAQAdapter.FAQViewHolder holder = new FAQAdapter.FAQViewHolder(mockItemView);
-//        when(mockAnswerTextView.getVisibility()).thenReturn(View.VISIBLE);
-//
-//        adapter.onBindViewHolder(holder, 0);
-//
-//        // Simulate click
-//        holder.itemView.performClick();
-//
-//        verify(mockAnswerTextView).setVisibility(View.GONE);
-//        verify(mockExpandIcon).setImageResource(android.R.drawable.arrow_down_float);
-//    }
 }

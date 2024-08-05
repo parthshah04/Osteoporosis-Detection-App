@@ -337,25 +337,6 @@
                 android:background="@android:color/darker_gray"
                 android:layout_marginBottom="16dp"/>
 
-            <Button
-                android:id="@+id/buttonPredict"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/prognosticate"
-                android:backgroundTint="@color/buttoncolor"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="16dp"/>
-
-            <!-- Save button -->
-            <Button
-                android:id="@+id/buttonSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/save"
-                android:backgroundTint="@color/headercolor"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="24dp"/>
-
             <!-- Result Section -->
             <TextView
                 android:layout_width="match_parent"
@@ -363,7 +344,7 @@
                 android:text="@string/prediction_results"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="#333333"
                 android:layout_marginBottom="8dp"/>
 
             <TextView
@@ -389,6 +370,56 @@
                 android:text="@string/prediction_of_tabular_data"
                 android:textSize="16sp"
                 android:layout_marginBottom="16dp"/>
+
+
+            <FrameLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+
+                <ProgressBar
+                    android:id="@+id/circularProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/circular_progress_results"
+                    android:rotation="-90"/>
+
+                <TextView
+                    android:id="@+id/textViewCircularProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="0%"/>
+
+            </FrameLayout>
+
+
+            <Button
+                android:id="@+id/buttonPredict"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prognosticate"
+                android:backgroundTint="@color/buttoncolor"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Save button -->
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:backgroundTint="@color/headercolor"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="24dp"/>
 
             <!-- Circular Progress Bar -->
             <ProgressBar
