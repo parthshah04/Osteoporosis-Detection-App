@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:paddingStart="16dp"
-            android:text="OSTEO VISION"
+            android:text="@string/osteo_vision"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Add patient"
+                android:text="@string/add_patients"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -110,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Manage Patients"
+                android:text="@string/manage_patients"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Visual Analysis"
+                android:text="@string/visual_analysis"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -170,7 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Doctor's Profile"
+                android:text="@string/doctors_profile_starting"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
