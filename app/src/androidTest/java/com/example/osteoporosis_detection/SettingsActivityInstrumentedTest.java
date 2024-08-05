@@ -52,15 +52,12 @@ public class SettingsActivityInstrumentedTest {
 
     @Test
     public void testThemeSwitching() {
-        // Check initial state
         onView(withId(R.id.radio_light_mode)).check(matches(isDisplayed()));
         onView(withId(R.id.radio_dark_mode)).check(matches(isDisplayed()));
 
-        // Switch to Dark Mode
         onView(withId(R.id.radio_dark_mode)).perform(click());
         assertEquals(AppCompatDelegate.MODE_NIGHT_YES, sharedPreferences.getInt("theme", -1));
 
-        // Switch to Light Mode
         onView(withId(R.id.radio_light_mode)).perform(click());
         assertEquals(AppCompatDelegate.MODE_NIGHT_NO, sharedPreferences.getInt("theme", -1));
     }

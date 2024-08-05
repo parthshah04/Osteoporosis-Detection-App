@@ -35,13 +35,6 @@ public class AboutActivityTest {
         activity.sharedPreferences = mockSharedPreferences;
     }
 
-//    @Test
-//    public void testInitialFragmentLoading() {
-//        FragmentManager fragmentManager = activity.getSupportFragmentManager();
-//        assertNotNull(fragmentManager.findFragmentById(R.id.fragment_container_section1));
-//        assertTrue(fragmentManager.findFragmentById(R.id.fragment_container_section1) instanceof Section1Fragment);
-//    }
-
     @Test
     public void testBackIconClick() {
         ImageView backIcon = activity.findViewById(R.id.backIcon);
@@ -54,16 +47,6 @@ public class AboutActivityTest {
         assertEquals(expectedIntent.getComponent(), actualIntent.getComponent());
         assertTrue(activity.isFinishing());
     }
-
-//    @Test
-//    public void testMenuIconClick() {
-//        ImageView menuIcon = activity.findViewById(R.id.menuIcon);
-//        menuIcon.performClick();
-//
-//        // This test is limited as PopupMenu is not fully supported in Robolectric
-//        // We can only verify that the click listener is set
-//        assertNotNull(menuIcon.getOnClickListener());
-//    }
 
     @Test
     public void testMoreInfoClick() {

@@ -63,7 +63,6 @@ public class AboutActivityInstrumentedTest {
         onView(withId(R.id.menuIcon)).perform(click());
         onView(withText(R.string.settings)).check(matches(isDisplayed()));
         onView(withText(R.string.about)).check(matches(isDisplayed()));
-//        onView(withText(R.string.m)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -73,11 +72,9 @@ public class AboutActivityInstrumentedTest {
         onView(withId(R.id.expandable_section2)).check(matches(withEffectiveVisibility(Visibility.GONE)));
         onView(withId(R.id.section2_header)).perform(click());
         onView(withId(R.id.expandable_section2)).check(matches(isDisplayed()));
-//        onView(withId(R.id.section2_arrow)).check(matches(withRotation(180)));
 
         onView(withId(R.id.section2_header)).perform(click());
         onView(withId(R.id.expandable_section2)).check(matches(withEffectiveVisibility(Visibility.GONE)));
-//        onView(withId(R.id.section2_arrow)).check(matches(withRotation(0)));
     }
 
     @Test
