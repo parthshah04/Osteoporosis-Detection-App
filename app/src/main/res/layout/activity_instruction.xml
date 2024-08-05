@@ -34,7 +34,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Instructions"
+                android:text="@string/instructions"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -110,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1. Enter your provided credentials to access the app.\n2. Use your unique username and password.\n3. Contact support if you encounter login issues."
+                android:text="@string/login_authentication_instructions"
                 android:textSize="14sp"
                 android:textColor="#808080"
                 android:lineSpacingExtra="8dp"/>
@@ -137,7 +137,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1. Register new patients by entering their details.\n2. Input patient symptoms in the provided table.\n3. Upload X-ray images for instant prediction or save for later analysis."
+                android:text="@string/add_patients_instructions"
                 android:textSize="14sp"
                 android:textColor="#808080"
                 android:lineSpacingExtra="8dp"/>
@@ -164,8 +164,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1. View a comprehensive list of registered patients.\n2. Click on a patient to access and update their specific information.\n3. Delete patient records permanently if necessary.
-"
+                android:text="@string/patient_details_instructions"
                 android:textSize="14sp"
                 android:textColor="#808080"
                 android:lineSpacingExtra="8dp"/>
@@ -192,7 +191,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1. Explore data visualizations including osteoporosis distribution graphs.\n2. View total patient counts and age group breakdowns.\n3. Gain insights through interactive charts and graphs."
+                android:text="@string/visual_instructions"
                 android:textSize="14sp"
                 android:textColor="#808080"
                 android:lineSpacingExtra="8dp"/>
@@ -219,7 +218,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1. Update your profile photo and password for security.\n2. Note that name, designation, phone number, and email cannot be edited.\n3. Ensure your profile information is current and accurate."
+                android:text="@string/doctors_profile_instructions"
                 android:textSize="14sp"
                 android:textColor="#808080"
                 android:lineSpacingExtra="8dp"/>

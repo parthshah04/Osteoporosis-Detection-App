@@ -193,4 +193,15 @@
     <string name="patient_details">Hasta Detayları</string>
     <string name="prediction_and_results">Tahmin ve Sonuçlar</string>
     <string name="visualization_and_profile">Görselleştirme ve Profil</string>
+    <string name="manage_patients">Hastaları Yönet</string>
+    <string name="visual_analysis">Görsel Analiz</string>
+    <string name="dashboard">Gösterge Paneli</string>
+    <string name="patient_list">Hasta Listesi</string>
+    <string name="edit_patient_information">Hasta Bilgilerini Düzenle</string>
+    <string name="save_changes">Değişiklikleri Kaydet</string>
+    <string name="login_authentication_instructions">1. Uygulamaya erişmek için sağladığınız kimlik bilgilerini girin.\n2. Benzersiz kullanıcı adınızı ve şifrenizi kullanın.\n3. Giriş sorunlarıyla karşılaşırsanız destek ekibiyle iletişime geçin.</string>
+    <string name="add_patients_instructions">1. Yeni hastaları ayrıntılarını girerek kaydedin.\n2. Sağlanan tabloya hasta semptomlarını girin.\n3. Anında tahmin için X-ray görüntülerini yükleyin veya daha sonra analiz için kaydedin.</string>
+    <string name="patient_details_instructions">1. Kayıtlı hastaların kapsamlı bir listesini görüntüleyin.\n2. Özel bilgilerine erişmek ve güncellemek için bir hastaya tıklayın.\n3. Gerekirse hasta kayıtlarını kalıcı olarak silin.</string>
+    <string name="visual_instructions">1. Osteoporoz dağılım grafikleri dahil veri görselleştirmelerini keşfedin.\n2. Toplam hasta sayısını ve yaş grubu dökümlerini görüntüleyin.\n3. Etkileşimli çizelgeler ve grafikler aracılığıyla içgörü elde edin.</string>
+    <string name="doctors_profile_instructions">1. Güvenlik için profil fotoğrafınızı ve şifrenizi güncelleyin.\n2. Adın, unvanın, telefon numarasının ve e-postanın düzenlenemeyeceğini unutmayın.\n3. Profil bilgilerinizin güncel ve doğru olduğundan emin olun.</string>
 </resources>

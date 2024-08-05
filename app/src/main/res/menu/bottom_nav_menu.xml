@@ -3,21 +3,21 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_menu"
-        android:title="Home" />
+        android:title="@string/home_starting" />
     <item
         android:id="@+id/navigation_registration"
         android:icon="@drawable/ic_register_menu"
-        android:title="Add Patient" />
+        android:title="@string/add_patients" />
     <item
         android:id="@+id/navigation_prediction"
         android:icon="@drawable/ic_patient_menu"
-        android:title="Patients" />
+        android:title="@string/patients" />
     <item
         android:id="@+id/navigation_visualization"
         android:icon="@drawable/ic_graph_menu"
-        android:title="Dashboard" />
+        android:title="@string/dashboard" />
     <item
         android:id="@+id/navigation_doctors_profile"
         android:icon="@drawable/ic_profile_menu"
-        android:title="Profile" />
+        android:title="@string/profile" />
 </menu>
